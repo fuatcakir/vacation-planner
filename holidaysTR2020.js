@@ -32,7 +32,7 @@ let holidayTR5 = {
     month: 5,
     day: 23,
     dayType: 'E', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'RAMAZAN BAYRAMI AREFESi'
+    description: 'RAMAZAN BAYRAMI'
 };
 let holidayTR6 = {
     year: 2020,
@@ -67,7 +67,7 @@ let holidayTR10 = {
     month: 7,
     day: 30,
     dayType: 'E', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'KURBAN BAYRAMI AREFESi'
+    description: 'KURBAN BAYRAMI'
 };
 let holidayTR11 = {
     year: 2020,
@@ -109,7 +109,7 @@ let holidayTR16 = {
     month: 10,
     day: 28,
     dayType: 'E', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'CUMHURİYET BAYRAMI AREFESi'
+    description: 'CUMHURİYET BAYRAMI'
 };
 let holidayTR17 = {
     year: 2020,
@@ -148,8 +148,24 @@ function holidayCheck(pDay) {
                 pDay.description = holiday.description;
                 break;
             }
-            
+
         }
     }
 
+}
+
+function getHolidayDescription(pDay) {
+    let hldyDesc = null;
+
+    for (const hold in holidaysTR) {
+        if (holidaysTR.hasOwnProperty(hold)) {
+            const holiday = holidaysTR[hold];
+            if (pDay.year == holiday.year && pDay.month == holiday.month && pDay.day == holiday.day) {
+                hldyDesc = holiday.description;
+                break;
+            }
+
+        }
+    }
+    return hldyDesc;
 }

@@ -4,49 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vacation-planner</title> 
-
+    <title>vacation-planner</title>
+    
+    <link rel="stylesheet" href="style.css">
     <script src="./cal2020.js"></script>
     <script src="./holidaysTR2020.js"></script>
     <script src="./vacationPlanner.js"></script>
- </head>
+</head>
 
 <body>
-    <p><strong>izin planlama</strong> sistemi</p>
-    <script >
+   <h1>İzin Planlama Sistemi</h1>
 
-        let person = {
-            name: 'Fuat',
-            surname: 'CAKIR',
-            mail: 'fuat.cakir@outlook.com',
-            totalVacationCount: 18,
-            plannedVacationCount: 0,
-            unPlannedVacationCount: 0,
-            plannedVacations:[]
-        };
+    <label for="lblMail">Mail :</label> <input type="email" name="email" id="email">
+    <label for="lbltotalVac">Toplam izin Sayısı: </label> 
+    <input type="number" name="totalVacationCount" id="vacationCount" min="1" max="200" value="15">
+    <button id="btnPlanner" onclick=" display()">İznimi Planla!</button><br><br>
+    <table id="tblPlannedVacations">
+        <thead>
+            <tr>
+                <th>Sıra</th>
+                <th>Başlangıç Tarihi</th>
+                <th>Bitiş Tarihi</th>
+                <th>Planlanan İzin Adedi</th>
+                <th>Açıklama</th>
+            </tr>
+        </thead>
+    </table>
+    <br>
+    <label id="vacationStatus">-</label>
 
-
-        console.log('Adi :' + person.name);
-        console.log('Soyadı :' + person.surname);
-        console.log('İletişim :' + person.mail);
-        console.log('Toplam İzin Adedi :' + person.totalVacationCount);
-        console.log('Planmış İzin Adedi :' + person.plannedVacationCount);
-        console.log('Kalan İzin Adedi :' + person.unPlannedVacationCount);
-
-        planMyVacations(person) ;
-
-        let index = 0;
-        person.plannedVacations.forEach(vacation => {
-        console.log(++index +". İZİN\n" +
-            "İzin araligi :"
-            + vacation.dayStart.day + "/" + vacation.dayStart.month + "/" + vacation.dayStart.year + "-"
-            + vacation.dayEnd.day + "/" + vacation.dayEnd.month + "/" + vacation.dayEnd.year + "\n" +
-            "İzin adeti : " + vacation.vacationCount);
-    });
-
-
-
+    <script>
+    //  display();
     </script>
+
+
 </body>
 
 </html>

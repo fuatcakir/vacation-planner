@@ -50,6 +50,7 @@ function createDayObject(date) {
     }
     newDay.fullDateStr = d.toDateString();
     holidayCheck(newDay);
+    newDay.description = getHolidayDescription(newDay);
     return newDay;
 }
 

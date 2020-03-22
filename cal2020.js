@@ -1,92 +1,90 @@
-let day20201024 = {
-    year: 2020,
-    month: 10,
-    day: 24,
-    dayType: 'WE', //WD : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: '',
-    dayCode: 'Sa'
-};
+function createDayObject(date) {
 
-let day20201025 = {
-    year: 2020,
-    month: 10,
-    day: 25,
-    dayType: 'WE', //WD : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: '',
-    dayCode: 'Su'
-};
+    var d = new Date(date);
 
-let day20201026 = {
-    year: 2020,
-    month: 26,
-    day: 22,
-    dayType: 'WD', //WD : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: '',
-    dayCode: 'Mo'
-};
+    let newDay = {
+        year: 2020,
+        month: 11,
+        day: 1,
+        dayType: 'WE', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
+        description: '',
+        dayCode: 'Su'
+    };
 
-let day20201027 = {
-    year: 2020,
-    month: 10,
-    day: 27,
-    dayType: 'WD', //WD : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: '',
-    dayCode: 'We'
-};
+    newDay.day = d.getDate();
+    newDay.month = d.getMonth() + 1;
+    newDay.year = d.getFullYear();
+    switch (d.getDay()) {
+        case 0:
+            newDay.dayCode = 'Su';
+            newDay.dayType = 'WE';
+            break;
+        case 1:
+            newDay.dayCode = 'Mo';
+            newDay.dayType = 'WD';
+            break;
+        case 2:
+            newDay.dayCode = 'Tu';
+            newDay.dayType = 'WD';
+            break;
+        case 3:
+            newDay.dayCode = 'We';
+            newDay.dayType = 'WD';
+            break;
+        case 4:
+            newDay.dayCode = 'Th';
+            newDay.dayType = 'WD';
+            break;
+        case 5:
+            newDay.dayCode = 'Fr';
+            newDay.dayType = 'WD';
+            break;
+        case 6:
+            newDay.dayCode = 'Sa';
+            newDay.dayType = 'WE';
+            break;
+        default:
+            newDay.dayCode = 'Su';
+            newDay.dayType = 'WE';
+            break;
+    }
+    newDay.fullDateStr = d.toDateString();
+    holidayCheck(newDay);
+    return newDay;
+}
 
-let day20201028 = {
-    year: 2020,
-    month: 10,
-    day: 28,
-    dayType: 'E', //WD : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: '29 Ekim Cumhuriyet Bayramı Arifesi',
-    dayCode: 'Th'
-};
+function createCalendar() {
 
-let day20201029 = {
-    year: 2020,
-    month: 10,
-    day: 29,
-    dayType: 'H', //WD : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: '29 Ekim Cumhuriyet Bayramı',
-    dayCode: 'Su'
-};
+    var day2020SIndex = new Date(2020, 0, 1, 1, 1, 1, 1);
 
-let day20201030 = {
-    year: 2020,
-    month: 10,
-    day: 30,
-    dayType: 'WD', //WD : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: '',
-    dayCode: 'Fr'
-};
+    let dayList = [];
 
-let day20201031 = {
-    year: 2020,
-    month: 10,
-    day: 31,
-    dayType: 'WE', //WD : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: '',
-    dayCode: 'Sa'
-};
+    while (day2020SIndex.getFullYear() <= 2020) {
+        dayList.push(createDayObject(day2020SIndex));
+        day2020SIndex.setDate(day2020SIndex.getDate() + 1);
+    }
 
-let day20201101 = {
-    year: 2020,
-    month: 11,
-    day: 1,
-    dayType: 'WE', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: '',
-    dayCode: 'Su'
-};
+    return dayList;
+}
 
-let days2020 = {
-    day20201024,
-    day20201025,
-    day20201026,
-    day20201027,
-    day20201028,
-    day20201029,
-    day20201030,
-    day20201031,
-    day20201101
-};
+function findNextWeekDay(pDay, dayList) {
+    let dayFound = false;
+    if (pDay.dayType == 'WD') {
+        return pDay;
+    }
+    else {
+        for (let index = 0; index < dayList.length; index++) {
+            const element = dayList[index];
+            if (pDay.year == element.year && pDay.month == element.month && pDay.day == element.day) {
+                dayFound = true;
+            } else {
+                if (dayFound && element.dayType == 'WD') {
+                    return element;
+                }
+            }
+
+        }
+    }
+
+    return pDay;
+}

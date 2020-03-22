@@ -4,13 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vacation-planner</title>
-    <script src="cal2020.js"></script>
-</head>
+    <title>vacation-planner</title> 
+
+    <script src="./cal2020.js"></script>
+    <script src="./holidaysTR2020.js"></script>
+    <script src="./vacationPlanner.js"></script>
+ </head>
 
 <body>
     <p><strong>izin planlama</strong> sistemi</p>
-    <script>
+    <script >
 
         let person = {
             name: 'Fuat',
@@ -18,84 +21,28 @@
             mail: 'fuat.cakir@outlook.com',
             totalVacationCount: 18,
             plannedVacationCount: 0,
-            unPlannedVacationCount: 0
-        };
-        console.log('Adi :' + person.name + '\nİzin sayısı: ' + person.totalVacationCount);
-
-        let wdCount = 0;
-        let daySearchStart;
-        let daySearchEnd;
-        let searchedWdCounts = {};
-
-        let vacation = {
-            personMail: 'fuat.cakir@outlook.com',
-            dayStart: day20201024,
-            dayEnd: day20201024,
-            vacationCount: 1.5
+            unPlannedVacationCount: 0,
+            plannedVacations:[]
         };
 
-        let allVacations = [];
+
+        console.log('Adi :' + person.name);
+        console.log('Soyadı :' + person.surname);
+        console.log('İletişim :' + person.mail);
+        console.log('Toplam İzin Adedi :' + person.totalVacationCount);
+        console.log('Planmış İzin Adedi :' + person.plannedVacationCount);
+        console.log('Kalan İzin Adedi :' + person.unPlannedVacationCount);
+
+        planMyVacations(person) ;
 
         let index = 0;
-        for (const key in days2020) {
-            if (days2020.hasOwnProperty(key)) {
-                const element = days2020[key];
-                /*
-                console.log(
-                            element.year+'/'+
-                            element.month+'/'+
-                            element.day+'-'+
-                            element.dayCode+' '+
-                            element.dayType+' '+
-                            element.description
-                            );
-                */
-
-                //tatil günlerini tarama
-                //ilk tatil günden itibaren sonraki ilk tatile kadar kaç çalışma günü var hesapla ve çık
-
-                if (index == 0) {
-                    daySearchStart = element;
-                }
-                if (element.dayType == 'WD') {
-                    wdCount++;
-                } else {
-
-                    if (element.dayType == 'E') {
-                        wdCount = wdCount + 0.5;
-                    }
-
-                    if (wdCount > 0) {
-
-                        daySearchEnd = element;
-
-                        vacation = {};
-                        vacation.personMail = person.mail;
-                        vacation.dayStart = daySearchStart;
-                        vacation.dayEnd = daySearchEnd;
-                        vacation.vacationCount = wdCount;
-
-                        allVacations.push(vacation);
-                        //reset all values
-                        index = 0;
-                        wdCount = 0;
-                        daySearchStart = element;
-
-                    }
-                }
-
-                index++;
-            }
-        }
-
-
-        allVacations.forEach(vacation => {
-            console.log(vacation.personMail + "\n" +
-                "İzin araligi :"
-                + vacation.dayStart.day + "/" + vacation.dayStart.month + "/" + vacation.dayStart.year + "-"
-                + vacation.dayEnd.day + "/" + vacation.dayEnd.month + "/" + vacation.dayEnd.year + "\n" +
-                "İzin adeti : " + vacation.vacationCount);
-        });
+        person.plannedVacations.forEach(vacation => {
+        console.log(++index +". İZİN\n" +
+            "İzin araligi :"
+            + vacation.dayStart.day + "/" + vacation.dayStart.month + "/" + vacation.dayStart.year + "-"
+            + vacation.dayEnd.day + "/" + vacation.dayEnd.month + "/" + vacation.dayEnd.year + "\n" +
+            "İzin adeti : " + vacation.vacationCount);
+    });
 
 
 

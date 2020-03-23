@@ -253,12 +253,10 @@ function display(page) {
     vacationStatusText += '[Planmış İzin Adedi :' + person.plannedVacationCount + '] ';
     vacationStatusText += '[Kalan İzin Adedi :' + person.unPlannedVacationCount + '] ';
     vacationStatusText += '[Toplam Tatil Günü :' + returnInfo.totalHolidayCountKey + '] ';
-
+    vacationStatusText += '[Verimlilik Oranı :' +  returnInfo.totalEfficencyRatioKey.toFixed(2) + '] ';
    
 
     document.getElementById("vacationStatus").innerText = vacationStatusText;
-    document.getElementById("efficencyRatioInfo").innerText = 'Verimlilik Oranı: '+ returnInfo.totalEfficencyRatioKey.toFixed(2);
-
 }
 
 function populateTable(person) {

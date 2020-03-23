@@ -229,7 +229,7 @@ function display(page) {
     };
 
     let vacationCount = document.getElementById("vacationCount").value;
-    let mailInfo = document.getElementById("email").value;
+    let mailInfo = null ;//document.getElementById("email").value;
 
     if (vacationCount) {
         person.totalVacationCount = vacationCount;
@@ -249,7 +249,7 @@ function display(page) {
 
     let returnInfo = populateTable(person);
 
-    let vacationStatusText = person.mail + ' için ';
+    let vacationStatusText = '';
     vacationStatusText += '[Planmış İzin Adedi :' + person.plannedVacationCount + '] ';
     vacationStatusText += '[Kalan İzin Adedi :' + person.unPlannedVacationCount + '] ';
     vacationStatusText += '[Toplam Tatil Günü :' + returnInfo.totalHolidayCountKey + '] ';

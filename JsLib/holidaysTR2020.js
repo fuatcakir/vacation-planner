@@ -3,7 +3,7 @@ let holidayTR1 = {
     month: 1,
     day: 1,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'YILBAŞI'
+    description: 'Yilbasi'
 };
 
 let holidayTR2 = {
@@ -11,112 +11,112 @@ let holidayTR2 = {
     month: 4,
     day: 23,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'ULUSAL EGEMENLİK VE ÇOCUK BAYRAMI'
+    description: 'Ulusal Egemenlik ve Cocuk Bayrami'
 };
 let holidayTR3 = {
     year: 2020,
     month: 5,
     day: 1,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'EMEK VE DAYANIŞMA GÜNÜ'
+    description: 'Emek ve Dayanisma Gunu'
 };
 let holidayTR4 = {
     year: 2020,
     month: 5,
     day: 19,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'ATATÜRKÜ ANMA GENÇLİK VE SPOR BAYRAMI'
+    description: 'Ataturku Anma Genclik ve Spor Bayrami'
 };
 let holidayTR5 = {
     year: 2020,
     month: 5,
     day: 23,
     dayType: 'E', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'RAMAZAN BAYRAMI'
+    description: 'Ramazan Bayrami'
 };
 let holidayTR6 = {
     year: 2020,
     month: 5,
     day: 24,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'RAMAZAN BAYRAMI'
+    description: 'Ramazan Bayrami'
 };
 let holidayTR7 = {
     year: 2020,
     month: 5,
     day: 25,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'RAMAZAN BAYRAMI'
+    description: 'Ramazan Bayrami'
 };
 let holidayTR8 = {
     year: 2020,
     month: 5,
     day: 26,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'RAMAZAN BAYRAMI'
+    description: 'Ramazan Bayrami'
 };
 let holidayTR9 = {
     year: 2020,
     month: 7,
     day: 15,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: '​DEMOKRASİ VE MİLLİ BİRLİK GÜNÜ'
+    description: '​Demokrasi ve Milli Birlik Gunu'
 };
 let holidayTR10 = {
     year: 2020,
     month: 7,
     day: 30,
     dayType: 'E', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'KURBAN BAYRAMI'
+    description: 'Kurban Bayrami'
 };
 let holidayTR11 = {
     year: 2020,
     month: 7,
     day: 31,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'KURBAN BAYRAMI'
+    description: 'Kurban Bayrami'
 };
 let holidayTR12 = {
     year: 2020,
     month: 8,
     day: 1,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'KURBAN BAYRAMI'
+    description: 'Kurban Bayrami'
 };
 let holidayTR13 = {
     year: 2020,
     month: 8,
     day: 2,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'KURBAN BAYRAMI'
+    description: 'Kurban Bayrami'
 };
 let holidayTR14 = {
     year: 2020,
     month: 8,
     day: 3,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'KURBAN BAYRAMI'
+    description: 'Kurban Bayrami'
 };
 let holidayTR15 = {
     year: 2020,
     month: 8,
     day: 30,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'ZAFER BAYRAMI'
+    description: 'Zafer Bayrami'
 };
 let holidayTR16 = {
     year: 2020,
     month: 10,
     day: 28,
     dayType: 'E', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'CUMHURİYET BAYRAMI'
+    description: 'Cumhuriyet Bayrami'
 };
 let holidayTR17 = {
     year: 2020,
     month: 10,
     day: 29,
     dayType: 'E', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'CUMHURİYET BAYRAMI'
+    description: 'Cumhuriyet Bayrami'
 };
 
 var holidaysTR = [
@@ -155,7 +155,7 @@ function holidayCheck(pDay) {
 }
 
 function getHolidayDescription(pDay) {
-    let hldyDesc = null;
+    let hldyDesc = '';
 
     for (const hold in holidaysTR) {
         if (holidaysTR.hasOwnProperty(hold)) {

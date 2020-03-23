@@ -89,3 +89,52 @@ function findNextWeekDay(pDay, dayList) {
 
     return pDay;
 }
+
+function findPreivousFirstHoliDay(pDay, dayList) {
+    let dayPrevWdFound = false;
+    let previousWDindex = 0;
+    let preivousFirstHoliDay = {};
+
+    if (pDay.dayType != 'WD') {
+        return pDay;
+    }
+    else {
+        for (let index = (dayList.length - 1); index >= 0; index--) {
+            const element = dayList[index];
+            if (pDay.year == element.year && pDay.month == element.month && pDay.day == element.day) {
+                dayPrevWdFound = true;
+            } else {
+                if (dayPrevWdFound && element.dayType == 'WD') {
+                    pDay = element;
+                    previousWDindex = index;
+                }
+            }
+
+        }
+    }
+    if (previousWDindex + 1 < dayList.length) {
+        preivousFirstHoliDay = dayList[previousWDindex + 1];
+    } else {
+        preivousFirstHoliDay = dayList[previousWDindex];
+    }
+    return preivousFirstHoliDay;
+}
+
+function findDayIndex(pDay, dayList) {
+
+    for (let index = 0; index < dayList.length; index++) {
+        const element = dayList[index];
+        if (pDay.year == element.year && pDay.month == element.month && pDay.day == element.day) {
+            return index;
+        }
+    }
+    return 0;
+}
+
+function dateRangeCount(pStartDay, pEndDay, dayList) {
+    return findDayIndex(pEndDay, dayList) - findDayIndex(pStartDay, dayList) ;
+}
+
+function getEfficencyRatio(pVacationCount, pDateRangeCount) {
+    return pDateRangeCount / pVacationCount ;
+}

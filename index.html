@@ -6,32 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vacation-planner</title>
     
-    <link rel="stylesheet" href="style.css">
-    <script src="./cal2020.js"></script>
-    <script src="./holidaysTR2020.js"></script>
-    <script src="./vacationPlanner.js"></script>
+    <link rel="stylesheet" href="./Style/style.css">
+    <script src="./JsLib/cal2020.js"></script>
+    <script src="./JsLib/holidaysTR2020.js"></script>
+    <script src="./JsLib/vacationPlanner.js"></script>
+    <script src="./JsLib/tableToExcel.js"></script>
+    <script src="./JsLib/Util.js"></script>
 </head>
 
 <body>
-   <h1>İzin Planlama Sistemi</h1>
+   <h2>İzin Planlama Sistemi (2020)</h2>
+
 
     <label for="lblMail">Mail :</label> <input type="email" name="email" id="email">
     <label for="lbltotalVac">Toplam izin Sayısı: </label> 
     <input type="number" name="totalVacationCount" id="vacationCount" min="1" max="200" value="15">
-    <button id="btnPlanner" onclick=" display()">İznimi Planla!</button><br><br>
+    <button id="btnPlanner" onclick=" display(1)">İznimi Planla!</button>
+    <input id="btnExport"  type="button" onclick="tableToExcel('tblPlannedVacations', '2020 İzin Planım')" value="Excele Al">
+    <br><br>
+    <button id="btnAlternat1" onclick=" display(1)">Alternatif Tablo 1 </button>
+    <button id="btnAlternat2" onclick=" display(2)">Alternatif Tablo 2 </button>
+    <button id="btnAlternat3" onclick=" display(3)">Alternatif Tablo 3 </button>
+    <label id="efficencyRatioInfo">-</label><br>
     <table id="tblPlannedVacations">
         <thead>
             <tr>
-                <th>Sıra</th>
-                <th>Başlangıç Tarihi</th>
-                <th>Bitiş Tarihi</th>
-                <th>Planlanan İzin Adedi</th>
-                <th>Açıklama</th>
+                <th>Sira</th>
+                <th>Baslangic Tarihi</th>
+                <th>Bitis Tarihi</th>
+                <th>Planlanan izin Adedi</th>
+                <th>Tatil Gunu Adedi</th>
+                <th>Aciklama</th>
             </tr>
         </thead>
     </table>
     <br>
-    <label id="vacationStatus">-</label>
+    <label id="vacationStatus">-</label> 
+
 
     <script>
     //  display();

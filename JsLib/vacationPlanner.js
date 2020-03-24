@@ -51,7 +51,7 @@ function planner(pPersonalData, pAlternative) {
                     vacation = {};
                     vacation.personMail = pPersonalData.mail;
                     vacation.dayStart = findPreivousFirstHoliDay(daySearchStart, dayList);
-                    vacation.dayEnd = findNextWeekDay(daySearchEnd, dayList);
+                    vacation.dayEnd = findLastHoliDay(daySearchEnd, dayList);
                     vacation.vacationCount = wdCount;
                     vacation.description = getHolidayDescription(daySearchStart) ? getHolidayDescription(daySearchStart) : getHolidayDescription(daySearchEnd);
                     vacation.holidayCount = dateRangeCount(vacation.dayStart, vacation.dayEnd, dayList);
@@ -90,17 +90,17 @@ function planner(pPersonalData, pAlternative) {
     var alternativeVacations3 = [];
     let repeatedCount = 0;
     let desc = '';
-    let sortVacatIndex =0;
+    let sortVacatIndex = 0;
 
     sortedVacations.forEach(vac => {
-        
-        if (vac.description !='' && desc == vac.description && repeatedCount == 0) {
-            alternativeVacations2.pop(sortedVacations[sortVacatIndex-1]);
+
+        if (vac.description != '' && desc == vac.description && repeatedCount == 0) {
+            alternativeVacations2.pop(sortedVacations[sortVacatIndex - 1]);
             alternativeVacations2.push(vac);
             repeatedCount++;
-        } else if (vac.description !='' && desc == vac.description && repeatedCount >= 1) {
-            alternativeVacations3.pop(sortedVacations[sortVacatIndex-1]);
-            alternativeVacations3.pop(sortedVacations[sortVacatIndex-2]);
+        } else if (vac.description != '' && desc == vac.description && repeatedCount >= 1) {
+            alternativeVacations3.pop(sortedVacations[sortVacatIndex - 1]);
+            alternativeVacations3.pop(sortedVacations[sortVacatIndex - 2]);
             alternativeVacations3.push(vac);
             repeatedCount++;
         }
@@ -129,7 +129,7 @@ function planner(pPersonalData, pAlternative) {
     });
     */
 
-    var plannedVacats =[];
+    var plannedVacats = [];
     if (pAlternative == 1) {
         plannedVacats = alternativeVacations1;
     } else if (pAlternative == 2) {
@@ -210,7 +210,7 @@ function getPlannedVacations(personalData, vacationsOptions) {
     personalData.plannedVacations = plannedVacats.sort(compareValues2('dayStart', 'month'));
 }
 
-function planMyVacations(personalData,page) {
+function planMyVacations(personalData, page) {
     let sortedVacationOptions = planner(personalData, page);
     getPlannedVacations(personalData, sortedVacationOptions);
 }
@@ -229,7 +229,7 @@ function display(page) {
     };
 
     let vacationCount = document.getElementById("vacationCount").value;
-    let mailInfo = null ;//document.getElementById("email").value;
+    let mailInfo = null;//document.getElementById("email").value;
 
     if (vacationCount) {
         person.totalVacationCount = vacationCount;
@@ -245,22 +245,37 @@ function display(page) {
     console.log('Planmış İzin Adedi :' + person.plannedVacationCount);
     console.log('Kalan İzin Adedi :' + person.unPlannedVacationCount);
 
-    planMyVacations(person,page);
+    planMyVacations(person, page);
 
-    let returnInfo = populateTable(person);
+    let returnInfo = populateTable(person, page);
 
-    let vacationStatusText = '';
-    vacationStatusText += '[Planmış İzin Adedi :' + person.plannedVacationCount + '] ';
-    vacationStatusText += '[Kalan İzin Adedi :' + person.unPlannedVacationCount + '] ';
-    vacationStatusText += '[Toplam Tatil Günü :' + returnInfo.totalHolidayCountKey + '] ';
-    vacationStatusText += '[Verimlilik Oranı :' +  returnInfo.totalEfficencyRatioKey.toFixed(2) + '] ';
+    let vacationStatusHtml1 = '<h5>Planmış İzin Adedi <span class="badge badge-secondary">' + person.plannedVacationCount + '</span></h5>';
+    let vacationStatusHtml2 = '<h5>Kalan İzin Adedi <span class="badge badge-secondary">' + person.unPlannedVacationCount + '</span></h5>';
+    let vacationStatusHtml3 = '<h5>Toplam Tatil Günü <span class="badge badge-secondary">' + returnInfo.totalHolidayCountKey + '</span></h5>';
    
+ 
+    document.getElementById("vacationStatus1").innerHTML = vacationStatusHtml1;
+    document.getElementById("vacationStatus2").innerHTML = vacationStatusHtml2;
+    document.getElementById("vacationStatus3").innerHTML = vacationStatusHtml3;
 
-    document.getElementById("vacationStatus").innerText = vacationStatusText;
 }
 
-function populateTable(person) {
-    let tblVacations = document.getElementById("tblPlannedVacations");
+function populateTable(person, page) {
+    let tblVacations = null;
+    switch (page) {
+        case 1:
+            tblVacations = document.getElementById("tblPlannedVacations1");
+            break;
+        case 2:
+            tblVacations = document.getElementById("tblPlannedVacations2");
+            break;
+        case 3:
+            tblVacations = document.getElementById("tblPlannedVacations3");
+            break;
+        default:
+            tblVacations = document.getElementById("tblPlannedVacations1");
+            break;
+    }
 
     //clear table
     var tableHeaderRowCount = 1;
@@ -288,12 +303,34 @@ function populateTable(person) {
         cell1.appendChild(text1);
 
         let cell2 = row.insertCell();
-        let text2 = document.createTextNode(lPad(vacation.dayStart.day) + "/" + lPad(vacation.dayStart.month) + "/" + vacation.dayStart.year);
-        cell2.appendChild(text2);
+        let text2 = lPad(vacation.dayStart.day) + "/" + lPad(vacation.dayStart.month) + "/" + vacation.dayStart.year;
+        let text3 = lPad(vacation.dayEnd.day) + "/" + lPad(vacation.dayEnd.month) + "/" + vacation.dayEnd.year;
+        // cell2.appendChild(document.createTextNode(text2+'-'+text3));
+        let g = document.createElement('input');
+        g.setAttribute("id", "input" + i);
+        g.setAttribute("class", "pointer");
+        cell2.appendChild(g);
 
-        let cell3 = row.insertCell();
-        let text3 = document.createTextNode(lPad(vacation.dayEnd.day) + "/" + lPad(vacation.dayEnd.month) + "/" + vacation.dayEnd.year);
-        cell3.appendChild(text3);
+        var picker = new Litepicker({
+            element: g,
+            firstDay: 1,
+            format: "DD/MM/YYYY",
+            lang: 'tr-TR',
+            numberOfMonths: 1,
+            numberOfColumns: 1,
+            selectForward: false,
+            selectBackward: false,
+            splitView: false,
+            inlineMode: false,
+            singleMode: false,
+            autoApply: true,
+            showWeekNumbers: false,
+            showTooltip: true,
+            disableWeekends: true,
+            mobileFriendly: true
+        });
+        picker.setDateRange(text2, text3);
+
 
         let cell4 = row.insertCell();
         let text4 = document.createTextNode(" " + decimalFormat(vacation.vacationCount));
@@ -311,5 +348,5 @@ function populateTable(person) {
         totalEfficencyRatio += vacation.efficiencyRatio;
     });
 
-    return {totalHolidayCountKey: totalHolidayCount, totalEfficencyRatioKey : totalEfficencyRatio};
+    return { totalHolidayCountKey: totalHolidayCount, totalEfficencyRatioKey: totalEfficencyRatio };
 }

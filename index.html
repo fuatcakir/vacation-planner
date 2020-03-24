@@ -5,49 +5,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vacation-planner</title>
-    
+
     <link rel="stylesheet" href="./Style/style.css">
+
     <script src="./JsLib/cal2020.js"></script>
     <script src="./JsLib/holidaysTR2020.js"></script>
     <script src="./JsLib/vacationPlanner.js"></script>
     <script src="./JsLib/tableToExcel.js"></script>
     <script src="./JsLib/Util.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/js/main.js"></script>
+
 </head>
 
 <body>
-   <h2>İzin Planlama Sistemi (2020)</h2>
 
 
-    <!-- <label for="lblMail">Mail :</label> <input type="email" name="email" id="email"> -->
-    <label for="lbltotalVac">Toplam izin Sayısı: </label> 
-    <input type="number" name="totalVacationCount" id="vacationCount" min="1" max="200" value="15">
-    <button id="btnPlanner" onclick=" display(1)">İznimi Planla!</button>
-    <input id="btnExport"  type="button" onclick="tableToExcel('tblPlannedVacations', '2020 İzin Planım')" value="Excele Al">
-    <br><br>
-    <button id="btnAlternat1" onclick=" display(1)">Alternatif Plan 1 </button>
-    <button id="btnAlternat2" onclick=" display(2)">Alternatif Plan 2 </button>
-    <button id="btnAlternat3" onclick=" display(3)">Alternatif Plan 3 </button>
-    <table id="tblPlannedVacations">
-        <thead>
-            <tr>
-                <th>Sira</th>
-                <th>Baslangic Tarihi</th>
-                <th>Bitis Tarihi</th>
-                <th>Planlanan izin Adedi</th>
-                <th>Tatil Gunu Adedi</th>
-                <th>Aciklama</th>
-            </tr>
-        </thead>
-    </table>
+    <div class="container">
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+        <a class="navbar-brand">İzin Planlama Sistemi (2020)</a>
+        <form class="form-inline">
+            <input id="vacationCount" class="form-control mr-sm-2" type="number" placeholder="Toplam izin Sayısı"
+                aria-label="Toplam izin Sayısı">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="button" onclick=" display(1)">İznimi
+                Planla!</button>
+        </form>
+    </nav>
+
     <br>
-    <label id="vacationStatus">-</label> 
+ 
+    
 
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                    aria-controls="nav-home" aria-selected="true" onclick="display(1)">Plan 1</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                    aria-controls="nav-profile" aria-selected="false" onclick="display(2)">Plan 2</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                    aria-controls="nav-contact" aria-selected="false" onclick="display(3)">Plan 3</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <br>
+                <table id="tblPlannedVacations1" class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sira</th>
+                            <th scope="col">Baslangic Tarihi-Bitis Tarihi</th>
+                            <th scope="col">Planlanan izin Adedi</th>
+                            <th scope="col">Tatil Gunu Adedi</th>
+                            <th scope="col">Aciklama</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <br>
+                <table id="tblPlannedVacations2" class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sira</th>
+                            <th scope="col">Baslangic Tarihi-Bitis Tarihi</th>
+                            <th scope="col">Planlanan izin Adedi</th>
+                            <th scope="col">Tatil Gunu Adedi</th>
+                            <th scope="col">Aciklama</th>
+                        </tr>
+                    </thead>
+                </table>
 
-    <script>
-    //  display();
-    </script>
+            </div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                <br>
+                <table id="tblPlannedVacations3" class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sira</th>
+                            <th scope="col">Baslangic Tarihi-Bitis Tarihi</th>
+                            <th scope="col">Planlanan izin Adedi</th>
+                            <th scope="col">Tatil Gunu Adedi</th>
+                            <th scope="col">Aciklama</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
 
+        <div class="container">
+            <div class="row">
+              <div class="col-sm">
+                <div class="alert alert-success" role="alert">
+                    <label id="vacationStatus1">-</label>
+                </div>
+              </div>
+              <div class="col-sm">
+                <div class="alert alert-success" role="alert">
+                    <label id="vacationStatus2">-</label>
+                </div>
+              </div>
+              <div class="col-sm">
+                <div class="alert alert-success" role="alert">
+                    <label id="vacationStatus3">-</label>
+                </div>
+              </div>
+            </div>
+          </div>
 
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

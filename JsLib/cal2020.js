@@ -131,10 +131,32 @@ function findDayIndex(pDay, dayList) {
     return 0;
 }
 
+function findLastHoliDay(pDay, dayList) {
+    let dayFound = false;
+    let dayFoundIndx = 0;
+
+    for (let index = 0; index < dayList.length; index++) {
+        const element = dayList[index];
+        if (pDay.year == element.year && pDay.month == element.month && pDay.day == element.day) {
+            dayFound = true;
+        } else {
+            if (dayFound && element.dayType == 'WD') {
+                pDay = element;
+                dayFoundIndx = index;
+                break;
+            }
+        }
+
+    }
+
+    pDay = dayList[dayFoundIndx - 1];
+    return pDay;
+}
+
 function dateRangeCount(pStartDay, pEndDay, dayList) {
-    return findDayIndex(pEndDay, dayList) - findDayIndex(pStartDay, dayList) ;
+    return findDayIndex(pEndDay, dayList) - findDayIndex(pStartDay, dayList) +1;
 }
 
 function getEfficencyRatio(pVacationCount, pDateRangeCount) {
-    return pDateRangeCount / pVacationCount ;
+    return pDateRangeCount / pVacationCount;
 }

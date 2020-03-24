@@ -222,7 +222,7 @@ function display(page) {
         name: 'Fuat',
         surname: 'CAKIR',
         mail: 'fuat.cakir@outlook.com',
-        totalVacationCount: 18,
+        totalVacationCount: 14,
         plannedVacationCount: 0,
         unPlannedVacationCount: 0,
         plannedVacations: []

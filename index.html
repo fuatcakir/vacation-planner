@@ -30,7 +30,7 @@
             <form class="form-inline">
                 <input id="vacationCount" class="form-control mr-sm-2" type="number" placeholder="Toplam izin Sayısı"
                     aria-label="Toplam izin Sayısı">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="button" onclick=" display(1)">İznimi
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" onclick=" display(1)">İznimi
                     Planla!</button>
             </form>
         </nav>
@@ -42,11 +42,13 @@
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-                    aria-controls="nav-home" aria-selected="true" onclick="display(1)">Plan 1</a>
+                    aria-controls="nav-home" aria-selected="true" onclick="display(1)">Önerilen Plan 1</a>
                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-                    aria-controls="nav-profile" aria-selected="false" onclick="display(2)">Plan 2</a>
+                    aria-controls="nav-profile" aria-selected="false" onclick="display(2)">Önerilen Plan 2</a>
                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
-                    aria-controls="nav-contact" aria-selected="false" onclick="display(3)">Plan 3</a>
+                    aria-controls="nav-contact" aria-selected="false" onclick="display(3)">Önerilen Plan 3</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-manuel" role="tab"
+                    aria-controls="nav-contact" aria-selected="false" onclick="display(4)">Planını Kendin Oluştur</a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -57,8 +59,8 @@
                         <tr>
                             <th scope="col">Sira</th>
                             <th scope="col">Baslangic Tarihi-Bitis Tarihi</th>
-                            <th scope="col">Planlanan izin Adedi</th>
-                            <th scope="col">Tatil Gunu Adedi</th>
+                            <th scope="col">Planlanan İzin</th>
+                            <th scope="col">Tatil Gunu</th>
                             <th scope="col">Aciklama</th>
                         </tr>
                     </thead>
@@ -71,8 +73,8 @@
                         <tr>
                             <th scope="col">Sira</th>
                             <th scope="col">Baslangic Tarihi-Bitis Tarihi</th>
-                            <th scope="col">Planlanan izin Adedi</th>
-                            <th scope="col">Tatil Gunu Adedi</th>
+                            <th scope="col">Planlanan İzin</th>
+                            <th scope="col">Tatil Gunu</th>
                             <th scope="col">Aciklama</th>
                         </tr>
                     </thead>
@@ -86,15 +88,62 @@
                         <tr>
                             <th scope="col">Sira</th>
                             <th scope="col">Baslangic Tarihi-Bitis Tarihi</th>
-                            <th scope="col">Planlanan izin Adedi</th>
-                            <th scope="col">Tatil Gunu Adedi</th>
+                            <th scope="col">Planlanan İzin</th>
+                            <th scope="col">Tatil Gunu </th>
                             <th scope="col">Aciklama</th>
                         </tr>
                     </thead>
                 </table>
             </div>
-        </div>
+            <div class="tab-pane fade" id="nav-manuel" role="tabpanel" aria-labelledby="nav-contact-tab">
+                <br>
+                <table id="tblPlannedVacations4" class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sec</th>
+                            <th scope="col">Baslangic Tarihi-Bitis Tarihi</th>
+                            <th scope="col">Planlanan İzin</th>
+                            <th scope="col">Tatil Gunu</th>
+                            <th scope="col">Aciklama</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="input-group">
+                    <input id="manualDatePicker" type="text" class="form-control"
+                        placeholder="Tatil Aralığını Seçiniz..." aria-label="Tatil Aralığını Seçiniz"
+                        aria-describedby="button-addon4" >
+                    <input id="manualDescription" type="text" class="form-control" placeholder="Açıklama" aria-label="Açıklama alanı"
+                        aria-describedby="button-addon4">
 
+                    <script>
+                        var picker = new Litepicker({
+                            element: document.getElementById("manualDatePicker"),
+                            firstDay: 1,
+                            format: "DD/MM/YYYY",
+                            lang: 'tr-TR',
+                            numberOfMonths: 2,
+                            numberOfColumns: 2,
+                            selectForward: false,
+                            selectBackward: false,
+                            splitView: false,
+                            inlineMode: false,
+                            singleMode: false,
+                            autoApply: true,
+                            showWeekNumbers: false,
+                            showTooltip: true,
+                            disableWeekends: false,
+                            mobileFriendly: true
+                        });
+                    </script>
+                    <div class="input-group-append" id="button-addon4">
+                        <button class="btn btn-outline-primary" type="button" onclick="addRowToTable()">Listeye Ekle</button>
+                        <button class="btn btn-outline-success" type="button" onclick="deleteRowsByChecked(0)">Seçili Olanları Bırak</button>
+                        <button class="btn btn-outline-danger" type="button" onclick="deleteRowsByChecked(1)">Seçili Olanları Sil</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
         <div class="container">
             <div class="row">
                 <div class="col-sm">

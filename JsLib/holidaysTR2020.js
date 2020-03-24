@@ -169,3 +169,20 @@ function getHolidayDescription(pDay) {
     }
     return hldyDesc;
 }
+
+function calculateVacation(pStartDay, pEndDay, pDayList) {
+    let totalVacation = 0;
+    let startDayIndex = findDayIndex(pStartDay, pDayList);
+    let endDayIndex = findDayIndex(pEndDay, pDayList);
+    for (let index = startDayIndex; index <= endDayIndex; index++) {
+        const element = pDayList[index];
+        holidayCheck(element)
+        if (element.dayType == 'WD') {
+            totalVacation += 1;
+        }
+        if (element.dayType == 'E') {
+            totalVacation += 0.5;
+        }
+    }
+    return totalVacation;
+}

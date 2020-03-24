@@ -1,4 +1,4 @@
-function planner(pPersonalData, pAlternative) {
+function planner(pPersonalData, page) {
     let wdCount = 0;
     let daySearchStart;
     let daySearchEnd;
@@ -88,6 +88,7 @@ function planner(pPersonalData, pAlternative) {
     var alternativeVacations1 = [];
     var alternativeVacations2 = [];
     var alternativeVacations3 = [];
+    var manualVacations = [];
     let repeatedCount = 0;
     let desc = '';
     let sortVacatIndex = 0;
@@ -112,7 +113,9 @@ function planner(pPersonalData, pAlternative) {
             repeatedCount = 0;
         }
 
-
+        if (page == 4 && vac.description != '') {
+            manualVacations.push(vac);
+        }
         holdVac = vac;
         desc = vac.description;
         sortVacatIndex++;
@@ -130,12 +133,14 @@ function planner(pPersonalData, pAlternative) {
     */
 
     var plannedVacats = [];
-    if (pAlternative == 1) {
+    if (page == 1) {
         plannedVacats = alternativeVacations1;
-    } else if (pAlternative == 2) {
+    } else if (page == 2) {
         plannedVacats = alternativeVacations2;
-    } else if (pAlternative == 3) {
+    } else if (page == 3) {
         plannedVacats = alternativeVacations3;
+    } else if (page == 4) {
+        plannedVacats = manualVacations;
     } else {
         plannedVacats = sortedVacations;
     }
@@ -189,20 +194,23 @@ function compareValues2(key, childKey = null, order = 'asc') {
     };
 }
 
-function getPlannedVacations(personalData, vacationsOptions) {
+function getPlannedVacations(personalData, vacationsOptions, page) {
     let totalVac = personalData.totalVacationCount;
     let plannedVacats = [];
     let currentVacatCount = 0;
     let plannedVacatCount = 0;
-    for (let index = 0; index < vacationsOptions.length; index++) {
-        const vacation = vacationsOptions[index];
-        currentVacatCount += vacation.vacationCount;
-        if (currentVacatCount <= totalVac) {
-            plannedVacatCount += vacation.vacationCount;
-            plannedVacats.push(vacation);
-        } else {
-            break;
+
+    if (page < 4) {
+        for (let index = 0; index < vacationsOptions.length; index++) {
+            const vacation = vacationsOptions[index];
+            currentVacatCount += vacation.vacationCount;
+            if (currentVacatCount <= totalVac) {
+                plannedVacatCount += vacation.vacationCount;
+                plannedVacats.push(vacation);
+            }
         }
+    } else {
+        plannedVacats = vacationsOptions;
     }
 
     personalData.plannedVacationCount = plannedVacatCount;
@@ -212,7 +220,7 @@ function getPlannedVacations(personalData, vacationsOptions) {
 
 function planMyVacations(personalData, page) {
     let sortedVacationOptions = planner(personalData, page);
-    getPlannedVacations(personalData, sortedVacationOptions);
+    getPlannedVacations(personalData, sortedVacationOptions, page);
 }
 
 
@@ -238,22 +246,22 @@ function display(page) {
         person.mail = mailInfo;
     }
 
-    console.log('Adi :' + person.name);
-    console.log('Soyadı :' + person.surname);
-    console.log('İletişim :' + person.mail);
-    console.log('Toplam İzin Adedi :' + person.totalVacationCount);
-    console.log('Planmış İzin Adedi :' + person.plannedVacationCount);
-    console.log('Kalan İzin Adedi :' + person.unPlannedVacationCount);
+    // console.log('Adi :' + person.name);
+    // console.log('Soyadı :' + person.surname);
+    // console.log('İletişim :' + person.mail);
+    // console.log('Toplam İzin Adedi :' + person.totalVacationCount);
+    // console.log('Planmış İzin Adedi :' + person.plannedVacationCount);
+    // console.log('Kalan İzin Adedi :' + person.unPlannedVacationCount);
 
     planMyVacations(person, page);
 
     let returnInfo = populateTable(person, page);
 
-    let vacationStatusHtml1 = '<h5>Planmış İzin Adedi <span class="badge badge-secondary">' + person.plannedVacationCount + '</span></h5>';
+    let vacationStatusHtml1 = '<h5>Toplam Planlanan İzin <span class="badge badge-secondary">' + person.plannedVacationCount + '</span></h5>';
     let vacationStatusHtml2 = '<h5>Kalan İzin Adedi <span class="badge badge-secondary">' + person.unPlannedVacationCount + '</span></h5>';
     let vacationStatusHtml3 = '<h5>Toplam Tatil Günü <span class="badge badge-secondary">' + returnInfo.totalHolidayCountKey + '</span></h5>';
-   
- 
+
+
     document.getElementById("vacationStatus1").innerHTML = vacationStatusHtml1;
     document.getElementById("vacationStatus2").innerHTML = vacationStatusHtml2;
     document.getElementById("vacationStatus3").innerHTML = vacationStatusHtml3;
@@ -271,6 +279,9 @@ function populateTable(person, page) {
             break;
         case 3:
             tblVacations = document.getElementById("tblPlannedVacations3");
+            break;
+        case 4:
+            tblVacations = document.getElementById("tblPlannedVacations4");
             break;
         default:
             tblVacations = document.getElementById("tblPlannedVacations1");
@@ -290,17 +301,25 @@ function populateTable(person, page) {
 
     let index = 0;
     person.plannedVacations.forEach(vacation => {
-        console.log(++index + ". İZİN\n" +
-            "İzin araligi :"
-            + vacation.dayStart.day + "/" + vacation.dayStart.month + "/" + vacation.dayStart.year + "-"
-            + vacation.dayEnd.day + "/" + vacation.dayEnd.month + "/" + vacation.dayEnd.year + "\n" +
-            "İzin adeti : " + vacation.vacationCount);
+
+        // console.log(++index + ". İZİN\n" +
+        //     "İzin araligi :"
+        //     + vacation.dayStart.day + "/" + vacation.dayStart.month + "/" + vacation.dayStart.year + "-"
+        //     + vacation.dayEnd.day + "/" + vacation.dayEnd.month + "/" + vacation.dayEnd.year + "\n" +
+        //     "İzin adeti : " + vacation.vacationCount);
 
         let row = tblVacations.insertRow();
 
         let cell1 = row.insertCell();
-        let text1 = document.createTextNode(index + ". izin");
-        cell1.appendChild(text1);
+        let text1 = document.createTextNode(++index + ". izin");
+        if (page == 4) {
+            let chk = document.createElement('input');
+            chk.setAttribute("id", "chk" + i);
+            chk.setAttribute("type", "checkbox");
+            cell1.appendChild(chk);
+        } else {
+            cell1.appendChild(text1);
+        }
 
         let cell2 = row.insertCell();
         let text2 = lPad(vacation.dayStart.day) + "/" + lPad(vacation.dayStart.month) + "/" + vacation.dayStart.year;

@@ -267,6 +267,10 @@ function display(page) {
     document.getElementById("vacationStatus2").innerHTML = vacationStatusHtml2;
     document.getElementById("vacationStatus3").innerHTML = vacationStatusHtml3;
 
+    if (page == 4) {
+        calculateVacations();
+    }
+
 }
 
 function populateTable(person, page) {
@@ -324,6 +328,7 @@ function populateTable(person, page) {
                         this.checked = false;
                     }
                 } 
+                calculateVacations();
             });
 
             cell1.appendChild(chk);

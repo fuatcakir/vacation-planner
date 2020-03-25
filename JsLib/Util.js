@@ -91,6 +91,8 @@ function addRowToTable() {
     document.getElementById("manualDescription").value = '';
     document.getElementById("manualDatePicker").value = '';
     new Litepicker({ element: document.getElementById("manualDatePicker") }).clearSelection();
+  
+    calculateVacations();
   }
 }
 
@@ -114,4 +116,40 @@ function deleteRowsByChecked(delCheckedRows) {
     }
 
   }
+
+  calculateVacations();
+}
+
+function calculateVacations() {
+  let tblVacations = document.getElementById("tblPlannedVacations4");
+  //clear table
+  var tableHeaderRowCount = 1;
+  var rowCount = tblVacations.rows.length;
+  let totalPlannedVacations = 0.0;
+  let totalHolidayCount = 0;
+  let totalUnPlannedVacationCount = 14.0;
+
+  let vacationCount = document.getElementById("vacationCount").value;
+
+  if (vacationCount) {
+    totalUnPlannedVacationCount = vacationCount;
+  }
+  for (var i = tableHeaderRowCount; i < rowCount; i++) {
+    if (tblVacations.rows[i].cells[0].childNodes[0].checked == true) {
+      totalPlannedVacations += parseFloat(tblVacations.rows[i].cells[2].textContent.replace(',','.'));
+      totalHolidayCount += parseInt(tblVacations.rows[i].cells[3].textContent);
+      totalUnPlannedVacationCount -= parseFloat(tblVacations.rows[i].cells[2].textContent.replace(',','.'));
+    }
+  }
+
+  let vacationStatusHtml1 = '<h5>Toplam Planlanan İzin <span class="badge badge-secondary">' + totalPlannedVacations + '</span></h5>';
+  let vacationStatusHtml2 = '<h5>Kalan İzin Adedi <span class="badge badge-secondary">' + totalUnPlannedVacationCount + '</span></h5>';
+  let vacationStatusHtml3 = '<h5>Toplam Tatil Günü <span class="badge badge-secondary">' + totalHolidayCount + '</span></h5>';
+
+
+  document.getElementById("vacationStatus1").innerHTML = vacationStatusHtml1;
+  document.getElementById("vacationStatus2").innerHTML = vacationStatusHtml2;
+  document.getElementById("vacationStatus3").innerHTML = vacationStatusHtml3;
+
+  return decimalFormat(totalPlannedVacations);
 }

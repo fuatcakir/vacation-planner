@@ -27,16 +27,27 @@
     <div class="container">
         <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
             <a class="navbar-brand">İzin Planlama Sistemi (2020)</a>
-            <form class="form-inline">
+            <div class="form-inline">
                 <input id="vacationCount" class="form-control mr-sm-2" type="number" placeholder="Toplam izin Sayısı"
                     aria-label="Toplam izin Sayısı">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" onclick=" display(1)">İznimi
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="button" onclick="render()">İznimi
                     Planla!</button>
-            </form>
+                </div>
         </nav>
 
         <br>
-
+        <script>
+            document.getElementById("vacationCount").addEventListener(
+                "keypress",function (event) {
+                    if (event.keyCode == 13) {
+                        if (document.getElementById("vacationCount").value) {
+                            display(1);
+                        }
+                        
+                    }
+                }
+            ); 
+        </script>
 
 
         <nav>
@@ -166,9 +177,7 @@
 
     </div>
 
-    <script>
-        display(1)  
-    </script>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -181,6 +190,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+
 </body>
 
 </html>

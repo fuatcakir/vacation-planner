@@ -260,7 +260,8 @@ function display(page) {
     let vacationStatusHtml1 = '<h5>Toplam Planlanan İzin <span class="badge badge-secondary">' + person.plannedVacationCount + '</span></h5>';
     let vacationStatusHtml2 = '<h5>Kalan İzin Adedi <span class="badge badge-secondary">' + person.unPlannedVacationCount + '</span></h5>';
     let vacationStatusHtml3 = '<h5>Toplam Tatil Günü <span class="badge badge-secondary">' + returnInfo.totalHolidayCountKey + '</span></h5>';
-
+   
+    document.getElementById("vacatStatusDiv").style.display = "block";
 
     document.getElementById("vacationStatus1").innerHTML = vacationStatusHtml1;
     document.getElementById("vacationStatus2").innerHTML = vacationStatusHtml2;

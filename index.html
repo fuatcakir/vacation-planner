@@ -26,24 +26,35 @@
 
     <div class="container">
         <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-            <a class="navbar-brand">İzin Planlama Sistemi (2020)</a>
+            <a class="navbar-brand">
+                <h2>iznini planla!</h2>
+            </a>
             <div class="form-inline">
+                <select class="custom-select" id="inputGroupSelect03">
+                    <option selected>2020</option>
+                    <option value="1">2020</option>
+                    <option value="2">2020</option>
+                </select>
                 <input id="vacationCount" class="form-control mr-sm-2" type="number" placeholder="Toplam izin Sayısı"
                     aria-label="Toplam izin Sayısı">
                 <button class="btn btn-outline-primary my-2 my-sm-0" type="button" onclick="render()">İznimi
                     Planla!</button>
-                </div>
+            </div>
         </nav>
 
         <br>
         <script>
+
+
             document.getElementById("vacationCount").addEventListener(
-                "keypress",function (event) {
+                "keypress", function (event) {
                     if (event.keyCode == 13) {
                         if (document.getElementById("vacationCount").value) {
-                            display(1);
+                            render();
+                        } else {
+                            document.getElementById("vacatStatusDiv").style.display = "none";
                         }
-                        
+
                     }
                 }
             ); 
@@ -52,8 +63,10 @@
 
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-                    aria-controls="nav-home" aria-selected="true" onclick="display(1)">Önerilen Plan 1</a>
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-welcome" role="tab"
+                    aria-controls="nav-home" aria-selected="true" onclick="disableFooter()">Hoşgeldiniz</a>
+                <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                    aria-controls="nav-home" aria-selected="false" onclick="display(1)">Önerilen Plan 1</a>
                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
                     aria-controls="nav-profile" aria-selected="false" onclick="display(2)">Önerilen Plan 2</a>
                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
@@ -63,7 +76,40 @@
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <br>
+            <div class="tab-pane fade show active" id="nav-welcome" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Minimum izin, maksimum tatil!</h5>
+                        <p class="card-text">Her yıl izin planlamak için tüm resmi tatillerin hangi güne geldiğini
+                            araştırmaya, tatili nasıl bağlasam diye düşünmeye ve izinlerinizi verimli kullanmak için
+                            hesap yaparak vakit harcamaya <b>"iznini planla!"</b> ile artık bir son verebilirsiniz.
+                        </p>
+                        <p class="card-text">
+                            Toplam izin gün sayınızı girdikten sonra bırakın sistem sizin için en verimli olacak şekilde
+                            izninizi planlasın. Alternatif üç plan seçeneğiyle resmi tatiller etrafında minimum izin
+                            günü kullanarak maksimum tatil yapmanın keyfini yaşayın. Eğer önerilen planlar size
+                            uymuyorsa Planını Kendin Oluştur sekmesinden istediğiniz izinleri seçin. Listede istediğiniz
+                            tarihleri göremediyseniz veya blok izin kullanmak istiyorsanız tatil tarih aralığınızı yazın
+                            ve listenize ekleyin. İzin planınızın çıktısını alabilir ya da kaydedebilirsiniz. Planlama
+                            sistemi herhangi bir şekilde bilgilerinizi saklamamaktadır.
+                        </p>
+                        <p class="card-text">
+                            Her türlü öneri ve görüşleriniz için bana aşağıdaki kanallardan ulaşabilirsiniz. Tatiliniz
+                            bol olsun!
+                        </p>
+                        <footer class="blockquote-footer">Fuat ÇAKIR</footer>
+                        <br>
+                        <a href="https://github.com/fuatcakir" class="btn btn-secondary">Github/fuatcakir</a>
+                        <a href="https://www.linkedin.com/in/fuatcakir" class="btn btn-primary">Linkedin/fuatcakir</a>
+                        <a href="mailto:fuat.cakir@outlook.com" class="btn btn-info">fuat.cakir@outlook.com</a>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                 <br>
                 <table id="tblPlannedVacations1" class="table table-sm">
                     <thead>
@@ -119,12 +165,21 @@
                         </tr>
                     </thead>
                 </table>
+
                 <div class="input-group">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Seçili İzinler</button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" onclick="deleteRowsByChecked(0)">Kalsın</a>
+                            <a class="dropdown-item" onclick="deleteRowsByChecked(1)"> Silinsin</a>
+                        </div>
+                    </div>
                     <input id="manualDatePicker" type="text" class="form-control"
                         placeholder="Tatil Aralığını Seçiniz..." aria-label="Tatil Aralığını Seçiniz"
-                        aria-describedby="button-addon4" >
-                    <input id="manualDescription" type="text" class="form-control" placeholder="Açıklama" aria-label="Açıklama alanı"
                         aria-describedby="button-addon4">
+                    <input id="manualDescription" type="text" class="form-control" placeholder="Açıklama"
+                        aria-label="Açıklama alanı" aria-describedby="button-addon4">
 
                     <script>
                         var picker = new Litepicker({
@@ -147,15 +202,16 @@
                         });
                     </script>
                     <div class="input-group-append" id="button-addon4">
-                        <button class="btn btn-outline-primary" type="button" onclick="addRowToTable()">Listeye Ekle</button>
-                        <button class="btn btn-outline-success" type="button" onclick="deleteRowsByChecked(0)">Seçili Olanları Bırak</button>
-                        <button class="btn btn-outline-danger" type="button" onclick="deleteRowsByChecked(1)">Seçili Olanları Sil</button>
+                        <button class="btn btn-outline-primary" type="button" onclick="addRowToTable()">Listeye
+                            Ekle</button>
                     </div>
                 </div>
+                <br>
+
             </div>
         </div>
         <br>
-        <div class="container">
+        <div class="container" id="vacatStatusDiv" style = "display:none">
             <div class="row">
                 <div class="col-sm">
                     <div class="alert alert-success" role="alert">

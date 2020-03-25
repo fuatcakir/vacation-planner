@@ -153,3 +153,6 @@ function calculateVacations() {
 
   return decimalFormat(totalPlannedVacations);
 }
+function disableFooter(){
+  document.getElementById("vacatStatusDiv").style.display = "none";
+}

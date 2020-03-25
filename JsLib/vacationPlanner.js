@@ -260,7 +260,7 @@ function display(page) {
     let vacationStatusHtml1 = '<h5>Toplam Planlanan İzin <span class="badge badge-secondary">' + person.plannedVacationCount + '</span></h5>';
     let vacationStatusHtml2 = '<h5>Kalan İzin Adedi <span class="badge badge-secondary">' + person.unPlannedVacationCount + '</span></h5>';
     let vacationStatusHtml3 = '<h5>Toplam Tatil Günü <span class="badge badge-secondary">' + returnInfo.totalHolidayCountKey + '</span></h5>';
-   
+
     document.getElementById("vacatStatusDiv").style.display = "block";
 
     document.getElementById("vacationStatus1").innerHTML = vacationStatusHtml1;
@@ -315,8 +315,17 @@ function populateTable(person, page) {
         let text1 = document.createTextNode(++index + ". izin");
         if (page == 4) {
             let chk = document.createElement('input');
-            chk.setAttribute("id", "chk" + i);
+            chk.setAttribute("id", "chk" + index);
             chk.setAttribute("type", "checkbox");
+            chk.addEventListener('change', function () {
+                if (this.checked) {
+                    let repeatedFlg = repeatedControl(this.id);
+                    if (repeatedFlg) {
+                        this.checked = false;
+                    }
+                } 
+            });
+
             cell1.appendChild(chk);
         } else {
             cell1.appendChild(text1);

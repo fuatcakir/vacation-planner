@@ -91,7 +91,7 @@ function addRowToTable() {
     document.getElementById("manualDescription").value = '';
     document.getElementById("manualDatePicker").value = '';
     new Litepicker({ element: document.getElementById("manualDatePicker") }).clearSelection();
-  
+
     calculateVacations();
   }
 }
@@ -136,9 +136,9 @@ function calculateVacations() {
   }
   for (var i = tableHeaderRowCount; i < rowCount; i++) {
     if (tblVacations.rows[i].cells[0].childNodes[0].checked == true) {
-      totalPlannedVacations += parseFloat(tblVacations.rows[i].cells[2].textContent.replace(',','.'));
+      totalPlannedVacations += parseFloat(tblVacations.rows[i].cells[2].textContent.replace(',', '.'));
       totalHolidayCount += parseInt(tblVacations.rows[i].cells[3].textContent);
-      totalUnPlannedVacationCount -= parseFloat(tblVacations.rows[i].cells[2].textContent.replace(',','.'));
+      totalUnPlannedVacationCount -= parseFloat(tblVacations.rows[i].cells[2].textContent.replace(',', '.'));
     }
   }
 
@@ -153,6 +153,38 @@ function calculateVacations() {
 
   return decimalFormat(totalPlannedVacations);
 }
-function disableFooter(){
+function disableFooter() {
   document.getElementById("vacatStatusDiv").style.display = "none";
+}
+
+function msg(txt) {
+  alert(txt);
+}
+
+function repeatedControl(chckboxId) {
+  let selectedSimilarVacat = false;
+  let selectedHldyDesc = '';
+  if (chckboxId) {
+    let checkedIndex = parseInt(chckboxId.substring(3, chckboxId.lenght));
+    let tblVacations = document.getElementById("tblPlannedVacations4");
+    selectedHldyDesc = tblVacations.rows[checkedIndex].cells[4].textContent;
+
+    //clear table
+    var tableHeaderRowCount = 1;
+    var rowCount = tblVacations.rows.length;
+
+    for (var i = tableHeaderRowCount; i < rowCount; i++) {
+      if (checkedIndex != i && tblVacations.rows[i].cells[0].childNodes[0].checked == true && selectedHldyDesc == tblVacations.rows[i].cells[4].textContent) {
+        selectedSimilarVacat = true;
+        break;
+      }
+    }
+
+  }
+
+  if (selectedSimilarVacat) {
+    msg(selectedHldyDesc + ' tatillerinden sadece bir tanesini seçebilirsiniz.');
+  }
+
+  return selectedSimilarVacat;
 }

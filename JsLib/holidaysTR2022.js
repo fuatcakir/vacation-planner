@@ -3,7 +3,7 @@ let holidayTR2022_1 = {
     month: 1,
     day: 1,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Yilbasi (1 Ocak)'
+    description: 'Yılbaşı (1 Ocak)'
 };
 
 let holidayTR2022_2 = {
@@ -11,91 +11,91 @@ let holidayTR2022_2 = {
     month: 4,
     day: 23,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Ulusal Egemenlik ve Cocuk Bayrami (23 Nisan)'
+    description: 'Ulusal Egemenlik ve Çocuk Bayramı (23 Nisan)'
 };
 let holidayTR2022_3 = {
     year: 2022,
     month: 5,
     day: 1,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Emek ve Dayanisma Gunu (1 Mayis)'
+    description: 'Emek ve Dayanışma Günü (1 Mayıs)'
 };
 let holidayTR2022_4 = {
     year: 2022,
     month: 5,
     day: 19,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Ataturku Anma Genclik ve Spor Bayrami (19 Mayis)'
+    description: 'Atatürkü Anma Gençlik ve Spor Bayramı (19 Mayıs)'
 };
 let holidayTR2022_5 = {
     year: 2022,
     month: 5,
     day: 1,
     dayType: 'E', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Ramazan Bayrami (1 Mayis[Arefe] - 5 Mayis)'
+    description: 'Ramazan Bayramı (1 Mayıs[Arefe] - 4 Mayıs)'
 };
 let holidayTR2022_6 = {
     year: 2022,
     month: 5,
     day: 2,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Ramazan Bayrami (1 Mayis[Arefe] - 5 Mayis)'
+    description: 'Ramazan Bayramı (1 Mayıs[Arefe] - 4 Mayıs)'
 };
 let holidayTR2022_7 = {
     year: 2022,
     month: 5,
     day: 3,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Ramazan Bayrami (1 Mayis[Arefe] - 5 Mayis)'
+    description: 'Ramazan Bayramı (1 Mayıs[Arefe] - 4 Mayıs)'
 };
 let holidayTR2022_8 = {
     year: 2022,
     month: 5,
     day: 4,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Ramazan Bayrami (1 Mayis[Arefe] - 5 Mayis)'
+    description: 'Ramazan Bayramı (1 Mayıs[Arefe] - 4 Mayıs)'
 };
 let holidayTR2022_9 = {
     year: 2022,
     month: 7,
     day: 15,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Demokrasi ve Milli Birlik Gunu (15 Temmuz)'
+    description: 'Demokrasi ve Milli Birlik Günü (15 Temmuz)'
 };
 let holidayTR2022_10 = {
     year: 2022,
     month: 7,
     day: 8,
     dayType: 'E', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Kurban Bayrami (8 Temmuz[Arefe] - 12 Temmuz)'
+    description: 'Kurban Bayramı (8 Temmuz[Arefe] - 12 Temmuz)'
 };
 let holidayTR2022_11 = {
     year: 2022,
     month: 7,
     day: 9,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Kurban Bayrami (8 Temmuz[Arefe] - 12 Temmuz)'
+    description: 'Kurban Bayramı (8 Temmuz[Arefe] - 12 Temmuz)'
 };
 let holidayTR2022_12 = {
     year: 2022,
     month: 7,
     day: 10,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Kurban Bayrami (8 Temmuz[Arefe] - 12 Temmuz)'
+    description: 'Kurban Bayramı (8 Temmuz[Arefe] - 12 Temmuz)'
 };
 let holidayTR2022_13 = {
     year: 2022,
     month: 7,
     day: 11,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Kurban Bayrami (8 Temmuz[Arefe] - 12 Temmuz)'
+    description: 'Kurban Bayramı (8 Temmuz[Arefe] - 12 Temmuz)'
 };
 let holidayTR2022_14 = {
     year: 2022,
     month: 7,
     day: 12,
     dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Kurban Bayrami (8 Temmuz[Arefe] - 12 Temmuz)'
+    description: 'Kurban Bayramı (8 Temmuz[Arefe] - 12 Temmuz)'
 };
 let holidayTR2022_15 = {
     year: 2022,
@@ -109,14 +109,14 @@ let holidayTR2022_16 = {
     month: 10,
     day: 28,
     dayType: 'E', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Cumhuriyet Bayrami (28 Ekim[Arefe] - 29 Ekim)'
+    description: 'Cumhuriyet Bayramı (28 Ekim[Arefe] - 29 Ekim)'
 };
 let holidayTR2022_17 = {
     year: 2022,
     month: 10,
     day: 29,
     dayType: 'E', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
-    description: 'Cumhuriyet Bayrami (28 Ekim[Arefe] - 29 Ekim)'
+    description: 'Cumhuriyet Bayramı (28 Ekim[Arefe] - 29 Ekim)'
 };
 
 var holidaysTR2022 = [

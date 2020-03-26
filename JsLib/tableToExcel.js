@@ -5,6 +5,8 @@
  *
  *  Made by rainabba
  *  Under MIT License
+ * 
+ *  Modified by Fuat CAKIR v1.1.2_fc2
  */
 //table2excel.js
 (function ($, window, document, undefined) {

@@ -28,19 +28,31 @@
 
     <script src="./JsLib/tableToExcel.js"></script>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161938667-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-161938667-1');
+    </script>
+
+
 </head>
 
 <body>
     <div class="container">
         <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
             <a class="navbar-brand" href="#" onclick="showWelcomePage()">
-                <img src="./Style/date_range-black-36dp.svg" width="40" height="40" class="d-inline-block align-top" alt="">
+                <img src="./Style/date_range-black-36dp.svg" width="40" height="40" class="d-inline-block align-top"
+                    alt="">
                 <strong>iznini planla!</strong>
             </a>
-          
+
             <div class="form-inline">
                 <select class="custom-select" id="inputGroupSelectYears" onchange="display(1)">
-                     <option value="2020" selected> 2020</option>
+                    <option value="2020" selected> 2020</option>
                     <option value="2021">2021</option>
                     <option value="2022">2022</option>
                 </select>

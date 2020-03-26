@@ -225,7 +225,8 @@ function planMyVacations(personalData, page) {
 
 
 function display(page) {
-    //default
+
+
     let person = {
         name: 'Fuat',
         surname: 'CAKIR',
@@ -278,18 +279,23 @@ function populateTable(person, page) {
     switch (page) {
         case 1:
             tblVacations = document.getElementById("tblPlannedVacations1");
+            $('#nav-tab a[href="#nav-home"]').tab('show');
             break;
         case 2:
             tblVacations = document.getElementById("tblPlannedVacations2");
+            $('#nav-tab a[href="#nav-profile"]').tab('show');
             break;
         case 3:
             tblVacations = document.getElementById("tblPlannedVacations3");
+            $('#nav-tab a[href="#nav-contact"]').tab('show');
             break;
         case 4:
             tblVacations = document.getElementById("tblPlannedVacations4");
+            $('#nav-tab a[href="#nav-manuel"]').tab('show');
             break;
         default:
             tblVacations = document.getElementById("tblPlannedVacations1");
+            $('#nav-tab a[href="#nav-home"]').tab('show');
             break;
     }
 
@@ -341,7 +347,7 @@ function populateTable(person, page) {
         let text3 = lPad(vacation.dayEnd.day) + "/" + lPad(vacation.dayEnd.month) + "/" + vacation.dayEnd.year;
         // cell2.appendChild(document.createTextNode(text2+'-'+text3));
         let g = document.createElement('input');
-        g.setAttribute("id", "input" + i);
+        g.setAttribute("id", "inputlp" + index);
         g.setAttribute("class", "pointer");
         cell2.appendChild(g);
 
@@ -383,11 +389,4 @@ function populateTable(person, page) {
     });
 
     return { totalHolidayCountKey: totalHolidayCount, totalEfficencyRatioKey: totalEfficencyRatio };
-}
-
-function render() {
-    display(1);
-    display(2);
-    display(3);
-    display(4);
 }

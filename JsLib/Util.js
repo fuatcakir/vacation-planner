@@ -34,7 +34,7 @@ function addRowToTable() {
     let text3 = document.getElementById("manualDatePicker").value.split('-')[1].trim();
     // cell2.appendChild(document.createTextNode(text2+'-'+text3));
     let g = document.createElement('input');
-    g.setAttribute("id", "input" + i);
+    g.setAttribute("id", "inputlp" + i);
     g.setAttribute("class", "pointer");
     cell2.appendChild(g);
 

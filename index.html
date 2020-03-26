@@ -11,25 +11,31 @@
     <script src="./JsLib/cal2020.js"></script>
     <script src="./JsLib/holidaysTR2020.js"></script>
     <script src="./JsLib/vacationPlanner.js"></script>
-    <script src="./JsLib/tableToExcel.js"></script>
     <script src="./JsLib/Util.js"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/js/main.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 
+    <script src="./JsLib/tableToExcel.js"></script>
 
 </head>
 
 <body>
     <div class="container">
         <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-            <a class="navbar-brand">
-                <h2>iznini planla!</h2>
+            <a class="navbar-brand" href="#">
+                <img src="./Style/date_range-black-36dp.svg" width="40" height="40" class="d-inline-block align-top" alt="">
+                <strong>iznini planla!</strong>
             </a>
+          
             <div class="form-inline">
                 <select class="custom-select" id="inputGroupSelect03">
                     <option selected>2020</option>
@@ -38,7 +44,7 @@
                 </select>
                 <input id="vacationCount" class="form-control mr-sm-2" type="number" placeholder="Toplam izin Sayısı"
                     aria-label="Toplam izin Sayısı">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="button" onclick="render()">İznimi
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="button" onclick="display(1)">İznimi
                     Planla!</button>
                 <!-- AddToAny BEGIN -->
                 <div class="a2a_kit a2a_kit_size_32 a2a_default_style" data-a2a-title="iznini planla!">
@@ -61,7 +67,7 @@
                 "keypress", function (event) {
                     if (event.keyCode == 13) {
                         if (document.getElementById("vacationCount").value) {
-                            render();
+                            display(1);
                         } else {
                             document.getElementById("vacatStatusDiv").style.display = "none";
                         }
@@ -75,7 +81,7 @@
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-welcome" role="tab"
-                    aria-controls="nav-home" aria-selected="true" onclick="disableFooter()">Hoşgeldiniz</a>
+                    aria-controls="nav-welcome" aria-selected="true" onclick="disableFooter()">Hoşgeldiniz</a>
                 <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
                     aria-controls="nav-home" aria-selected="false" onclick="display(1)">Önerilen Plan 1</a>
                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
@@ -83,7 +89,7 @@
                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
                     aria-controls="nav-contact" aria-selected="false" onclick="display(3)">Önerilen Plan 3</a>
                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-manuel" role="tab"
-                    aria-controls="nav-contact" aria-selected="false" onclick="display(4)">Planını Kendin Oluştur</a>
+                    aria-controls="nav-manuel" aria-selected="false" onclick="display(4)">Planını Kendin Oluştur</a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -182,8 +188,10 @@
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">Seçili İzinler</button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" onclick="deleteRowsByChecked(0)">Kalsın</a>
-                            <a class="dropdown-item" onclick="deleteRowsByChecked(1)"> Silinsin</a>
+                            <a class="dropdown-item pointer" onclick="deleteRowsByChecked(0)">Kalsın</a>
+                            <a class="dropdown-item pointer" onclick="deleteRowsByChecked(1)">Silinsin</a>
+                            <div role="separator" class="dropdown-divider"></div>
+                            <a class="dropdown-item pointer" id="btnExport">Excel'e Çıkar</a>
                         </div>
                     </div>
                     <input id="manualDatePicker" type="text" class="form-control"
@@ -213,7 +221,8 @@
                         });
                     </script>
                     <div class="input-group-append" id="button-addon4">
-                        <button class="btn btn-outline-primary" type="button" onclick="addRowToTable()">Tatil Ekle</button>
+                        <button class="btn btn-outline-primary" type="button" onclick="addRowToTable()">Tatil
+                            Ekle</button>
                     </div>
                 </div>
                 <br>
@@ -243,13 +252,20 @@
 
     </div>
 
-
+    <script type="text/javascript">
+        $(function () {
+            $("#btnExport").click(function () {
+                $("#tblPlannedVacations4").table2excel({
+                    filename: "izin_planim.xls",
+                    exclude_inputs: false,
+                });
+            });
+        });
+    </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>

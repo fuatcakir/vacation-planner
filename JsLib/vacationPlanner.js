@@ -8,7 +8,9 @@ function planner(pPersonalData, page) {
         personMail: 'fuat.cakir@outlook.com',
         dayStart: null,
         dayEnd: null,
-        vacationCount: 0
+        vacationCount: 0,
+        description: '',
+        priority: 0
     };
 
     let allVacations = [];
@@ -53,9 +55,11 @@ function planner(pPersonalData, page) {
                     vacation.dayStart = findPreivousFirstHoliDay(daySearchStart, dayList);
                     vacation.dayEnd = findLastHoliDay(daySearchEnd, dayList);
                     vacation.vacationCount = wdCount;
-                    vacation.description = getHolidayDescription(daySearchStart) ? getHolidayDescription(daySearchStart) : getHolidayDescription(daySearchEnd);
+                    // vacation.description = getHolidayDescription(daySearchStart) ? getHolidayDescription(daySearchStart) : getHolidayDescription(daySearchEnd);
+                    vacation.description = chooseDescription(daySearchStart.description, daySearchEnd.description);
                     vacation.holidayCount = dateRangeCount(vacation.dayStart, vacation.dayEnd, dayList);
                     vacation.efficiencyRatio = getEfficencyRatio(vacation.vacationCount, vacation.holidayCount);
+                    vacation.priority = getVacationPriority(vacation);
                     allVacations.push(vacation);
                     //reset all values
                     index = 0;
@@ -95,30 +99,36 @@ function planner(pPersonalData, page) {
 
     sortedVacations.forEach(vac => {
 
-        if (vac.description != '' && desc == vac.description && repeatedCount == 0) {
-            alternativeVacations2.pop(sortedVacations[sortVacatIndex - 1]);
-            alternativeVacations2.push(vac);
-            repeatedCount++;
-        } else if (vac.description != '' && desc == vac.description && repeatedCount >= 1) {
-            alternativeVacations3.pop(sortedVacations[sortVacatIndex - 1]);
-            alternativeVacations3.pop(sortedVacations[sortVacatIndex - 2]);
-            alternativeVacations3.push(vac);
-            repeatedCount++;
-        }
-        else {
-            alternativeVacations1.push(vac);
-            alternativeVacations2.push(vac);
-            alternativeVacations3.push(vac);
+        if (vac.priority == 1 || vac.priority == 2) {
 
-            repeatedCount = 0;
+            if (vac.description != '' && desc == vac.description && repeatedCount == 0) {
+                alternativeVacations2.pop(sortedVacations[sortVacatIndex - 1]);
+                alternativeVacations2.push(vac);
+                repeatedCount++;
+            } else if (vac.description != '' && desc == vac.description && repeatedCount >= 1) {
+                alternativeVacations3.pop(sortedVacations[sortVacatIndex - 1]);
+                alternativeVacations3.pop(sortedVacations[sortVacatIndex - 2]);
+                alternativeVacations3.push(vac);
+                repeatedCount++;
+            }
+            else {
+                if (vac.priority == 1 || !isNotImpHolidayPlannedMoth(sortedVacations, vac)) { 
+                    alternativeVacations1.push(vac);
+                    alternativeVacations2.push(vac);
+                    alternativeVacations3.push(vac);
+                }
+                repeatedCount = 0;
+            }
+
+
+            holdVac = vac;
+            desc = vac.description;
+            sortVacatIndex++;
         }
 
         if (page == 4 && vac.description != '') {
             manualVacations.push(vac);
         }
-        holdVac = vac;
-        desc = vac.description;
-        sortVacatIndex++;
     });
 
 
@@ -215,7 +225,13 @@ function getPlannedVacations(personalData, vacationsOptions, page) {
 
     personalData.plannedVacationCount = plannedVacatCount;
     personalData.unPlannedVacationCount = totalVac - plannedVacatCount;
-    personalData.plannedVacations = plannedVacats.sort(compareValues2('dayStart', 'month'));
+    if (page == 4) {
+        personalData.plannedVacations = plannedVacats.sort(compareValues('description', 'desc'));
+
+    } else {
+        personalData.plannedVacations = plannedVacats.sort(compareValues2('dayStart', 'month'));
+
+    }
 }
 
 function planMyVacations(personalData, page) {
@@ -333,7 +349,7 @@ function populateTable(person, page) {
                     if (repeatedFlg) {
                         this.checked = false;
                     }
-                } 
+                }
                 calculateVacations();
             });
 

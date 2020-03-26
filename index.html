@@ -8,8 +8,10 @@
 
     <link rel="stylesheet" href="./Style/style.css">
 
-    <script src="./JsLib/cal2020.js"></script>
+    <script src="./JsLib/calendarUtil.js"></script>
     <script src="./JsLib/holidaysTR2020.js"></script>
+    <script src="./JsLib/holidaysTR2021.js"></script>
+    <script src="./JsLib/holidaysTR2022.js"></script>
     <script src="./JsLib/vacationPlanner.js"></script>
     <script src="./JsLib/Util.js"></script>
 
@@ -31,16 +33,16 @@
 <body>
     <div class="container">
         <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="#" onclick="showWelcomePage()">
                 <img src="./Style/date_range-black-36dp.svg" width="40" height="40" class="d-inline-block align-top" alt="">
                 <strong>iznini planla!</strong>
             </a>
           
             <div class="form-inline">
-                <select class="custom-select" id="inputGroupSelect03">
-                    <option selected>2020</option>
-                    <option value="1">2020</option>
-                    <option value="2">2020</option>
+                <select class="custom-select" id="inputGroupSelectYears">
+                     <option value="2020" selected> 2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
                 </select>
                 <input id="vacationCount" class="form-control mr-sm-2" type="number" placeholder="Toplam izin Sayısı"
                     aria-label="Toplam izin Sayısı">

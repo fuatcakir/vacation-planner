@@ -188,3 +188,22 @@ function repeatedControl(chckboxId) {
 
   return selectedSimilarVacat;
 }
+
+function showWelcomePage() {
+  $('#nav-tab a[href="#nav-welcome"]').tab('show');
+}
+
+function chooseDescription(desc1, desc2) {
+  let desc = '';
+  if (desc1 && desc2 && desc1 != desc2) {
+    desc = desc1 + " , " + desc2;
+  } else if (desc1 && !desc2) {
+    desc = desc1;
+  } else if (!desc1 && desc2) {
+    desc = desc2;
+  } else {
+    desc = desc1;
+  }
+
+  return desc;
+}

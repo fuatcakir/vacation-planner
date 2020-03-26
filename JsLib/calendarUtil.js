@@ -56,13 +56,17 @@ function createDayObject(date) {
 
 function createCalendar() {
 
-    var day2020SIndex = new Date(2020, 0, 1, 1, 1, 1, 1);
+    let selectedYaar = parseInt(document.getElementById('inputGroupSelectYears').value);
+    if (selectedYaar) {
+        selectedYaar = parseInt(selectedYaar);
+    }
+    var daysIndex = new Date(selectedYaar, 0, 1, 1, 1, 1, 1);
 
     let dayList = [];
 
-    while (day2020SIndex.getFullYear() <= 2020) {
-        dayList.push(createDayObject(day2020SIndex));
-        day2020SIndex.setDate(day2020SIndex.getDate() + 1);
+    while (daysIndex.getFullYear() <= selectedYaar) {
+        dayList.push(createDayObject(daysIndex));
+        daysIndex.setDate(daysIndex.getDate() + 1);
     }
 
     return dayList;
@@ -149,14 +153,106 @@ function findLastHoliDay(pDay, dayList) {
 
     }
 
-    pDay = dayList[dayFoundIndx - 1];
+    if (dayFoundIndx == 0) {
+        pDay = dayList[dayList.length - 1];
+    } else {
+        pDay = dayList[dayFoundIndx - 1];
+
+    }
     return pDay;
 }
 
 function dateRangeCount(pStartDay, pEndDay, dayList) {
-    return findDayIndex(pEndDay, dayList) - findDayIndex(pStartDay, dayList) +1;
+    return findDayIndex(pEndDay, dayList) - findDayIndex(pStartDay, dayList) + 1;
 }
 
 function getEfficencyRatio(pVacationCount, pDateRangeCount) {
     return pDateRangeCount / pVacationCount;
+}
+
+function calculateVacation(pStartDay, pEndDay, pDayList) {
+    let totalVacation = 0;
+    let startDayIndex = findDayIndex(pStartDay, pDayList);
+    let endDayIndex = findDayIndex(pEndDay, pDayList);
+    for (let index = startDayIndex; index <= endDayIndex; index++) {
+        const element = pDayList[index];
+        holidayCheck(element)
+        if (element.dayType == 'WD') {
+            totalVacation += 1;
+        }
+        if (element.dayType == 'E') {
+            totalVacation += 0.5;
+        }
+    }
+    return totalVacation;
+}
+
+function getHolidayDescription(pStartDay, pEndDay) {
+    let hldyDesc = ' ';
+    var currHolidays = getSelectedYearHolidays();
+
+    for (const hold in currHolidays) {
+        if (currHolidays.hasOwnProperty(hold)) {
+            const holiday = currHolidays[hold];
+            if (pStartDay.year == holiday.year && pStartDay.month == holiday.month && pStartDay.day == holiday.day) {
+                hldyDesc += holiday.description + ' ';
+
+            }
+
+        }
+    }
+    return hldyDesc.trim();
+}
+
+function holidayCheck(pDay) {
+    var currHolidays = getSelectedYearHolidays();
+
+    for (const hold in currHolidays) {
+        if (currHolidays.hasOwnProperty(hold)) {
+            const holiday = currHolidays[hold];
+            if (pDay.year == holiday.year && pDay.month == holiday.month && pDay.day == holiday.day) {
+                pDay.dayType = holiday.dayType;
+                pDay.description = holiday.description;
+                break;
+            }
+
+        }
+    }
+}
+
+function getSelectedYearHolidays() {
+    let selectedYear = parseInt(document.getElementById('inputGroupSelectYears').value);
+    var currentYearHolidays = [];
+    if (selectedYear == '2020') {
+        currentYearHolidays = holidaysTR2020;
+    } else if (selectedYear == '2021') {
+        currentYearHolidays = holidaysTR2021;
+    } else if (selectedYear == '2022') {
+        currentYearHolidays = holidaysTR2022;
+    } else if (selectedYear == '2023') {
+
+    }
+
+    return currentYearHolidays;
+}
+
+function getVacationPriority(pVacation) {
+    let priority = 5;
+    if (pVacation.description) {
+        priority = 1;
+    } else if (!pVacation.description && (pVacation.dayEnd.month == 6 || pVacation.dayEnd.month == 7 || pVacation.dayEnd.month == 8)) {
+        priority = 2;
+    } else {
+        priority = 3;
+    }
+    return priority;
+}
+
+function isNotImpHolidayPlannedMoth(pVacList, pCurrentVacat) {
+    pVacList.forEach(element => {
+        if (element.priority == 2 && pCurrentVacat.dayEnd.month == element.dayEnd.month) {
+            return true;
+        }
+    });
+    return false;
 }

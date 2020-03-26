@@ -26,6 +26,10 @@ function addRowToTable() {
     chk.setAttribute("id", "chk" + i);
     chk.setAttribute("type", "checkbox");
     chk.setAttribute("checked", "checked");
+    chk.addEventListener('change', function () {
+
+      calculateVacations();
+    });
     cell1.appendChild(chk);
 
 
@@ -161,26 +165,26 @@ function msg(txt) {
   alert(txt);
 }
 
-function repeatedControl(chckboxId) {
+function repeatedControl(obj) {
   let selectedSimilarVacat = false;
   let selectedHldyDesc = '';
-  if (chckboxId) {
-    let checkedIndex = parseInt(chckboxId.substring(3, chckboxId.lenght));
-    let tblVacations = document.getElementById("tblPlannedVacations4");
-    selectedHldyDesc = tblVacations.rows[checkedIndex].cells[4].textContent;
 
-    //clear table
-    var tableHeaderRowCount = 1;
-    var rowCount = tblVacations.rows.length;
+  let checkedIndex = obj.rowIndex;
+  let tblVacations = document.getElementById("tblPlannedVacations4");
+  selectedHldyDesc = tblVacations.rows[checkedIndex].cells[4].textContent;
 
-    for (var i = tableHeaderRowCount; i < rowCount; i++) {
-      if (checkedIndex != i && tblVacations.rows[i].cells[0].childNodes[0].checked == true && selectedHldyDesc == tblVacations.rows[i].cells[4].textContent) {
-        selectedSimilarVacat = true;
-        break;
-      }
+  //clear table
+  var tableHeaderRowCount = 1;
+  var rowCount = tblVacations.rows.length;
+
+  for (var i = tableHeaderRowCount; i < rowCount; i++) {
+    if (checkedIndex != i && tblVacations.rows[i].cells[0].childNodes[0].checked == true && selectedHldyDesc == tblVacations.rows[i].cells[4].textContent) {
+      selectedSimilarVacat = true;
+      break;
     }
-
   }
+
+
 
   if (selectedSimilarVacat) {
     msg(selectedHldyDesc + ' tatillerinden sadece bir tanesini seçebilirsiniz.');
@@ -206,4 +210,16 @@ function chooseDescription(desc1, desc2) {
   }
 
   return desc;
+}
+
+function table4RowClick(obj) {
+  let tblVacations = document.getElementById("tblPlannedVacations4");
+
+  if (tblVacations.rows[obj.rowIndex].cells[0].childNodes[0].checked) {
+    let repeatedFlg = repeatedControl(obj);
+    if (repeatedFlg) {
+      tblVacations.rows[obj.rowIndex].cells[0].childNodes[0].checked = false;
+    }
+  }
+  calculateVacations();
 }

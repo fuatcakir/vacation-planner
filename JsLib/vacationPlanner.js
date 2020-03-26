@@ -112,7 +112,7 @@ function planner(pPersonalData, page) {
                 repeatedCount++;
             }
             else {
-                if (vac.priority == 1 || !isNotImpHolidayPlannedMoth(sortedVacations, vac)) { 
+                if (vac.priority == 1 || !isNotImpHolidayPlannedMoth(sortedVacations, vac)) {
                     alternativeVacations1.push(vac);
                     alternativeVacations2.push(vac);
                     alternativeVacations3.push(vac);
@@ -338,19 +338,24 @@ function populateTable(person, page) {
         let row = tblVacations.insertRow();
 
         let cell1 = row.insertCell();
+        if (page == 4) {
+            row.addEventListener('click', function name() {
+                table4RowClick(this);
+            });
+        }
         let text1 = document.createTextNode(++index + ". izin");
         if (page == 4) {
             let chk = document.createElement('input');
             chk.setAttribute("id", "chk" + index);
             chk.setAttribute("type", "checkbox");
             chk.addEventListener('change', function () {
-                if (this.checked) {
-                    let repeatedFlg = repeatedControl(this.id);
-                    if (repeatedFlg) {
-                        this.checked = false;
-                    }
-                }
-                calculateVacations();
+                // if (this.checked) {
+                //     let repeatedFlg = repeatedControl(this.id);
+                //     if (repeatedFlg) {
+                //         this.checked = false;
+                //     }
+                // }
+                // calculateVacations();
             });
 
             cell1.appendChild(chk);

@@ -320,6 +320,8 @@ function display(page) {
         calculateVacations();
     }
 
+    refreshYearPreview(page, true);
+
 }
 
 function populateTable(person, page) {

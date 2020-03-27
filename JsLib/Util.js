@@ -97,6 +97,7 @@ function addRowToTable() {
     new Litepicker({ element: document.getElementById("manualDatePicker") }).clearSelection();
 
     calculateVacations();
+    refreshYearPreview(4, false);
   }
 }
 
@@ -122,6 +123,7 @@ function deleteRowsByChecked(delCheckedRows) {
   }
 
   calculateVacations();
+  refreshYearPreview(4, false);
 }
 
 function calculateVacations() {
@@ -139,6 +141,7 @@ function calculateVacations() {
     totalUnPlannedVacationCount = vacationCount;
   }
   for (var i = tableHeaderRowCount; i < rowCount; i++) {
+
     if (tblVacations.rows[i].cells[0].childNodes[0].checked == true) {
       totalPlannedVacations += parseFloat(tblVacations.rows[i].cells[2].textContent.replace(',', '.'));
       totalHolidayCount += parseInt(tblVacations.rows[i].cells[3].textContent);
@@ -183,7 +186,7 @@ function repeatedControl(obj) {
       if (selectedSimilarVacat) {
         break;
       }
-      
+
     }
   }
 
@@ -225,6 +228,7 @@ function table4RowClick(obj) {
     }
   }
   calculateVacations();
+  refreshYearPreview(4, false);
 }
 
 
@@ -295,12 +299,122 @@ var sort_by;
 }());
 
 function getStarRatings(starCount) {
-  let starContainer="";
+  let starContainer = "";
   for (let index = 0; index < starCount; index++) {
-    starContainer +='<span class="fa fa-star checked"></span>';  
+    starContainer += '<span class="fa fa-star checked"></span>';
   }
   return starContainer;
 }
+
+function setMothPreview(pBtn, isGreen) {
+  if (isGreen) {
+    pBtn.setAttribute('class', 'btn btn-success disabled');
+  } else {
+    pBtn.setAttribute('class', 'btn btn-secondary disabled');
+  }
+}
+
+function getMontPreviewButton(pMonthOrder) {
+  var whichBtnMonth = null;
+  switch (pMonthOrder) {
+    case 1:
+      whichBtnMonth = document.getElementById("btnJan");
+      break;
+    case 2:
+      whichBtnMonth = document.getElementById("btnFeb");
+      break;
+    case 3:
+      whichBtnMonth = document.getElementById("btnMar");
+      break;
+    case 4:
+      whichBtnMonth = document.getElementById("btnApr");
+      break;
+    case 5:
+      whichBtnMonth = document.getElementById("btnMay");
+      break;
+    case 6:
+      whichBtnMonth = document.getElementById("btnJun");
+      break;
+    case 7:
+      whichBtnMonth = document.getElementById("btnJly");
+      break;
+    case 8:
+      whichBtnMonth = document.getElementById("btnAug");
+      break;
+    case 9:
+      whichBtnMonth = document.getElementById("btnSep");
+      break;
+    case 10:
+      whichBtnMonth = document.getElementById("btnOct");
+      break;
+    case 11:
+      whichBtnMonth = document.getElementById("btnNov");
+      break;
+    case 12:
+      whichBtnMonth = document.getElementById("btnDec");
+      break;
+    default:
+      whichBtnMonth = document.getElementById("");
+      break;
+  }
+
+  return whichBtnMonth;
+}
+
+function refreshYearPreview(page, pReset) {
+  let tblVacations = null;
+
+  if (page == 1) {
+    tblVacations = document.getElementById("tblPlannedVacations1");
+  } else if (page == 2) {
+    tblVacations = document.getElementById("tblPlannedVacations2");
+  } else if (page == 3) {
+    tblVacations = document.getElementById("tblPlannedVacations3");
+  } else {
+    tblVacations = document.getElementById("tblPlannedVacations4");
+  }
+
+  let reset = pReset;
+  //clear table
+  var tableHeaderRowCount = 1;
+  var rowCount = tblVacations.rows.length;
+
+  if (page == 4 && reset) {
+    for (let index = 1; index <= 12; index++) {
+      setMothPreview(getMontPreviewButton(index), false);
+    }
+  } else {
+
+    var monthArr = [];
+    var monthArrOFF = [];
+    for (var i = tableHeaderRowCount; i < rowCount; i++) {
+      let dateRange = tblVacations.rows[i].cells[1].childNodes[0].value;
+      let startDateMonth = parseInt(dateRange.split('-')[0].split('/')[1]);
+      let endDateMonth = parseInt(dateRange.split('-')[1].split('/')[1]);
+
+      if (page < 4 || tblVacations.rows[i].cells[0].childNodes[0].checked) {
+        monthArr.push(startDateMonth);
+        monthArr.push(endDateMonth);
+      }
+    }
+
+    const unique = (value, index, self) => {
+      return self.indexOf(value) === index
+    }
+    monthArr = monthArr.filter(unique);
+
+    for (let index = 1; index <= 12; index++) {
+      if (monthArr.includes(index)) {
+        setMothPreview(getMontPreviewButton(index), true);
+      } else {
+        setMothPreview(getMontPreviewButton(index), false);
+
+      }
+
+    }
+  }
+}
+
 
 
 

@@ -361,19 +361,16 @@ function populateTable(person, page) {
     let index = 0;
     person.plannedVacations.forEach(vacation => {
 
-        // console.log(++index + ". İZİN\n" +
-        //     "İzin araligi :"
-        //     + vacation.dayStart.day + "/" + vacation.dayStart.month + "/" + vacation.dayStart.year + "-"
-        //     + vacation.dayEnd.day + "/" + vacation.dayEnd.month + "/" + vacation.dayEnd.year + "\n" +
-        //     "İzin adeti : " + vacation.vacationCount);
 
         let row = tblVacations.getElementsByTagName('tbody')[0].insertRow();
-        if (vacation.efficiencyRatio >= 4) {
-            row.setAttribute('class', 'table-success');
 
-        } else if (vacation.efficiencyRatio > 2.5 && vacation.efficiencyRatio < 4) {
-            row.setAttribute('class', 'table-warning');
-        }
+        //renklendirme kapalı
+        // if (vacation.efficiencyRatio >= 4) {
+        //     row.setAttribute('class', 'table-success');
+
+        // } else if (vacation.efficiencyRatio > 2.5 && vacation.efficiencyRatio < 4) {
+        //     row.setAttribute('class', 'table-warning');
+        // }
 
 
         let cell1 = row.insertCell();
@@ -445,6 +442,24 @@ function populateTable(person, page) {
         // let text6 = document.createTextNode(vacation.description);
         cell6.innerHTML = vacation.description;
         // cell6.appendChild(text6);
+
+        if (page == 4) {
+            let cellRatings = row.insertCell();
+            let starCount = 0
+            if (vacation.efficiencyRatio >= 9) {
+                starCount = 5;
+            } else if (vacation.efficiencyRatio < 9 && vacation.efficiencyRatio >= 4) {
+                starCount = 4;
+            } else if (vacation.efficiencyRatio > 2.5 && vacation.efficiencyRatio < 4) {
+                starCount = 3;
+            } else if (vacation.efficiencyRatio > 1 && vacation.efficiencyRatio <= 2.5) {
+                starCount = 2;
+            } else {
+                starCount = 1;
+            }
+            cellRatings.innerHTML = getStarRatings(starCount);
+        }
+
 
         totalEfficencyRatio += vacation.efficiencyRatio;
     });

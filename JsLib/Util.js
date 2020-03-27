@@ -291,6 +291,14 @@ var sort_by;
   }
 }());
 
+function getStarRatings(starCount) {
+  let starContainer="";
+  for (let index = 0; index < starCount; index++) {
+    starContainer +='<span class="fa fa-star checked"></span>';  
+  }
+  return starContainer;
+}
+
 
 
 

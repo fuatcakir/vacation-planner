@@ -178,8 +178,8 @@ function repeatedControl(obj) {
   var rowCount = tblVacations.rows.length;
 
   for (var i = tableHeaderRowCount; i < rowCount; i++) {
-    if (checkedIndex != i && tblVacations.rows[i].cells[0].childNodes[0].checked == true && selectedHldyDesc == tblVacations.rows[i].cells[4].textContent) {
-      selectedSimilarVacat = true;
+    if (checkedIndex != i && tblVacations.rows[i].cells[0].childNodes[0].checked == true) {
+      selectedSimilarVacat = selectedHldyDesc && tblVacations.rows[i].cells[4].textContent && (selectedHldyDesc.includes(tblVacations.rows[i].cells[4].textContent) || tblVacations.rows[i].cells[4].textContent.includes(selectedHldyDesc));
       break;
     }
   }
@@ -200,7 +200,7 @@ function showWelcomePage() {
 function chooseDescription(desc1, desc2) {
   let desc = '';
   if (desc1 && desc2 && desc1 != desc2) {
-    desc = desc1 + " , " + desc2;
+    desc = desc1 + "<br>" + desc2;
   } else if (desc1 && !desc2) {
     desc = desc1;
   } else if (!desc1 && desc2) {
@@ -223,3 +223,74 @@ function table4RowClick(obj) {
   }
   calculateVacations();
 }
+
+
+var sort_by;
+(function () {
+  // utility functions
+  var default_cmp = function (a, b) {
+    if (a == b) return 0;
+    return a < b ? -1 : 1;
+  },
+    getCmpFunc = function (primer, reverse) {
+      var cmp = default_cmp;
+      if (primer) {
+        cmp = function (a, b) {
+          return default_cmp(primer(a), primer(b));
+        };
+      }
+      if (reverse) {
+        return function (a, b) {
+          return -1 * cmp(a, b);
+        };
+      }
+      return cmp;
+    };
+
+  // actual implementation
+  sort_by = function () {
+    var fields = [],
+      n_fields = arguments.length,
+      field, name, reverse, cmp;
+
+    // preprocess sorting options
+    for (var i = 0; i < n_fields; i++) {
+      field = arguments[i];
+      if (typeof field === 'string') {
+        name = field;
+        cmp = default_cmp;
+      }
+      else {
+        name = field.name;
+        cmp = getCmpFunc(field.primer, field.reverse);
+      }
+      fields.push({
+        name: name,
+        cmp: cmp
+      });
+    }
+
+    return function (A, B) {
+      var a, b, name, cmp, result;
+      for (var i = 0, l = n_fields; i < l; i++) {
+        result = 0;
+        field = fields[i];
+        name = field.name;
+        cmp = field.cmp;
+
+        if (name.includes('day')) {
+          result = cmp(A[name.split('.')[0]][name.split('.')[1]], B[name.split('.')[0]][name.split('.')[1]]);
+        } else {
+          result = cmp(A[name], B[name]);
+
+        }
+        if (result !== 0) break;
+      }
+      return result;
+    }
+  }
+}());
+
+
+
+

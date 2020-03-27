@@ -204,6 +204,34 @@ function compareValues2(key, childKey = null, order = 'asc') {
     };
 }
 
+function compareValues2prop(key, subkey, childKey, order = 'asc') {
+    return function innerSort(a, b) {
+        if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+            return 0;
+        }
+
+        const varA = (typeof a[key] === 'string')
+            ? a[key].toUpperCase() : a[key];
+        const varB = (typeof b[key] === 'string')
+            ? b[key].toUpperCase() : b[key];
+
+        const varChildA = (typeof a[subkey][childKey] === 'string')
+            ? a[subkey][childKey].toUpperCase() : a[subkey][childKey];
+        const varChildB = (typeof b[subkey][childKey] === 'string')
+            ? b[subkey][childKey].toUpperCase() : b[subkey][childKey];
+
+        let comparison = 0;
+        if ((varA > varB) || (varChildA > varChildB)) {
+            comparison = 1;
+        } else if ((varA < varB) || (varChildA < varChildB)) {
+            comparison = -1;
+        }
+        return (
+            (order === 'desc') ? (comparison * -1) : comparison
+        );
+    };
+}
+
 function getPlannedVacations(personalData, vacationsOptions, page) {
     let totalVac = personalData.totalVacationCount;
     let plannedVacats = [];
@@ -226,10 +254,14 @@ function getPlannedVacations(personalData, vacationsOptions, page) {
     personalData.plannedVacationCount = plannedVacatCount;
     personalData.unPlannedVacationCount = totalVac - plannedVacatCount;
     if (page == 4) {
-        personalData.plannedVacations = plannedVacats.sort(compareValues('description', 'desc'));
+        personalData.plannedVacations = plannedVacats.sort(sort_by('dayStart.month', {
+            name: 'description',
+            reverse: false
+        }));
 
     } else {
         personalData.plannedVacations = plannedVacats.sort(compareValues2('dayStart', 'month'));
+
 
     }
 }
@@ -335,7 +367,14 @@ function populateTable(person, page) {
         //     + vacation.dayEnd.day + "/" + vacation.dayEnd.month + "/" + vacation.dayEnd.year + "\n" +
         //     "İzin adeti : " + vacation.vacationCount);
 
-        let row = tblVacations.insertRow();
+        let row = tblVacations.getElementsByTagName('tbody')[0].insertRow();
+        if (vacation.efficiencyRatio >= 4) {
+            row.setAttribute('class', 'table-success');
+
+        } else if (vacation.efficiencyRatio > 2.5 && vacation.efficiencyRatio < 4) {
+            row.setAttribute('class', 'table-warning');
+        }
+
 
         let cell1 = row.insertCell();
         if (page == 4) {
@@ -403,8 +442,9 @@ function populateTable(person, page) {
         totalHolidayCount += vacation.holidayCount;
 
         let cell6 = row.insertCell();
-        let text6 = document.createTextNode(vacation.description);
-        cell6.appendChild(text6);
+        // let text6 = document.createTextNode(vacation.description);
+        cell6.innerHTML = vacation.description;
+        // cell6.appendChild(text6);
 
         totalEfficencyRatio += vacation.efficiencyRatio;
     });

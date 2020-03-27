@@ -158,10 +158,11 @@ function calculateVacations() {
   document.getElementById("vacationStatus2").innerHTML = vacationStatusHtml2;
   document.getElementById("vacationStatus3").innerHTML = vacationStatusHtml3;
 
-  return decimalFormat(totalPlannedVacations);
+  return decimalFormat(totalPlannedVacations+totalUnPlannedVacationCount);
 }
 function disableFooter() {
   document.getElementById("vacatStatusDiv").style.display = "none";
+  // document.getElementById("holidayPreview").style.display = "none";
 }
 
 function msg(txt) {
@@ -375,7 +376,6 @@ function refreshYearPreview(page, pReset) {
   }
 
   let reset = pReset;
-  //clear table
   var tableHeaderRowCount = 1;
   var rowCount = tblVacations.rows.length;
 
@@ -415,7 +415,24 @@ function refreshYearPreview(page, pReset) {
   }
 }
 
-
+function isThereAnyManuelPlan() {
+  var tableHeaderRowCount = 1;
+  let tblVacations = document.getElementById("tblPlannedVacations4");
+  var rowCount = tblVacations.rows.length;
+  let checkedHolidays = false;
+  for (var i = tableHeaderRowCount; i < rowCount; i++) {
+    if ( tblVacations.rows[i].cells[0].childNodes[0].checked) {
+      checkedHolidays = true;
+      break;
+    }
+  }
+  let vacatCount = calculateVacations() ;
+  let enteredVacatCount= document.getElementById("vacationCount").value;
+  if (checkedHolidays && enteredVacatCount && vacatCount == enteredVacatCount) {
+    return true;
+  }
+  return false;
+}
 
 
 

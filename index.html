@@ -57,15 +57,14 @@
             </a>
 
             <div class="form-inline">
-                <select class="custom-select" id="inputGroupSelectYears" onchange="display(1)">
+                <select class="custom-select" id="inputGroupSelectYears" onchange="plan(4)">
                     <option value="2020" selected> 2020</option>
                     <option value="2021">2021</option>
                     <option value="2022">2022</option>
                 </select>
                 <input id="vacationCount" class="form-control mr-sm-2" type="number" placeholder="Toplam izin Sayısı"
                     aria-label="Toplam izin Sayısı">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="button" onclick="display(1)">İznimi
-                    Planla!</button>
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="button" onclick="plan(4)">Planla!</button>
                 <!-- AddToAny BEGIN -->
                 <div class="a2a_kit a2a_kit_size_32 a2a_default_style" data-a2a-title="iznini planla!">
                     <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
@@ -87,14 +86,14 @@
                 "keypress", function (event) {
                     if (event.keyCode == 13) {
                         if (document.getElementById("vacationCount").value) {
-                            display(1);
+                            plan(4);
                         } else {
-                            document.getElementById("vacatStatusDiv").style.display = "none";
+                            disableFooter();
                         }
-
                     }
                 }
-            ); 
+            );
+            
         </script>
 
 
@@ -108,13 +107,13 @@
                     aria-controls="nav-profile" aria-selected="false" onclick="display(2)">Önerilen Plan 2</a>
                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
                     aria-controls="nav-contact" aria-selected="false" onclick="display(3)">Önerilen Plan 3</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-manuel" role="tab"
-                    aria-controls="nav-manuel" aria-selected="false" onclick="display(4)">Planını Kendin Oluştur</a>
+                <a class="nav-item nav-link " id="nav-contact-tab" data-toggle="tab" href="#nav-manuel" role="tab"
+                    aria-controls="nav-manuel" aria-selected="false" onclick="display(4)">Planını Oluştur</a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
             <br>
-            <div class="tab-pane fade show active" id="nav-welcome" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="tab-pane fade  show active" id="nav-welcome" role="tabpanel" aria-labelledby="nav-home-tab">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Minimum izin, maksimum tatil!</h5>
@@ -126,7 +125,7 @@
                             Toplam izin gün sayınızı girdikten sonra bırakın sistem sizin için en verimli olacak şekilde
                             izninizi planlasın. Alternatif üç plan seçeneğiyle resmi tatiller etrafında minimum izin
                             günü kullanarak maksimum tatil yapmanın keyfini yaşayın. Eğer önerilen planlar size
-                            uymuyorsa Planını Kendin Oluştur sekmesinden istediğiniz izinleri seçin. Listede istediğiniz
+                            uymuyorsa Planını Oluştur sekmesinden istediğiniz izinleri seçin. Listede istediğiniz
                             tarihleri göremediyseniz veya blok izin kullanmak istiyorsanız tatil tarih aralığınızı yazın
                             ve listenize ekleyin. İzin planınızın çıktısını alabilir ya da kaydedebilirsiniz. Planlama
                             sistemi herhangi bir şekilde bilgilerinizi saklamamaktadır.
@@ -146,7 +145,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="tab-pane fade " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
                 <table id="tblPlannedVacations1" class="table table-sm table-hover">
                     <thead>
@@ -192,7 +191,7 @@
                     <tbody></tbody>
                 </table>
             </div>
-            <div class="tab-pane fade" id="nav-manuel" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <div class="tab-pane fade " id="nav-manuel" role="tabpanel" aria-labelledby="nav-contact-tab">
 
                 <table id="tblPlannedVacations4" class="table table-sm table-hover">
                     <thead>
@@ -250,12 +249,12 @@
                             Ekle</button>
                     </div>
                 </div>
-               
+
             </div>
         </div>
         <br>
-        <div class="container">
-            <div id="holidayPreview" class="btn-group" role="group" aria-label="Basic example">
+        <div class="container" id="holidayPreview" >
+            <div class="btn-group" role="group" aria-label="Basic example">
                 <div class="input-group-prepend">
                     <div class="input-group-text" id="btnGroupAddon">Tatillerin Dağılımı</div>
                 </div>

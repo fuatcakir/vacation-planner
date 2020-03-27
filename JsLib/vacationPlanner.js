@@ -271,10 +271,27 @@ function planMyVacations(personalData, page) {
     getPlannedVacations(personalData, sortedVacationOptions, page);
 }
 
+function displayAll() {
+    display(4);
+    display(3);
+    display(2);
+    display(1);
+}
 
 function display(page) {
 
+    if (page == 4) {
+        let therIsAplan = isThereAnyManuelPlan();
+        if (therIsAplan) {
+            return;
+        }
+    }
 
+    plan(page);
+
+}
+
+function plan(page) {
     let person = {
         name: 'Fuat',
         surname: 'CAKIR',
@@ -311,6 +328,8 @@ function display(page) {
     let vacationStatusHtml3 = '<h5>Toplam Tatil Günü <span class="badge badge-secondary">' + returnInfo.totalHolidayCountKey + '</span></h5>';
 
     document.getElementById("vacatStatusDiv").style.display = "block";
+    // document.getElementById("holidayPreview").style.display = "block";
+
 
     document.getElementById("vacationStatus1").innerHTML = vacationStatusHtml1;
     document.getElementById("vacationStatus2").innerHTML = vacationStatusHtml2;
@@ -321,7 +340,6 @@ function display(page) {
     }
 
     refreshYearPreview(page, true);
-
 }
 
 function populateTable(person, page) {

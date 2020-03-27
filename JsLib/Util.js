@@ -180,7 +180,10 @@ function repeatedControl(obj) {
   for (var i = tableHeaderRowCount; i < rowCount; i++) {
     if (checkedIndex != i && tblVacations.rows[i].cells[0].childNodes[0].checked == true) {
       selectedSimilarVacat = selectedHldyDesc && tblVacations.rows[i].cells[4].textContent && (selectedHldyDesc.includes(tblVacations.rows[i].cells[4].textContent) || tblVacations.rows[i].cells[4].textContent.includes(selectedHldyDesc));
-      break;
+      if (selectedSimilarVacat) {
+        break;
+      }
+      
     }
   }
 

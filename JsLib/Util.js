@@ -38,11 +38,11 @@ function addRowToTable() {
     let text3 = document.getElementById("manualDatePicker").value.split('-')[1].trim();
     // cell2.appendChild(document.createTextNode(text2+'-'+text3));
     let g = document.createElement('input');
-    g.setAttribute("id", "inputlp" + i);
+    g.setAttribute("id", "inputlp4"+ i);
     g.setAttribute("class", "pointer");
     cell2.appendChild(g);
 
-    var picker = new Litepicker({
+    var pickerManuel = new Litepicker({
       element: g,
       firstDay: 1,
       format: "DD/MM/YYYY",
@@ -60,7 +60,7 @@ function addRowToTable() {
       disableWeekends: false,
       mobileFriendly: true
     });
-    picker.setDateRange(text2, text3);
+    pickerManuel.setDateRange(text2, text3);
 
 
     let dayList = createCalendar();
@@ -94,7 +94,8 @@ function addRowToTable() {
 
     document.getElementById("manualDescription").value = '';
     document.getElementById("manualDatePicker").value = '';
-    new Litepicker({ element: document.getElementById("manualDatePicker") }).clearSelection();
+    // new Litepicker({ element: document.getElementById("manualDatePicker") }).clearSelection();
+    manualDatePicker.clearSelection();
 
     calculateVacations();
     refreshYearPreview(4, false);

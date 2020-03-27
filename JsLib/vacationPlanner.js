@@ -424,7 +424,7 @@ function populateTable(person, page) {
         let text3 = lPad(vacation.dayEnd.day) + "/" + lPad(vacation.dayEnd.month) + "/" + vacation.dayEnd.year;
         // cell2.appendChild(document.createTextNode(text2+'-'+text3));
         let g = document.createElement('input');
-        g.setAttribute("id", "inputlp" + index);
+        g.setAttribute("id", "inputlp"+ page + index);
         g.setAttribute("class", "pointer");
         cell2.appendChild(g);
 

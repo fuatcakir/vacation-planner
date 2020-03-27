@@ -262,7 +262,7 @@
   function getRichContent(pCell, indexLitePicker) {
     let content = '';
     if (pCell.html().indexOf("litepicker") >= 0) {
-      content = document.getElementById("inputlp" + indexLitePicker).value;
+      content = document.getElementById("inputlp4" + indexLitePicker).value;
     } else {
       content = pCell.html();
     }

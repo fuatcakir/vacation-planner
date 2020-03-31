@@ -291,7 +291,7 @@ function display(page) {
 
 }
 
-function plan(page, data) {
+function plan(page) {
     let person = {
         name: 'Fuat',
         surname: 'CAKIR',
@@ -619,6 +619,7 @@ function populateTableWithData(page, data) {
         // cell6.appendChild(text6);
 
         let efficiencyRatio = vacat.holidaycount / vacat.vacationcount;
+
         if (page == 4) {
             let cellRatings = row.insertCell();
             let starCount = 0
@@ -639,6 +640,17 @@ function populateTableWithData(page, data) {
 
         totalEfficencyRatio += efficiencyRatio;
     }
+
+    document.getElementById("vacationCount").value = data.data.totalvacationcount ? data.data.totalvacationcount : 14;
+
+    document.getElementById("vacatStatusDiv").style.display = "block";
+    document.getElementById("btnSharePlan").style.display = "inline-block";
+
+    if (page == 4) {
+        calculateVacations();
+    }
+
+    refreshYearPreview(page, false);
 
     return { totalHolidayCountKey: totalHolidayCount, totalEfficencyRatioKey: totalEfficencyRatio };
 }

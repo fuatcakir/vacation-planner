@@ -467,6 +467,8 @@ function prepareSharePanel() {
   let vpJSON = {};
   vpJSON.tablevacat = [];
   vpJSON.sharedesc = "";
+  let totalvacatcount = document.getElementById('vacationCount').value;
+  vpJSON.totalvacationcount = totalvacatcount ? totalvacatcount : 14;
 
   for (let index = tableHeaderRowCount; index < rowCount; index++) {
     if (manuelPlan &&
@@ -488,42 +490,44 @@ function prepareSharePanel() {
     vpJSON.tablevacat[index - 1] = myRow;
   }
 
-  const data = vpJSON;
-  /** */
-  fetch('https://vphrestapi.herokuapp.com/api/vacations/', {
-    method: 'POST', // or 'PUT'
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('Success:', data);
-      console.log(' Success ID :', url + '?q=' + data.data._id);
-      document.getElementById('sharingurl').value = url + '?q=' + data.data._id;
-      let surl = url + '?q=' + data.data._id;
+  if (vpJSON.tablevacat.length > 0) {
 
-      document.getElementById('anyShareBtn').setAttribute('data-a2a-url', surl);
+    const data = vpJSON;
+    /** */
+    fetch('https://vphrestapi.herokuapp.com/api/vacations/', {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
     })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success:', data);
+        console.log(' Success ID :', url + '?q=' + data.data._id);
+        document.getElementById('sharingurl').value = url + '?q=' + data.data._id;
+        let surl = url + '?q=' + data.data._id;
+
+        document.getElementById('anyShareBtn').setAttribute('data-a2a-url', surl);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
 }
 
-function myCopyFunction() {
+function copyText() {
   /* Get the text field */
   var copyText = document.getElementById("sharingurl");
 
   /* Select the text field */
   copyText.select();
-  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
 
   /* Copy the text inside the text field */
   document.execCommand("copy");
 
   /* Alert the copied text */
-  alert("Link kopyalandı: " + copyText.value);
+  // alert("Copied the text: " + copyText.value);
 }
 
 function outFunc() {

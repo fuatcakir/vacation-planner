@@ -207,6 +207,7 @@ function repeatedControl(obj) {
 
 function showWelcomePage() {
   $('#nav-tab a[href="#nav-welcome"]').tab('show');
+  document.getElementById("btnSharePlan").style.display = "none";
 }
 
 function chooseDescription(desc1, desc2) {
@@ -439,20 +440,105 @@ function isThereAnyManuelPlan() {
   return false;
 }
 
-//JSON
-$(document).ready(function () {
-  let urlString = window.location.href;
-  let url = new URL(urlString);
-  let q = url.get("q");
-  fetch('https://vphrestapi.herokuapp.com/api/vacations/' + q)
-    .then((response) => {
-      response.json();
-    })
-    .then((data) => {
-      console.log(data);
-    });
+function prepareSharePanel() {
+  let url = window.location.href;
 
-});
+  let table = document.getElementById("tblPlannedVacations3");
+
+  let panelIndx = 0;
+  if (document.getElementById('nav-sugplan1-tab').getAttribute('aria-selected') == "true") {
+    table = document.getElementById("tblPlannedVacations1");
+    panelIndx = 1;
+  } else if (document.getElementById('nav-sugplan2-tab').getAttribute('aria-selected') == "true") {
+    table = document.getElementById("tblPlannedVacations2");
+    panelIndx = 2;
+  } else if (document.getElementById('nav-sugplan3-tab').getAttribute('aria-selected') == "true") {
+    table = document.getElementById("tblPlannedVacations3");
+    panelIndx = 3;
+  } else if (document.getElementById('nav-manuel-tab').getAttribute('aria-selected') == "true") {
+    table = document.getElementById("tblPlannedVacations4");
+    panelIndx = 4;
+  }
+
+  let manuelPlan = document.getElementById('nav-manuel-tab').getAttribute('aria-selected') == "true";
+
+  var tableHeaderRowCount = 1;
+  var rowCount = table.rows.length;
+  let vpJSON = {};
+  vpJSON.tablevacat = [];
+  vpJSON.sharedesc = "";
+
+  for (let index = tableHeaderRowCount; index < rowCount; index++) {
+    if (manuelPlan &&
+      table.rows[index].cells[0].childNodes[0].checked == false) {
+      continue;
+    }
+    const vRow = table.rows[index];
+
+    let startDate = document.getElementById("inputlp" + panelIndx + '' + index).value.split('-')[0].trim();
+    let endDate = document.getElementById("inputlp" + panelIndx + '' + index).value.split('-')[1].trim();
+
+    let myRow = {
+      daystart: startDate.split('/')[2] + '-' + startDate.split('/')[1] + '-' + startDate.split('/')[0],
+      dayend: endDate.split('/')[2] + '-' + endDate.split('/')[1] + '-' + endDate.split('/')[0],
+      vacationcount: parseFloat(table.rows[index].cells[2].textContent),
+      holidaycount: parseFloat(table.rows[index].cells[3].textContent),
+      description: table.rows[index].cells[4].textContent
+    }
+    vpJSON.tablevacat[index - 1] = myRow;
+  }
+
+  const data = vpJSON;
+  /** */
+  fetch('https://vphrestapi.herokuapp.com/api/vacations/', {
+    method: 'POST', // or 'PUT'
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Success:', data);
+      console.log(' Success ID :', url + '?q=' + data.data._id);
+      document.getElementById('sharingurl').value = url + '?q=' + data.data._id;
+      let surl = url + '?q=' + data.data._id;
+
+      document.getElementById('anyShareBtn').setAttribute('data-a2a-url', surl);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+function myCopyFunction() {
+  /* Get the text field */
+  var copyText = document.getElementById("sharingurl");
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+
+  /* Alert the copied text */
+  alert("Link kopyalandı: " + copyText.value);
+}
+
+function outFunc() {
+  var tooltip = document.getElementById("myTooltip");
+  tooltip.innerHTML = "Copy to clipboard";
+}
+
+function changeFooterVisiblty(pHidden) {
+  var which = document.getElementById("holidayPreview");
+
+  if (pHidden)
+    which.style.visibility = "hidden"
+  else
+    which.style.visibility = "visible"
+}
 
 
 

@@ -65,16 +65,6 @@
                 <input id="vacationCount" class="form-control mr-sm-2" type="number" placeholder="Toplam izin Sayısı"
                     aria-label="Toplam izin Sayısı">
                 <button class="btn btn-outline-primary my-2 my-sm-0" type="button" onclick="plan(4)">Planla!</button>
-                <!-- AddToAny BEGIN -->
-                <div class="a2a_kit a2a_kit_size_32 a2a_default_style" data-a2a-title="iznini planla!">
-                    <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
-                </div>
-                <script>
-                    var a2a_config = a2a_config || {};
-                    a2a_config.locale = "tr";
-                </script>
-                <script async src="https://static.addtoany.com/menu/page.js"></script>
-                <!-- AddToAny END -->
             </div>
         </nav>
 
@@ -93,7 +83,27 @@
                     }
                 }
             );
-            
+
+            //JSON test on ?q=5e81e73b0eb35e288c2b7b36 
+            $(document).ready(function () {
+                document.getElementById("btnSharePlan").style.display = "none";
+
+                var url_string = window.location.href
+                var url = new URL(url_string);
+                var q = url.searchParams.get("q");
+                if (q) {
+                    console.log(q);
+
+                    fetch('https://vphrestapi.herokuapp.com/api/vacations/' + q)
+                        .then((response) => {
+                            return response.json();
+                        })
+                        .then((data) => {
+                            console.log(data);
+                        });
+                }
+            });
+
         </script>
 
 
@@ -101,13 +111,13 @@
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-welcome" role="tab"
                     aria-controls="nav-welcome" aria-selected="true" onclick="disableFooter()">Hoşgeldiniz</a>
-                <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                <a class="nav-item nav-link" id="nav-sugplan1-tab" data-toggle="tab" href="#nav-home" role="tab"
                     aria-controls="nav-home" aria-selected="false" onclick="display(1)">Önerilen Plan 1</a>
-                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                <a class="nav-item nav-link" id="nav-sugplan2-tab" data-toggle="tab" href="#nav-profile" role="tab"
                     aria-controls="nav-profile" aria-selected="false" onclick="display(2)">Önerilen Plan 2</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                <a class="nav-item nav-link" id="nav-sugplan3-tab" data-toggle="tab" href="#nav-contact" role="tab"
                     aria-controls="nav-contact" aria-selected="false" onclick="display(3)">Önerilen Plan 3</a>
-                <a class="nav-item nav-link " id="nav-contact-tab" data-toggle="tab" href="#nav-manuel" role="tab"
+                <a class="nav-item nav-link " id="nav-manuel-tab" data-toggle="tab" href="#nav-manuel" role="tab"
                     aria-controls="nav-manuel" aria-selected="false" onclick="display(4)">Planını Oluştur</a>
             </div>
         </nav>
@@ -253,7 +263,7 @@
             </div>
         </div>
         <br>
-        <div class="container" id="holidayPreview" >
+        <div class="container" id="holidayPreview" style="visibility: visible;">
             <div class="btn-group" role="group" aria-label="Basic example">
                 <div class="input-group-prepend">
                     <div class="input-group-text" id="btnGroupAddon">Tatillerin Dağılımı</div>
@@ -270,7 +280,61 @@
                 <button id="btnOct" type="button" class="btn btn-secondary disabled">Ekim</button>
                 <button id="btnNov" type="button" class="btn btn-secondary disabled">Kasım</button>
                 <button id="btnDec" type="button" class="btn btn-secondary disabled">Aralık</button>
+
+
             </div>
+            <button id="btnSharePlan" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop"
+                onclick="prepareSharePanel()">
+                Planı Paylaş!</button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Paylaşım Linki</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <input id="sharingurl" type="text" disabled class="form-control"
+                                    placeholder="Recipient's username" aria-label="Recipient's username"
+                                    aria-describedby="button-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                                        onclick=" myCopyFunction()" data-toggle="tooltip" data-placement="top"
+                                        title="linki kopyala">Kopyala</button>
+                                </div>
+                            </div>
+                            <div id="btnShareLink">
+                                <div id="anyShareBtn" class="a2a_kit a2a_kit_size_32 a2a_default_style"
+                                    data-a2a-url="https://fuatcakir.github.io/vacation-planner/" data-a2a-title="İşte benim izin planım!">
+                                    <a class="a2a_button_whatsapp"></a>
+                                    <a class="a2a_button_linkedin"></a>
+                                    <a class="a2a_button_email"></a>
+                                    <a class="a2a_button_facebook"></a>
+                                    <a class="a2a_button_twitter"></a>
+                                    <a class="a2a_button_telegram"></a>
+                                    <a class="a2a_button_tumblr"></a>
+                                    <a class="a2a_button_evernote"></a>
+                                    <a class="a2a_button_facebook_messenger"></a>
+                                    <a class="a2a_button_google_gmail"></a>
+                                    <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+
         </div>
         <br>
         <div class="container" id="vacatStatusDiv" style="display:none">
@@ -304,7 +368,7 @@
                     sheetName: "İzin Planım"
                 });
             });
-        });
+        });   
     </script>
 
     <!-- Optional JavaScript -->
@@ -316,6 +380,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+
+    <script async src="https://static.addtoany.com/menu/page.js"></script>
+
 
 </body>
 

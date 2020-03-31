@@ -38,7 +38,7 @@ function addRowToTable() {
     let text3 = document.getElementById("manualDatePicker").value.split('-')[1].trim();
     // cell2.appendChild(document.createTextNode(text2+'-'+text3));
     let g = document.createElement('input');
-    g.setAttribute("id", "inputlp4"+ i);
+    g.setAttribute("id", "inputlp4" + i);
     g.setAttribute("class", "pointer");
     cell2.appendChild(g);
 
@@ -91,6 +91,10 @@ function addRowToTable() {
     let cell6 = row.insertCell();
     let text6 = document.createTextNode(document.getElementById("manualDescription").value);
     cell6.appendChild(text6);
+
+    let cellRatings = row.insertCell();
+    cellRatings.innerHTML = '';
+
 
     document.getElementById("manualDescription").value = '';
     document.getElementById("manualDatePicker").value = '';
@@ -159,7 +163,7 @@ function calculateVacations() {
   document.getElementById("vacationStatus2").innerHTML = vacationStatusHtml2;
   document.getElementById("vacationStatus3").innerHTML = vacationStatusHtml3;
 
-  return decimalFormat(totalPlannedVacations+totalUnPlannedVacationCount);
+  return decimalFormat(totalPlannedVacations + totalUnPlannedVacationCount);
 }
 function disableFooter() {
   document.getElementById("vacatStatusDiv").style.display = "none";
@@ -422,18 +426,33 @@ function isThereAnyManuelPlan() {
   var rowCount = tblVacations.rows.length;
   let checkedHolidays = false;
   for (var i = tableHeaderRowCount; i < rowCount; i++) {
-    if ( tblVacations.rows[i].cells[0].childNodes[0].checked) {
+    if (tblVacations.rows[i].cells[0].childNodes[0].checked) {
       checkedHolidays = true;
       break;
     }
   }
-  let vacatCount = calculateVacations() ;
-  let enteredVacatCount= document.getElementById("vacationCount").value;
+  let vacatCount = calculateVacations();
+  let enteredVacatCount = document.getElementById("vacationCount").value;
   if (checkedHolidays && enteredVacatCount && vacatCount == enteredVacatCount) {
     return true;
   }
   return false;
 }
+
+//JSON
+$(document).ready(function () {
+  let urlString = window.location.href;
+  let url = new URL(urlString);
+  let q = url.get("q");
+  fetch('https://vphrestapi.herokuapp.com/api/vacations/' + q)
+    .then((response) => {
+      response.json();
+    })
+    .then((data) => {
+      console.log(data);
+    });
+
+});
 
 
 

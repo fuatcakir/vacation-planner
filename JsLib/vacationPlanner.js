@@ -526,8 +526,9 @@ function populateTableWithData(page, data) {
     }
 
     let mySharedData = data.data.tablevacat;
-    for (let index = tableHeaderRowCount; index < mySharedData.length; index++) {
-        const vacat = mySharedData[index-1];
+    let sharedDataIndx = 0;
+    for (let index = tableHeaderRowCount; index < mySharedData.length+1; index++) {
+        const vacat = mySharedData[sharedDataIndx];
 
 
 
@@ -549,7 +550,7 @@ function populateTableWithData(page, data) {
                 table4RowClick(this);
             });
         }
-        let text1 = document.createTextNode(++index + ". izin");
+        let text1 = document.createTextNode(index + ". izin");
         if (page == 4) {
             let chk = document.createElement('input');
             chk.setAttribute("id", "chk" + index);
@@ -637,7 +638,7 @@ function populateTableWithData(page, data) {
             cellRatings.innerHTML = getStarRatings(starCount);
         }
 
-
+        sharedDataIndx = sharedDataIndx + 1;
         totalEfficencyRatio += efficiencyRatio;
     }
 

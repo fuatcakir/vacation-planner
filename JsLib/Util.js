@@ -470,6 +470,7 @@ function prepareSharePanel() {
   let totalvacatcount = document.getElementById('vacationCount').value;
   vpJSON.totalvacationcount = totalvacatcount ? totalvacatcount : 14;
 
+  let vacationIndex = 0;
   for (let index = tableHeaderRowCount; index < rowCount; index++) {
     if (manuelPlan &&
       table.rows[index].cells[0].childNodes[0].checked == false) {
@@ -477,17 +478,18 @@ function prepareSharePanel() {
     }
     const vRow = table.rows[index];
 
-    let startDate = document.getElementById("inputlp" + panelIndx + '' + index).value.split('-')[0].trim();
-    let endDate = document.getElementById("inputlp" + panelIndx + '' + index).value.split('-')[1].trim();
+    let startDate = table.rows[index].cells[1].childNodes[0].value.split('-')[0].trim();
+    let endDate = table.rows[index].cells[1].childNodes[0].value.split('-')[1].trim();
 
     let myRow = {
       daystart: startDate.split('/')[2] + '-' + startDate.split('/')[1] + '-' + startDate.split('/')[0],
       dayend: endDate.split('/')[2] + '-' + endDate.split('/')[1] + '-' + endDate.split('/')[0],
-      vacationcount: parseFloat(table.rows[index].cells[2].textContent),
-      holidaycount: parseFloat(table.rows[index].cells[3].textContent),
+      vacationcount: parseFloat(table.rows[index].cells[2].textContent.replace(',','.')),
+      holidaycount: parseFloat(table.rows[index].cells[3].textContent.replace(',','.')),
       description: table.rows[index].cells[4].textContent
     }
-    vpJSON.tablevacat[index - 1] = myRow;
+    vpJSON.tablevacat[vacationIndex] = myRow;
+    vacationIndex = vacationIndex + 1;
   }
 
   if (vpJSON.tablevacat.length > 0) {

@@ -291,7 +291,7 @@ function display(page) {
 
 }
 
-function plan(page) {
+function plan(page, data) {
     let person = {
         name: 'Fuat',
         surname: 'CAKIR',
@@ -426,7 +426,7 @@ function populateTable(person, page) {
         let text3 = lPad(vacation.dayEnd.day) + "/" + lPad(vacation.dayEnd.month) + "/" + vacation.dayEnd.year;
         // cell2.appendChild(document.createTextNode(text2+'-'+text3));
         let g = document.createElement('input');
-        g.setAttribute("id", "inputlp"+ page + index);
+        g.setAttribute("id", "inputlp" + page + index);
         g.setAttribute("class", "pointer");
         cell2.appendChild(g);
 
@@ -485,6 +485,160 @@ function populateTable(person, page) {
 
         totalEfficencyRatio += vacation.efficiencyRatio;
     });
+
+    return { totalHolidayCountKey: totalHolidayCount, totalEfficencyRatioKey: totalEfficencyRatio };
+}
+
+function populateTableWithData(page, data) {
+    let tblVacations = null;
+    switch (page) {
+        case 1:
+            tblVacations = document.getElementById("tblPlannedVacations1");
+            $('#nav-tab a[href="#nav-home"]').tab('show');
+            break;
+        case 2:
+            tblVacations = document.getElementById("tblPlannedVacations2");
+            $('#nav-tab a[href="#nav-profile"]').tab('show');
+            break;
+        case 3:
+            tblVacations = document.getElementById("tblPlannedVacations3");
+            $('#nav-tab a[href="#nav-contact"]').tab('show');
+            break;
+        case 4:
+            tblVacations = document.getElementById("tblPlannedVacations4");
+            $('#nav-tab a[href="#nav-manuel"]').tab('show');
+            break;
+        default:
+            tblVacations = document.getElementById("tblPlannedVacations1");
+            $('#nav-tab a[href="#nav-home"]').tab('show');
+            break;
+    }
+
+    //clear table
+    var tableHeaderRowCount = 1;
+    var rowCount = tblVacations.rows.length;
+    let totalHolidayCount = 0;
+    let totalEfficencyRatio = 0;
+
+
+    for (var i = tableHeaderRowCount; i < rowCount; i++) {
+        tblVacations.deleteRow(tableHeaderRowCount);
+    }
+
+    let mySharedData = data.data.tablevacat;
+    for (let index = tableHeaderRowCount; index < mySharedData.length; index++) {
+        const vacat = mySharedData[index-1];
+
+
+
+
+        let row = tblVacations.getElementsByTagName('tbody')[0].insertRow();
+
+        //renklendirme kapalı
+        // if (vacation.efficiencyRatio >= 4) {
+        //     row.setAttribute('class', 'table-success');
+
+        // } else if (vacation.efficiencyRatio > 2.5 && vacation.efficiencyRatio < 4) {
+        //     row.setAttribute('class', 'table-warning');
+        // }
+
+
+        let cell1 = row.insertCell();
+        if (page == 4) {
+            row.addEventListener('click', function name() {
+                table4RowClick(this);
+            });
+        }
+        let text1 = document.createTextNode(++index + ". izin");
+        if (page == 4) {
+            let chk = document.createElement('input');
+            chk.setAttribute("id", "chk" + index);
+            chk.setAttribute("type", "checkbox");
+            chk.setAttribute("checked", "checked");
+            chk.addEventListener('change', function () {
+                // if (this.checked) {
+                //     let repeatedFlg = repeatedControl(this.id);
+                //     if (repeatedFlg) {
+                //         this.checked = false;
+                //     }
+                // }
+                // calculateVacations();
+            });
+
+            cell1.appendChild(chk);
+        } else {
+            cell1.appendChild(text1);
+        }
+
+        let cell2 = row.insertCell();
+        let dStart = new Date(vacat.daystart);
+        let dEnd = new Date(vacat.dayend);
+
+
+        let text2 = lPad(dStart.getDate()) + "/" + lPad(dStart.getMonth() + 1) + "/" + dStart.getFullYear();
+        let text3 = lPad(dEnd.getDate()) + "/" + lPad(dEnd.getMonth() + 1) + "/" + dEnd.getFullYear();
+        // cell2.appendChild(document.createTextNode(text2+'-'+text3));
+        let g = document.createElement('input');
+        g.setAttribute("id", "inputlp" + page + index);
+        g.setAttribute("class", "pointer");
+        cell2.appendChild(g);
+
+        var picker = new Litepicker({
+            element: g,
+            firstDay: 1,
+            format: "DD/MM/YYYY",
+            lang: 'tr-TR',
+            numberOfMonths: 1,
+            numberOfColumns: 1,
+            selectForward: false,
+            selectBackward: false,
+            splitView: false,
+            inlineMode: false,
+            singleMode: false,
+            autoApply: true,
+            showWeekNumbers: false,
+            showTooltip: true,
+            disableWeekends: true,
+            mobileFriendly: true
+        });
+        picker.setDateRange(text2, text3);
+
+
+        let cell4 = row.insertCell();
+        let text4 = document.createTextNode(" " + decimalFormat(vacat.vacationcount));
+        cell4.appendChild(text4);
+
+        let cell5 = row.insertCell();
+        let text5 = document.createTextNode(" " + vacat.holidaycount);
+        cell5.appendChild(text5);
+        totalHolidayCount += vacat.holidaycount;
+
+        let cell6 = row.insertCell();
+        // let text6 = document.createTextNode(vacation.description);
+        cell6.innerHTML = vacat.description;
+        // cell6.appendChild(text6);
+
+        let efficiencyRatio = vacat.holidaycount / vacat.vacationcount;
+        if (page == 4) {
+            let cellRatings = row.insertCell();
+            let starCount = 0
+            if (efficiencyRatio >= 9) {
+                starCount = 5;
+            } else if (efficiencyRatio < 9 && efficiencyRatio >= 4) {
+                starCount = 4;
+            } else if (efficiencyRatio > 2.5 && efficiencyRatio < 4) {
+                starCount = 3;
+            } else if (efficiencyRatio > 1 && efficiencyRatio <= 2.5) {
+                starCount = 2;
+            } else {
+                starCount = 1;
+            }
+            cellRatings.innerHTML = getStarRatings(starCount);
+        }
+
+
+        totalEfficencyRatio += efficiencyRatio;
+    }
 
     return { totalHolidayCountKey: totalHolidayCount, totalEfficencyRatioKey: totalEfficencyRatio };
 }

@@ -92,14 +92,14 @@
                 var url = new URL(url_string);
                 var q = url.searchParams.get("q");
                 if (q) {
-                    console.log(q);
-
+                    console.log(q); 
                     fetch('https://vphrestapi.herokuapp.com/api/vacations/' + q)
                         .then((response) => {
                             return response.json();
                         })
                         .then((data) => {
                             console.log(data);
+                            populateTableWithData(4, data);
                         });
                 }
             });
@@ -305,13 +305,14 @@
                                     aria-describedby="button-addon2">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" id="button-addon2"
-                                        onclick=" myCopyFunction()" data-toggle="tooltip" data-placement="top"
+                                        onclick="myCopyFunction()" data-toggle="tooltip" data-placement="top"
                                         title="linki kopyala">Kopyala</button>
                                 </div>
                             </div>
                             <div id="btnShareLink">
                                 <div id="anyShareBtn" class="a2a_kit a2a_kit_size_32 a2a_default_style"
-                                    data-a2a-url="https://fuatcakir.github.io/vacation-planner/" data-a2a-title="İşte benim izin planım!">
+                                    data-a2a-url="https://fuatcakir.github.io/vacation-planner/"
+                                    data-a2a-title="İşte benim izin planım!">
                                     <a class="a2a_button_whatsapp"></a>
                                     <a class="a2a_button_linkedin"></a>
                                     <a class="a2a_button_email"></a>

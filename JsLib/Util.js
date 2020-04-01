@@ -103,6 +103,9 @@ function addRowToTable() {
 
     calculateVacations();
     refreshYearPreview(4, false);
+  }else{
+    alert("Lütfen tatil aralığını seçiniz.");
+    document.getElementById("manualDatePicker").focus();
   }
 }
 

@@ -137,8 +137,9 @@
                             günü kullanarak maksimum tatil yapmanın keyfini yaşayın. Eğer önerilen planlar size
                             uymuyorsa Planını Oluştur sekmesinden istediğiniz izinleri seçin. Listede istediğiniz
                             tarihleri göremediyseniz veya blok izin kullanmak istiyorsanız tatil tarih aralığınızı yazın
-                            ve listenize ekleyin. İzin planınızın çıktısını alabilir ya da kaydedebilirsiniz. Planlama
-                            sistemi herhangi bir şekilde bilgilerinizi saklamamaktadır.
+                            ve listenize ekleyin. İzin planınızın çıktısını alabilir ya da paylaşabilirsiniz. 
+                            Planlamaya izin sayınızı girerek başlamak için sağ üstteki <span class = "pointer" style="color:rgb(0, 162, 255);font-weight:bold" onclick="focusTotalVacation()">panele gidiniz</span>.    
+                            
                         </p>
                         <p class="card-text">
                             Her türlü öneri ve görüşleriniz için bana aşağıdaki kanallardan ulaşabilirsiniz. Tatiliniz
@@ -292,8 +293,9 @@
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Paylaşım Linki</h5>
+                        <div class="modal-header"> 
+                            <div id="loader" class="loader"></div>
+                            <h5 class="modal-title" id="staticBackdropLabel">Paylaşım Linki Hazırlanıyor</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

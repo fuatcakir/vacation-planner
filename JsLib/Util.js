@@ -441,6 +441,8 @@ function isThereAnyManuelPlan() {
 }
 
 function prepareSharePanel() {
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("staticBackdropLabel").innerText = "Paylaşım Linki Hazırlanıyor"; 
   let url = window.location.href;
 
   let table = document.getElementById("tblPlannedVacations3");
@@ -505,8 +507,9 @@ function prepareSharePanel() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Success:', data);
-        console.log(' Success ID :', url + '?q=' + data.data._id);
+          document.getElementById("loader").style.display = "none";
+          document.getElementById("staticBackdropLabel").innerText = "Paylaşım Linki Hazır";
+          
         document.getElementById('sharingurl').value = url + '?q=' + data.data._id;
         let surl = url + '?q=' + data.data._id;
 
@@ -546,5 +549,8 @@ function changeFooterVisiblty(pHidden) {
     which.style.visibility = "visible"
 }
 
+function focusTotalVacation() {
+  document.getElementById("vacationCount").focus();
+}
 
 

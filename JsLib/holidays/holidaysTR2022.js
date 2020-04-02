@@ -115,7 +115,7 @@ let holidayTR2022_17 = {
     year: 2022,
     month: 10,
     day: 29,
-    dayType: 'E', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
+    dayType: 'H', //WI : Haftaici, WE:Haftasonu, E: Arafe, H : Resmi tatil
     description: 'Cumhuriyet Bayramı (28 Ekim[Arefe] - 29 Ekim)'
 };
 

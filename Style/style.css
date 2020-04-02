@@ -61,3 +61,73 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+
+.zui-table {
+  border: none;
+  border-right: solid 1px #DDEFEF;
+  border-collapse: separate;
+  border-spacing: 0;
+  font: normal 13px Arial, sans-serif;
+}
+
+.zui-table thead th {
+  background-color: #DDEFEF;
+  border: 1px solid black;;
+  color: #336B6B;
+  padding: 10px;
+  text-align: left;
+  text-shadow: 1px 1px 1px #fff;
+  white-space: nowrap;
+}
+
+.zui-table tbody td {
+  border-bottom: solid 1px #DDEFEF;
+  color: #333;
+  /* padding: 10px; */
+  text-shadow: 1px 1px 1px #fff;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.zui-wrapper {
+  position: relative;
+}
+
+.zui-scroller {
+  margin-left: 170px;
+  overflow-x: scroll;
+  overflow-y: visible;
+  padding-bottom: 1px;
+  padding-top: 5px;
+  /* width: 300px; */
+}
+
+.zui-table .zui-sticky-col {
+  border-left: solid 1px #DDEFEF;
+  border-right: solid 1px #DDEFEF;
+  left: 0;
+  position: absolute;
+  top: auto;
+  width: 170px;
+}
+
+.comptablecellBG{
+  background-color: rgb(255, 121, 121); 
+}
+
+.comptablecellWEBG{
+  background-color: rgb(253, 255, 162); 
+}
+
+.comptablecellTodayBG{
+  background-color: rgb(95, 151, 253); 
+}
+
+.comptablecellEveBG{
+  background-color: rgb(184, 253, 182); 
+}
+
+.comptablecellHolidayBG{
+  background-color: rgb(92, 250, 105); 
+}

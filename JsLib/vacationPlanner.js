@@ -279,7 +279,7 @@ function displayAll() {
 }
 
 function display(page) {
-
+    visibiltyHolidayPreButtons(true);
     if (page == 4) {
         let therIsAplan = isThereAnyManuelPlan();
         if (therIsAplan) {

@@ -256,3 +256,23 @@ function isNotImpHolidayPlannedMoth(pVacList, pCurrentVacat) {
     });
     return false;
 }
+
+function isItWeekend(pSearchDate) {
+    let searchDt = new Date(pSearchDate);
+    let searchDtM = new Date(searchDt.getFullYear(), searchDt.getMonth(), searchDt.getDate(), 0, 0, 0, 0);
+    if (searchDtM.getDay() == 0 || searchDtM.getDay() == 6) {
+        return true;
+    }
+    return false;
+}
+
+function isItToday(pSearchDate) {
+    let pDay = new Date()
+    let searchDt = new Date(pSearchDate);
+    let searchDtM = new Date(searchDt.getFullYear(), searchDt.getMonth(), searchDt.getDate(), 0, 0, 0, 0);
+    if (pDay.getFullYear() == searchDtM.getFullYear() && pDay.getMonth() == searchDtM.getMonth() && pDay.getDate() == searchDtM.getDate()) {
+        return true;
+    }
+    return false;
+}
+

@@ -103,7 +103,7 @@ function addRowToTable() {
 
     calculateVacations();
     refreshYearPreview(4, false);
-  }else{
+  } else {
     alert("Lütfen tatil aralığını seçiniz.");
     document.getElementById("manualDatePicker").focus();
   }
@@ -169,8 +169,8 @@ function calculateVacations() {
   return decimalFormat(totalPlannedVacations + totalUnPlannedVacationCount);
 }
 function disableFooter() {
-  document.getElementById("vacatStatusDiv").style.display = "none";
   // document.getElementById("holidayPreview").style.display = "none";
+  visibiltyHolidayPreButtons(false);
 }
 
 function msg(txt) {
@@ -210,7 +210,7 @@ function repeatedControl(obj) {
 
 function showWelcomePage() {
   $('#nav-tab a[href="#nav-welcome"]').tab('show');
-  document.getElementById("btnSharePlan").style.display = "none";
+  visibiltyHolidayPreButtons(false);
 }
 
 function chooseDescription(desc1, desc2) {
@@ -445,7 +445,7 @@ function isThereAnyManuelPlan() {
 
 function prepareSharePanel() {
   document.getElementById("loader").style.display = "block";
-  document.getElementById("staticBackdropLabel").innerText = "Paylaşım Linki Hazırlanıyor"; 
+  document.getElementById("staticBackdropLabel").innerText = "Paylaşım Linki Hazırlanıyor";
   let url = window.location.href;
 
   let table = document.getElementById("tblPlannedVacations3");
@@ -489,8 +489,8 @@ function prepareSharePanel() {
     let myRow = {
       daystart: startDate.split('/')[2] + '-' + startDate.split('/')[1] + '-' + startDate.split('/')[0],
       dayend: endDate.split('/')[2] + '-' + endDate.split('/')[1] + '-' + endDate.split('/')[0],
-      vacationcount: parseFloat(table.rows[index].cells[2].textContent.replace(',','.')),
-      holidaycount: parseFloat(table.rows[index].cells[3].textContent.replace(',','.')),
+      vacationcount: parseFloat(table.rows[index].cells[2].textContent.replace(',', '.')),
+      holidaycount: parseFloat(table.rows[index].cells[3].textContent.replace(',', '.')),
       description: table.rows[index].cells[4].textContent
     }
     vpJSON.tablevacat[vacationIndex] = myRow;
@@ -510,9 +510,9 @@ function prepareSharePanel() {
     })
       .then((response) => response.json())
       .then((data) => {
-          document.getElementById("loader").style.display = "none";
-          document.getElementById("staticBackdropLabel").innerText = "Paylaşım Linki Hazır";
-          
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("staticBackdropLabel").innerText = "Paylaşım Linki Hazır";
+
         document.getElementById('sharingurl').value = url + '?q=' + data.data._id;
         let surl = url + '?q=' + data.data._id;
 
@@ -554,6 +554,185 @@ function changeFooterVisiblty(pHidden) {
 
 function focusTotalVacation() {
   document.getElementById("vacationCount").focus();
+}
+
+function addLeaveCompareTable(data) {
+  let selectedYaar = parseInt(document.getElementById('inputGroupSelectYears').value);
+  // let selectedYaar = 2020;
+
+  if (selectedYaar) {
+    selectedYaar = parseInt(selectedYaar);
+  }
+
+  let tableB = document.getElementById('tableLeaveCompareB');
+  let tableBTR = document.createElement('tr');
+
+  for (let index = 0; index < 13; index++) {
+    let tableBTd = document.createElement('td');
+
+    // if (index == 0) {
+    //   let chk = document.createElement('input');
+    //   chk.setAttribute("id", "chklpc" + index);
+    //   chk.setAttribute("type", "checkbox");
+    //   // chk.setAttribute("class", "zui-sticky-col");
+
+    //   cell.appendChild(chk);
+    // } else 
+    if (index == 0) {
+      let inp = document.createElement('input');
+      inp.setAttribute("id", "txtIdlpc" + index);
+      inp.setAttribute("type", "text");
+      inp.setAttribute("value", data._id);
+      tableBTd.setAttribute("class", "zui-sticky-col");
+      tableBTd.appendChild(inp);
+    } else {
+      var daysIndex = new Date(selectedYaar, index - 1, 1, 1, 1, 1, 1);
+
+      let subtable = document.createElement('table');
+      subtable.setAttribute("border", "1");
+      let tbody = document.createElement('tbody');
+      let tr = document.createElement('tr');
+
+
+      while (daysIndex.getFullYear() <= selectedYaar && daysIndex.getMonth() == (index - 1)) {
+        let td = document.createElement('td');
+        td.appendChild(document.createTextNode(String(daysIndex.getDate()).padStart(2, '0')));
+        let searchDate = selectedYaar + "-" + String(index).padStart(2, '0') + "-" + String(daysIndex.getDate()).padStart(2, '0');
+
+        if (isItWeekend(searchDate)) {
+          td.setAttribute("class", "comptablecellWEBG");
+        }
+        let pDay = {};
+        pDay.year = selectedYaar;
+        pDay.month = index;
+        pDay.day = daysIndex.getDate();
+        holidayCheck(pDay)
+        if (pDay.dayType == 'E') {
+          td.setAttribute("class", "comptablecellEveBG");
+          td.setAttribute("title", pDay.description);
+        }
+        if (pDay.dayType == 'H') {
+          td.setAttribute("class", "comptablecellHolidayBG");
+          td.setAttribute("title", pDay.description);
+        }
+
+        if (isItToday(searchDate)) {
+          td.setAttribute("class", "comptablecellTodayBG");
+        }
+        if (isItVacation(data, searchDate)) {
+          td.setAttribute("class", "comptablecellBG");
+        }
+        tr.appendChild(td);
+        daysIndex.setDate(daysIndex.getDate() + 1);
+      }
+      tbody.appendChild(tr);
+      subtable.appendChild(tbody);
+      tableBTd.appendChild(subtable);
+    }
+    tableBTR.appendChild(tableBTd);
+    tableB.appendChild(tableBTR);
+  }
+}
+
+
+function addLeaveCompareTableByURL() {
+  var url_string = document.getElementById("txtLeavesCompare").value;
+  if (url_string) {
+    var url = null;
+    var q = null;
+    try {
+      url = new URL(url_string);
+      q = url.searchParams.get("q");
+    } catch (error) {
+      alert('Lütfen ' + window.location.href + ' tarafından verilen paylaşım linkini giriniz.')
+    }
+    if (q) {
+      document.getElementById("loader2").style.display = "block";
+      console.log(q);
+      fetch('https://vphrestapi.herokuapp.com/api/vacations/' + q)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          document.getElementById("loader2").style.display = "none";
+          console.log(data);
+          addLeaveCompareTable(data.data);
+          document.getElementById("txtLeavesCompare").value = "";
+        });
+    } else {
+      alert('Lütfen ' + window.location.href + ' tarafından verilen paylaşım linkini giriniz.')
+    }
+  }
+}
+
+function isItVacation(data, searchDate) {
+  let selectedYaar = parseInt(document.getElementById('inputGroupSelectYears').value);
+  let vacations = data.tablevacat;
+  let isItHoliday = false;
+  for (let index = 0; index < vacations.length; index++) {
+    const vacat = vacations[index];
+    let dStart = new Date(vacat.daystart);
+    let dStartM = new Date(dStart.getFullYear(), dStart.getMonth(), dStart.getDate(), 0, 0, 0, 0);
+
+    let dEnd = new Date(vacat.dayend);
+    let dEndM = new Date(dEnd.getFullYear(), dEnd.getMonth(), dEnd.getDate(), 0, 0, 0, 0);
+
+    let searchDt = new Date(searchDate);
+    let searchDtM = new Date(searchDt.getFullYear(), searchDt.getMonth(), searchDt.getDate(), 0, 0, 0, 0);
+
+    isItHoliday = (searchDtM >= dStartM && searchDtM <= dEndM);
+    if (isItHoliday) {
+      break;
+    }
+  }
+
+  return isItHoliday;
+}
+
+
+function visibiltyHolidayPreButtons(visible) {
+
+  let vdisplay = "none";
+  if (visible) {
+    vdisplay = "inline-block";
+  } else {
+    vdisplay = "none";
+  }
+
+  document.getElementById("btnSharePlan").style.display = vdisplay;
+
+  document.getElementById("btnGroupAddon").style.display = vdisplay;
+
+  document.getElementById("btnJan").style.display = vdisplay;
+
+  document.getElementById("btnFeb").style.display = vdisplay;
+
+  document.getElementById("btnMar").style.display = vdisplay;
+
+  document.getElementById("btnApr").style.display = vdisplay;
+
+  document.getElementById("btnMay").style.display = vdisplay;
+
+  document.getElementById("btnJun").style.display = vdisplay;
+
+  document.getElementById("btnJly").style.display = vdisplay;
+
+  document.getElementById("btnAug").style.display = vdisplay;
+
+  document.getElementById("btnSep").style.display = vdisplay;
+
+  document.getElementById("btnOct").style.display = vdisplay;
+
+  document.getElementById("btnNov").style.display = vdisplay;
+
+  document.getElementById("btnDec").style.display = vdisplay;
+
+  document.getElementById("vacatStatusDiv").style.display = vdisplay;
+
+}
+
+function displayCompareTable() {
+  visibiltyHolidayPreButtons(false);
 }
 
 

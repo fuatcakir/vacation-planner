@@ -86,13 +86,14 @@
 
             //JSON test on ?q=5e81e73b0eb35e288c2b7b36 
             $(document).ready(function () {
-                document.getElementById("btnSharePlan").style.display = "none";
+                document.getElementById("loader2").style.display = "none";
+                visibiltyHolidayPreButtons(false);
 
                 var url_string = window.location.href
                 var url = new URL(url_string);
                 var q = url.searchParams.get("q");
                 if (q) {
-                    console.log(q); 
+                    console.log(q);
                     fetch('https://vphrestapi.herokuapp.com/api/vacations/' + q)
                         .then((response) => {
                             return response.json();
@@ -119,6 +120,9 @@
                     aria-controls="nav-contact" aria-selected="false" onclick="display(3)">Önerilen Plan 3</a>
                 <a class="nav-item nav-link " id="nav-manuel-tab" data-toggle="tab" href="#nav-manuel" role="tab"
                     aria-controls="nav-manuel" aria-selected="false" onclick="display(4)">Planını Oluştur</a>
+                <a class="nav-item nav-link " id="nav-compare-tab" data-toggle="tab" href="#nav-compare" role="tab"
+                    aria-controls="nav-compare" aria-selected="false" onclick="displayCompareTable()">Planları
+                    Karşılaştır</a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -137,9 +141,11 @@
                             günü kullanarak maksimum tatil yapmanın keyfini yaşayın. Eğer önerilen planlar size
                             uymuyorsa Planını Oluştur sekmesinden istediğiniz izinleri seçin. Listede istediğiniz
                             tarihleri göremediyseniz veya blok izin kullanmak istiyorsanız tatil tarih aralığınızı yazın
-                            ve listenize ekleyin. İzin planınızın çıktısını alabilir ya da paylaşabilirsiniz. 
-                            Planlamaya izin sayınızı girerek başlamak için sağ üstteki <span class = "pointer" style="color:rgb(0, 162, 255);font-weight:bold" onclick="focusTotalVacation()">panele gidiniz</span>.    
-                            
+                            ve listenize ekleyin. İzin planınızın çıktısını alabilir ya da paylaşabilirsiniz.
+                            Planlamaya izin sayınızı girerek başlamak için sağ üstteki <span class="pointer"
+                                style="color:rgb(0, 162, 255);font-weight:bold" onclick="focusTotalVacation()">panele
+                                gidiniz</span>.
+
                         </p>
                         <p class="card-text">
                             Her türlü öneri ve görüşleriniz için bana aşağıdaki kanallardan ulaşabilirsiniz. Tatiliniz
@@ -262,6 +268,53 @@
                 </div>
 
             </div>
+
+            <div class="tab-pane fade" id="nav-compare" role="tabpanel" aria-labelledby="nav-compare-tab">
+
+                <div class="container">
+                    <div class="input-group mb-3">
+                        <div id="loader2" class="loader"></div>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">Paylaşım linkini buraya giriniz:</span>
+                        </div>
+                        <input id="txtLeavesCompare" type="text" class="form-control"
+                            placeholder="(Örnek: https://izniniplanla.com/?q=5e85e871f67d1300048e779b)"
+                            aria-label="Paylaşım Linkini Yazınız" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button id="btnLeavesCompare" class="btn btn-outline-primary" type="button"
+                                onclick="addLeaveCompareTableByURL()">Plan
+                                Ekle</button>
+                        </div>
+                    </div>
+
+
+                    <div class="zui-wrapper">
+                        <div class="zui-scroller">
+                            <table class="zui-table" id="tableLeaveCompare">
+                                <thead>
+                                    <tr>
+                                        <th class="zui-sticky-col">ID (Düzenlenebilir)</th>
+                                        <th>Ocak</th>
+                                        <th>Şubat</th>
+                                        <th>Mart</th>
+                                        <th>Nisan</th>
+                                        <th>Mayıs</th>
+                                        <th>Haziran</th>
+                                        <th>Temmuz</th>
+                                        <th>Ağustos</th>
+                                        <th>Eylül</th>
+                                        <th>Ekim</th>
+                                        <th>Kasım</th>
+                                        <th>Aralık</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableLeaveCompareB"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
         <br>
         <div class="container" id="holidayPreview" style="visibility: visible;">
@@ -293,7 +346,7 @@
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header"> 
+                        <div class="modal-header">
                             <div id="loader" class="loader"></div>
                             <h5 class="modal-title" id="staticBackdropLabel">Paylaşım Linki Hazırlanıyor</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -302,7 +355,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="input-group mb-3">
-                                <input id="sharingurl" type="text"  class="form-control"
+                                <input id="sharingurl" type="text" class="form-control"
                                     placeholder="http://izniniplanla.com/" aria-label="http://izniniplanla.com/"
                                     aria-describedby="button-addon2">
                                 <div class="input-group-append">
@@ -363,6 +416,14 @@
     </div>
 
     <script type="text/javascript">
+        document.getElementById("txtLeavesCompare").addEventListener(
+            "keypress", function (event) {
+                if (event.keyCode == 13) {
+                    addLeaveCompareTableByURL();
+                }
+            }
+        );
+
         $(function () {
             $("#btnExport").click(function () {
                 $("#tblPlannedVacations4").table2excel({

@@ -699,8 +699,6 @@ function visibiltyHolidayPreButtons(visible) {
     vdisplay = "none";
   }
 
-  document.getElementById("btnSharePlan").style.display = vdisplay;
-
   document.getElementById("btnGroupAddon").style.display = vdisplay;
 
   document.getElementById("btnJan").style.display = vdisplay;

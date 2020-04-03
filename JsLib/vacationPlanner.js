@@ -328,7 +328,6 @@ function plan(page) {
     let vacationStatusHtml3 = '<h5>Toplam Tatil Günü <span class="badge badge-secondary">' + returnInfo.totalHolidayCountKey + '</span></h5>';
 
     document.getElementById("vacatStatusDiv").style.display = "block";
-    document.getElementById("btnSharePlan").style.display = "inline-block";
 
     // document.getElementById("holidayPreview").style.display = "block";
 
@@ -645,7 +644,6 @@ function populateTableWithData(page, data) {
     document.getElementById("vacationCount").value = data.data.totalvacationcount ? data.data.totalvacationcount : 14;
 
     document.getElementById("vacatStatusDiv").style.display = "block";
-    document.getElementById("btnSharePlan").style.display = "inline-block";
 
     if (page == 4) {
         calculateVacations();

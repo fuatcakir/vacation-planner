@@ -600,6 +600,7 @@ function addLeaveCompareTable(data) {
       tableBTd.appendChild(inp);
     } else if (index == 13) {
       tableBTd.appendChild(document.createTextNode(data._id));
+      tableBTd.hidden=true;
     } else {
       var daysIndex = new Date(selectedYaar, index - 1, 1, 1, 1, 1, 1);
 

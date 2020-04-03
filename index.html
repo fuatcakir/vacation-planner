@@ -59,7 +59,7 @@
 <body>
     <div class="container">
         <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-            <a class="navbar-brand" onclick="showWelcomePage()">
+            <a class="navbar-brand" href="#">
                 <img src="./Style/date_range-black-36dp.svg" width="40" height="40" class="d-inline-block align-top"
                     alt="">
                 <strong>iznini planla!</strong>
@@ -396,7 +396,7 @@
                                         <th>Ekim</th>
                                         <th>Kasım</th>
                                         <th>Aralık</th>
-                                        <th>ID</th>
+                                        <th hidden>ID</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableLeaveCompareB"></tbody>
@@ -404,7 +404,7 @@
                         </div>
                     </div>
                     <div class="alert alert-light" role="alert">
-                        <button id="btnDemoData" type="button" class="btn btn-info" onclick="demoDataToCompare()">Örnek Data Yükleme</button>
+                        <button id="btnDemoData" type="button" class="btn btn-info" onclick="demoDataToCompare()">DEMO</button>
                         <button id="btnClearCompData" type="button" class="btn btn-danger"
                             onclick="clearCompTableData()">Tabloyu Temizle</button>
                     </div>

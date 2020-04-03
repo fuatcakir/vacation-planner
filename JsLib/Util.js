@@ -23,7 +23,7 @@ function addRowToTable() {
     let i = tblVacations.rows.length;
 
     let chk = document.createElement('input');
-    chk.setAttribute("id", "chk" + i);
+    chk.setAttribute("id", "chk" + i-1);
     chk.setAttribute("type", "checkbox");
     chk.setAttribute("checked", "checked");
     chk.addEventListener('change', function () {
@@ -208,6 +208,7 @@ function repeatedControl(obj) {
 
 function showWelcomePage() {
   $('#nav-tab a[href="#nav-welcome"]').tab('show');
+  document.getElementById("vacatStatusDiv").style.display = "none";
 }
 
 function chooseDescription(desc1, desc2) {
@@ -579,7 +580,7 @@ function addLeaveCompareTable(data) {
   let tableB = document.getElementById('tableLeaveCompareB');
   let tableBTR = document.createElement('tr');
 
-  for (let index = 0; index < 14; index++) {
+   for (let index = 0; index < 14; index++) {
     let tableBTd = document.createElement('td');
 
     // if (index == 0) {
@@ -592,7 +593,7 @@ function addLeaveCompareTable(data) {
     // } else 
     if (index == 0) {
       let inp = document.createElement('input');
-      inp.setAttribute("id", "txtIdlpc" + index);
+      inp.setAttribute("id", "txtIdlpc" + tableB.rows.length);
       inp.setAttribute("type", "text");
       inp.setAttribute("value", data.sharedesc);
       tableBTd.setAttribute("class", "zui-sticky-col");
@@ -749,6 +750,7 @@ function visibiltyHolidayPreButtons(visible) {
 }
 
 function displayCompareTable() {
+  document.getElementById("vacatStatusDiv").style.display = "none";
   document.getElementById('txtSharePlan').value = "";
 }
 
@@ -775,5 +777,19 @@ function loadComparableData(cUrl) {
 
   }
 }
+
+function clearCompTableData() {
+  let cmpTable = document.getElementById('tableLeaveCompare');
+  var tableHeaderRowCount = 1;
+  var rowCount = cmpTable.rows.length;
+  for (let index = tableHeaderRowCount; index < rowCount; index++) {
+    cmpTable.deleteRow(tableHeaderRowCount);
+  }
+}
+
+function demoDataToCompare() {
+  loadComparableData("5e8758f754570c0004debfc9_5e87594054570c0004debfcf_5e87596d54570c0004debfd5_5e87599a54570c0004debfde_5e8759f454570c0004debfe8");
+}
+
 
 

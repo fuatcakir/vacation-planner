@@ -259,11 +259,11 @@
     });
   }
 
-  function getRichContent(pCell, indexLitePicker) {
+  function getRichContent(pCell, index) {
     let content = '';
     if (pCell.html().indexOf("litepicker") >= 0) {
-      content = document.getElementById("inputlp4" + indexLitePicker).value;
-    } else {
+      content = document.getElementById("inputlp4" + index).value;
+    }else {
       content = pCell.html();
     }
     return content;

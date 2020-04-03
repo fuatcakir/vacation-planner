@@ -279,7 +279,6 @@ function displayAll() {
 }
 
 function display(page) {
-    visibiltyHolidayPreButtons(true);
     if (page == 4) {
         let therIsAplan = isThereAnyManuelPlan();
         if (therIsAplan) {
@@ -488,7 +487,7 @@ function populateTable(person, page) {
 }
 
 function populateTableWithData(page, data) {
-    visibiltyHolidayPreButtons(true);
+
     let tblVacations = null;
     switch (page) {
         case 1:

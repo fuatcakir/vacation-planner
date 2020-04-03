@@ -169,7 +169,6 @@ function calculateVacations() {
   return decimalFormat(totalPlannedVacations + totalUnPlannedVacationCount);
 }
 function disableFooter() {
-  visibiltyHolidayPreButtons(false);
 }
 
 function msg(txt) {
@@ -209,7 +208,6 @@ function repeatedControl(obj) {
 
 function showWelcomePage() {
   $('#nav-tab a[href="#nav-welcome"]').tab('show');
-  visibiltyHolidayPreButtons(false);
 }
 
 function chooseDescription(desc1, desc2) {
@@ -323,44 +321,44 @@ function setMothPreview(pBtn, isGreen) {
   }
 }
 
-function getMontPreviewButton(pMonthOrder) {
+function getMontPreviewButton(pMonthOrder, page) {
   var whichBtnMonth = null;
   switch (pMonthOrder) {
     case 1:
-      whichBtnMonth = document.getElementById("btnJan");
+      whichBtnMonth = document.getElementById("btnJan" + page);
       break;
     case 2:
-      whichBtnMonth = document.getElementById("btnFeb");
+      whichBtnMonth = document.getElementById("btnFeb" + page);
       break;
     case 3:
-      whichBtnMonth = document.getElementById("btnMar");
+      whichBtnMonth = document.getElementById("btnMar" + page);
       break;
     case 4:
-      whichBtnMonth = document.getElementById("btnApr");
+      whichBtnMonth = document.getElementById("btnApr" + page);
       break;
     case 5:
-      whichBtnMonth = document.getElementById("btnMay");
+      whichBtnMonth = document.getElementById("btnMay" + page);
       break;
     case 6:
-      whichBtnMonth = document.getElementById("btnJun");
+      whichBtnMonth = document.getElementById("btnJun" + page);
       break;
     case 7:
-      whichBtnMonth = document.getElementById("btnJly");
+      whichBtnMonth = document.getElementById("btnJly" + page);
       break;
     case 8:
-      whichBtnMonth = document.getElementById("btnAug");
+      whichBtnMonth = document.getElementById("btnAug" + page);
       break;
     case 9:
-      whichBtnMonth = document.getElementById("btnSep");
+      whichBtnMonth = document.getElementById("btnSep" + page);
       break;
     case 10:
-      whichBtnMonth = document.getElementById("btnOct");
+      whichBtnMonth = document.getElementById("btnOct" + page);
       break;
     case 11:
-      whichBtnMonth = document.getElementById("btnNov");
+      whichBtnMonth = document.getElementById("btnNov" + page);
       break;
     case 12:
-      whichBtnMonth = document.getElementById("btnDec");
+      whichBtnMonth = document.getElementById("btnDec" + page);
       break;
     default:
       whichBtnMonth = document.getElementById("");
@@ -389,7 +387,7 @@ function refreshYearPreview(page, pReset) {
 
   if (page == 4 && reset) {
     for (let index = 1; index <= 12; index++) {
-      setMothPreview(getMontPreviewButton(index), false);
+      setMothPreview(getMontPreviewButton(index, page), false);
     }
   } else {
 
@@ -413,9 +411,9 @@ function refreshYearPreview(page, pReset) {
 
     for (let index = 1; index <= 12; index++) {
       if (monthArr.includes(index)) {
-        setMothPreview(getMontPreviewButton(index), true);
+        setMothPreview(getMontPreviewButton(index, page), true);
       } else {
-        setMothPreview(getMontPreviewButton(index), false);
+        setMothPreview(getMontPreviewButton(index, page), false);
 
       }
 
@@ -747,15 +745,11 @@ function visibiltyHolidayPreButtons(visible) {
 
   document.getElementById("vacatStatusDiv").style.display = vdisplay;
 
-  // document.getElementById("btnGroupYearCont").style.display = vdisplay;
-
-
 
 }
 
 function displayCompareTable() {
   document.getElementById('txtSharePlan').value = "";
-  visibiltyHolidayPreButtons(false);
 }
 
 function getCompareTableAllIDs() {

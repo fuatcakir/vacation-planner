@@ -96,12 +96,11 @@
             //JSON test on ?q=5e81e73b0eb35e288c2b7b36 
             $(document).ready(function () {
                 document.getElementById("loader2").style.display = "none";
-                visibiltyHolidayPreButtons(false);
 
                 var url_string = window.location.href
                 var url = new URL(url_string);
                 var q = url.searchParams.get("q");
-                var qc= url.searchParams.get("c");
+                var qc = url.searchParams.get("c");
 
                 if (q) {
                     console.log(q);
@@ -177,6 +176,25 @@
             </div>
 
             <div class="tab-pane fade " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="container" id="holidayPreview" style="visibility: visible;">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text" id="btnGroupAddon">Tatillerin Dağılımı</div>
+                        </div>
+                        <button id="btnJan1" type="button" class="btn btn-secondary disabled">Ocak</button>
+                        <button id="btnFeb1" type="button" class="btn btn-secondary disabled">Şubat</button>
+                        <button id="btnMar1" type="button" class="btn btn-secondary disabled">Mart</button>
+                        <button id="btnApr1" type="button" class="btn btn-secondary disabled">Nisan</button>
+                        <button id="btnMay1" type="button" class="btn btn-secondary disabled">Mayıs</button>
+                        <button id="btnJun1" type="button" class="btn btn-secondary disabled">Haziran</button>
+                        <button id="btnJly1" type="button" class="btn btn-secondary disabled">Temmuz</button>
+                        <button id="btnAug1" type="button" class="btn btn-secondary disabled">Ağustos</button>
+                        <button id="btnSep1" type="button" class="btn btn-secondary disabled">Eylül</button>
+                        <button id="btnOct1" type="button" class="btn btn-secondary disabled">Ekim</button>
+                        <button id="btnNov1" type="button" class="btn btn-secondary disabled">Kasım</button>
+                        <button id="btnDec1" type="button" class="btn btn-secondary disabled">Aralık</button>
+                    </div>
+                </div>
 
                 <table id="tblPlannedVacations1" class="table table-sm table-hover">
                     <thead>
@@ -192,6 +210,25 @@
                 </table>
             </div>
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="container" id="holidayPreview" style="visibility: visible;">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text" id="btnGroupAddon">Tatillerin Dağılımı</div>
+                        </div>
+                        <button id="btnJan2" type="button" class="btn btn-secondary disabled">Ocak</button>
+                        <button id="btnFeb2" type="button" class="btn btn-secondary disabled">Şubat</button>
+                        <button id="btnMar2" type="button" class="btn btn-secondary disabled">Mart</button>
+                        <button id="btnApr2" type="button" class="btn btn-secondary disabled">Nisan</button>
+                        <button id="btnMay2" type="button" class="btn btn-secondary disabled">Mayıs</button>
+                        <button id="btnJun2" type="button" class="btn btn-secondary disabled">Haziran</button>
+                        <button id="btnJly2" type="button" class="btn btn-secondary disabled">Temmuz</button>
+                        <button id="btnAug2" type="button" class="btn btn-secondary disabled">Ağustos</button>
+                        <button id="btnSep2" type="button" class="btn btn-secondary disabled">Eylül</button>
+                        <button id="btnOct2" type="button" class="btn btn-secondary disabled">Ekim</button>
+                        <button id="btnNov2" type="button" class="btn btn-secondary disabled">Kasım</button>
+                        <button id="btnDec2" type="button" class="btn btn-secondary disabled">Aralık</button>
+                    </div>
+                </div>
 
                 <table id="tblPlannedVacations2" class="table table-sm table-hover">
                     <thead>
@@ -208,6 +245,25 @@
 
             </div>
             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                <div class="container" id="holidayPreview" style="visibility: visible;">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text" id="btnGroupAddon">Tatillerin Dağılımı</div>
+                        </div>
+                        <button id="btnJan3" type="button" class="btn btn-secondary disabled">Ocak</button>
+                        <button id="btnFeb3" type="button" class="btn btn-secondary disabled">Şubat</button>
+                        <button id="btnMar3" type="button" class="btn btn-secondary disabled">Mart</button>
+                        <button id="btnApr3" type="button" class="btn btn-secondary disabled">Nisan</button>
+                        <button id="btnMay3" type="button" class="btn btn-secondary disabled">Mayıs</button>
+                        <button id="btnJun3" type="button" class="btn btn-secondary disabled">Haziran</button>
+                        <button id="btnJly3" type="button" class="btn btn-secondary disabled">Temmuz</button>
+                        <button id="btnAug3" type="button" class="btn btn-secondary disabled">Ağustos</button>
+                        <button id="btnSep3" type="button" class="btn btn-secondary disabled">Eylül</button>
+                        <button id="btnOct3" type="button" class="btn btn-secondary disabled">Ekim</button>
+                        <button id="btnNov3" type="button" class="btn btn-secondary disabled">Kasım</button>
+                        <button id="btnDec3" type="button" class="btn btn-secondary disabled">Aralık</button>
+                    </div>
+                </div>
 
                 <table id="tblPlannedVacations3" class="table table-sm table-hover">
                     <thead>
@@ -223,6 +279,26 @@
                 </table>
             </div>
             <div class="tab-pane fade " id="nav-manuel" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+                <div class="container" id="holidayPreview" style="visibility: visible;">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text" id="btnGroupAddon">Tatillerin Dağılımı</div>
+                        </div>
+                        <button id="btnJan4" type="button" class="btn btn-secondary disabled">Ocak</button>
+                        <button id="btnFeb4" type="button" class="btn btn-secondary disabled">Şubat</button>
+                        <button id="btnMar4" type="button" class="btn btn-secondary disabled">Mart</button>
+                        <button id="btnApr4" type="button" class="btn btn-secondary disabled">Nisan</button>
+                        <button id="btnMay4" type="button" class="btn btn-secondary disabled">Mayıs</button>
+                        <button id="btnJun4" type="button" class="btn btn-secondary disabled">Haziran</button>
+                        <button id="btnJly4" type="button" class="btn btn-secondary disabled">Temmuz</button>
+                        <button id="btnAug4" type="button" class="btn btn-secondary disabled">Ağustos</button>
+                        <button id="btnSep4" type="button" class="btn btn-secondary disabled">Eylül</button>
+                        <button id="btnOct4" type="button" class="btn btn-secondary disabled">Ekim</button>
+                        <button id="btnNov4" type="button" class="btn btn-secondary disabled">Kasım</button>
+                        <button id="btnDec4" type="button" class="btn btn-secondary disabled">Aralık</button>
+                    </div>
+                </div>
 
                 <table id="tblPlannedVacations4" class="table table-sm table-hover">
                     <thead>
@@ -332,88 +408,18 @@
             </div>
         </div>
         <br>
-        <div class="container" id="holidayPreview" style="visibility: visible;">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <div class="input-group-prepend">
-                    <div class="input-group-text" id="btnGroupAddon">Tatillerin Dağılımı</div>
-                </div>
-                <button id="btnJan" type="button" class="btn btn-secondary disabled">Ocak</button>
-                <button id="btnFeb" type="button" class="btn btn-secondary disabled">Şubat</button>
-                <button id="btnMar" type="button" class="btn btn-secondary disabled">Mart</button>
-                <button id="btnApr" type="button" class="btn btn-secondary disabled">Nisan</button>
-                <button id="btnMay" type="button" class="btn btn-secondary disabled">Mayıs</button>
-                <button id="btnJun" type="button" class="btn btn-secondary disabled">Haziran</button>
-                <button id="btnJly" type="button" class="btn btn-secondary disabled">Temmuz</button>
-                <button id="btnAug" type="button" class="btn btn-secondary disabled">Ağustos</button>
-                <button id="btnSep" type="button" class="btn btn-secondary disabled">Eylül</button>
-                <button id="btnOct" type="button" class="btn btn-secondary disabled">Ekim</button>
-                <button id="btnNov" type="button" class="btn btn-secondary disabled">Kasım</button>
-                <button id="btnDec" type="button" class="btn btn-secondary disabled">Aralık</button>
-            </div> 
-        </div>
-   
-        <div class="shadow-sm p-3 mb-5 bg-white rounded">
 
-            <div class="input-group mb-3">
-                <input id="txtSharePlan" type="text" class="form-control" placeholder="Paylaşım açıklaması giriniz"
-                    aria-label="Paylaşım açıklaması giriniz" aria-describedby="button-addon2">
-                <div class="input-group-append">
-                    <button id="btnSharePlan" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop"
-                        onclick="prepareSharePanel()">
-                        Paylaş!</button>
-                </div>
+
+        <div class="input-group mb-3">
+            <input id="txtSharePlan" type="text" class="form-control" placeholder="Paylaşım açıklaması giriniz"
+                aria-label="Paylaşım açıklaması giriniz" aria-describedby="button-addon2">
+            <div class="input-group-append">
+                <button id="btnSharePlan" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop"
+                    onclick="prepareSharePanel()">
+                    Paylaş!</button>
             </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div id="loader" class="loader"></div>
-                        <h5 class="modal-title" id="staticBackdropLabel">Paylaşım Linki Hazırlanıyor</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="input-group mb-3">
-                            <input id="sharingurl" type="text" class="form-control"
-                                placeholder="http://izniniplanla.com/" aria-label="http://izniniplanla.com/"
-                                aria-describedby="button-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2"
-                                    onclick="copyText()" data-toggle="tooltip" data-placement="top"
-                                    title="linki kopyala">Kopyala</button>
-                            </div>
-                        </div>
-                        <div id="btnShareLink">
-                            <div id="anyShareBtn" class="a2a_kit a2a_kit_size_32 a2a_default_style"
-                                data-a2a-url="https://fuatcakir.github.io/vacation-planner/"
-                                data-a2a-title="İşte benim izin planım!">
-                                <a class="a2a_button_whatsapp"></a>
-                                <a class="a2a_button_linkedin"></a>
-                                <a class="a2a_button_email"></a>
-                                <a class="a2a_button_facebook"></a>
-                                <a class="a2a_button_twitter"></a>
-                                <a class="a2a_button_telegram"></a>
-                                <a class="a2a_button_tumblr"></a>
-                                <a class="a2a_button_evernote"></a>
-                                <a class="a2a_button_facebook_messenger"></a>
-                                <a class="a2a_button_google_gmail"></a>
-                                <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
 
         <div class="container" id="vacatStatusDiv" style="display:none">
             <div class="row">
@@ -436,6 +442,56 @@
         </div>
 
     </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div id="loader" class="loader"></div>
+                    <h5 class="modal-title" id="staticBackdropLabel">Paylaşım Linki Hazırlanıyor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <input id="sharingurl" type="text" class="form-control" placeholder="http://izniniplanla.com/"
+                            aria-label="http://izniniplanla.com/" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                                onclick="copyText()" data-toggle="tooltip" data-placement="top"
+                                title="linki kopyala">Kopyala</button>
+                        </div>
+                    </div>
+                    <div id="btnShareLink">
+                        <div id="anyShareBtn" class="a2a_kit a2a_kit_size_32 a2a_default_style"
+                            data-a2a-url="https://fuatcakir.github.io/vacation-planner/"
+                            data-a2a-title="İşte benim izin planım!">
+                            <a class="a2a_button_whatsapp"></a>
+                            <a class="a2a_button_linkedin"></a>
+                            <a class="a2a_button_email"></a>
+                            <a class="a2a_button_facebook"></a>
+                            <a class="a2a_button_twitter"></a>
+                            <a class="a2a_button_telegram"></a>
+                            <a class="a2a_button_tumblr"></a>
+                            <a class="a2a_button_evernote"></a>
+                            <a class="a2a_button_facebook_messenger"></a>
+                            <a class="a2a_button_google_gmail"></a>
+                            <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
 
     <script type="text/javascript">
         document.getElementById("txtLeavesCompare").addEventListener(

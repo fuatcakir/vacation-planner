@@ -329,7 +329,6 @@ function plan(page) {
 
     document.getElementById("vacatStatusDiv").style.display = "block";
 
-    // document.getElementById("holidayPreview").style.display = "block";
 
 
     document.getElementById("vacationStatus1").innerHTML = vacationStatusHtml1;
@@ -489,6 +488,7 @@ function populateTable(person, page) {
 }
 
 function populateTableWithData(page, data) {
+    visibiltyHolidayPreButtons(true);
     let tblVacations = null;
     switch (page) {
         case 1:
@@ -524,6 +524,7 @@ function populateTableWithData(page, data) {
         tblVacations.deleteRow(tableHeaderRowCount);
     }
 
+    document.getElementById('txtSharePlan').value = data.data.sharedesc;
     let mySharedData = data.data.tablevacat;
     let sharedDataIndx = 0;
     for (let index = tableHeaderRowCount; index < mySharedData.length+1; index++) {

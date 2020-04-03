@@ -101,6 +101,8 @@
                 var url_string = window.location.href
                 var url = new URL(url_string);
                 var q = url.searchParams.get("q");
+                var qc= url.searchParams.get("c");
+
                 if (q) {
                     console.log(q);
                     fetch('https://vphrestapi.herokuapp.com/api/vacations/' + q)
@@ -111,6 +113,9 @@
                             console.log(data);
                             populateTableWithData(4, data);
                         });
+                }
+                if (qc) {
+                    loadComparableData(qc);
                 }
             });
 
@@ -284,14 +289,14 @@
                     <div class="input-group mb-3">
                         <div id="loader2" class="loader"></div>
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon3">Paylaşım linkini buraya giriniz:</span>
+                            <span class="input-group-text" id="basic-addon3">Paylaşım linki :</span>
                         </div>
                         <input id="txtLeavesCompare" type="text" class="form-control"
                             placeholder="(Örnek: https://izniniplanla.com/?q=5e85e871f67d1300048e779b)"
                             aria-label="Paylaşım Linki:" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button id="btnLeavesCompare" class="btn btn-outline-primary" type="button"
-                                onclick="addLeaveCompareTableByURL()">Plan
+                                onclick="addLeaveCompareTableByURL(null)">Plan
                                 Ekle</button>
                         </div>
                     </div>
@@ -302,7 +307,7 @@
                             <table class="zui-table" id="tableLeaveCompare">
                                 <thead>
                                     <tr>
-                                        <th class="zui-sticky-col">ID (Düzenlenebilir)</th>
+                                        <th class="zui-sticky-col">Açıklama (Düzenlenebilir)</th>
                                         <th>Ocak</th>
                                         <th>Şubat</th>
                                         <th>Mart</th>
@@ -315,6 +320,7 @@
                                         <th>Ekim</th>
                                         <th>Kasım</th>
                                         <th>Aralık</th>
+                                        <th>ID</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableLeaveCompareB"></tbody>
@@ -345,8 +351,9 @@
                 <button id="btnDec" type="button" class="btn btn-secondary disabled">Aralık</button>
             </div> 
         </div>
+   
+        <div class="shadow-sm p-3 mb-5 bg-white rounded">
 
-        <div class="container">
             <div class="input-group mb-3">
                 <input id="txtSharePlan" type="text" class="form-control" placeholder="Paylaşım açıklaması giriniz"
                     aria-label="Paylaşım açıklaması giriniz" aria-describedby="button-addon2">
@@ -408,8 +415,6 @@
         </div>
         <!-- Modal -->
 
-
-        <br>
         <div class="container" id="vacatStatusDiv" style="display:none">
             <div class="row">
                 <div class="col-sm">

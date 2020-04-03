@@ -169,7 +169,6 @@ function calculateVacations() {
   return decimalFormat(totalPlannedVacations + totalUnPlannedVacationCount);
 }
 function disableFooter() {
-  // document.getElementById("holidayPreview").style.display = "none";
   visibiltyHolidayPreButtons(false);
 }
 
@@ -444,11 +443,12 @@ function isThereAnyManuelPlan() {
 }
 
 function prepareSharePanel() {
+
   document.getElementById("loader").style.display = "block";
   document.getElementById("staticBackdropLabel").innerText = "Paylaşım Linki Hazırlanıyor";
   let url = window.location.href;
 
-  let table = document.getElementById("tblPlannedVacations3");
+  let table = null;
 
   let panelIndx = 0;
   if (document.getElementById('nav-sugplan1-tab').getAttribute('aria-selected') == "true") {
@@ -463,64 +463,86 @@ function prepareSharePanel() {
   } else if (document.getElementById('nav-manuel-tab').getAttribute('aria-selected') == "true") {
     table = document.getElementById("tblPlannedVacations4");
     panelIndx = 4;
+  } else if (document.getElementById('nav-compare-tab').getAttribute('aria-selected') == "true") {
+    table = document.getElementById("tableLeaveCompare");
+    panelIndx = 5;
   }
 
-  let manuelPlan = document.getElementById('nav-manuel-tab').getAttribute('aria-selected') == "true";
-
-  var tableHeaderRowCount = 1;
-  var rowCount = table.rows.length;
-  let vpJSON = {};
-  vpJSON.tablevacat = [];
-  vpJSON.sharedesc = "";
-  let totalvacatcount = document.getElementById('vacationCount').value;
-  vpJSON.totalvacationcount = totalvacatcount ? totalvacatcount : 14;
-
-  let vacationIndex = 0;
-  for (let index = tableHeaderRowCount; index < rowCount; index++) {
-    if (manuelPlan &&
-      table.rows[index].cells[0].childNodes[0].checked == false) {
-      continue;
-    }
-    const vRow = table.rows[index];
-
-    let startDate = table.rows[index].cells[1].childNodes[0].value.split('-')[0].trim();
-    let endDate = table.rows[index].cells[1].childNodes[0].value.split('-')[1].trim();
-
-    let myRow = {
-      daystart: startDate.split('/')[2] + '-' + startDate.split('/')[1] + '-' + startDate.split('/')[0],
-      dayend: endDate.split('/')[2] + '-' + endDate.split('/')[1] + '-' + endDate.split('/')[0],
-      vacationcount: parseFloat(table.rows[index].cells[2].textContent.replace(',', '.')),
-      holidaycount: parseFloat(table.rows[index].cells[3].textContent.replace(',', '.')),
-      description: table.rows[index].cells[4].textContent
-    }
-    vpJSON.tablevacat[vacationIndex] = myRow;
-    vacationIndex = vacationIndex + 1;
+  let sharedesc = document.getElementById('txtSharePlan').value;
+  if (sharedesc) {
+    document.getElementById('anyShareBtn').setAttribute('data-a2a-title', sharedesc);
   }
 
-  if (vpJSON.tablevacat.length > 0) {
+  if (panelIndx == 0) {
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("staticBackdropLabel").innerText = "Paylaşım Linki Hazır";
+    let surl = "https://izniniplanla.com/";
+    document.getElementById('sharingurl').value = surl;
+    document.getElementById('anyShareBtn').setAttribute('data-a2a-url', surl);
+  } else if (panelIndx == 05) {
+    let surl = window.location.href + '?c=' + getCompareTableAllIDs();
+    document.getElementById('sharingurl').value = surl;
+    document.getElementById('anyShareBtn').setAttribute('data-a2a-url', surl);
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("staticBackdropLabel").innerText = "Paylaşım Linki Hazır";
+  } else {
+    let manuelPlan = document.getElementById('nav-manuel-tab').getAttribute('aria-selected') == "true";
 
-    const data = vpJSON;
-    /** */
-    fetch('https://vphrestapi.herokuapp.com/api/vacations/', {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        document.getElementById("loader").style.display = "none";
-        document.getElementById("staticBackdropLabel").innerText = "Paylaşım Linki Hazır";
+    var tableHeaderRowCount = 1;
+    var rowCount = table.rows.length;
+    let vpJSON = {};
+    vpJSON.tablevacat = [];
+    vpJSON.sharedesc = document.getElementById('txtSharePlan').value;
+    let totalvacatcount = document.getElementById('vacationCount').value;
+    vpJSON.totalvacationcount = totalvacatcount ? totalvacatcount : 14;
 
-        document.getElementById('sharingurl').value = url + '?q=' + data.data._id;
-        let surl = url + '?q=' + data.data._id;
+    let vacationIndex = 0;
+    for (let index = tableHeaderRowCount; index < rowCount; index++) {
+      if (manuelPlan &&
+        table.rows[index].cells[0].childNodes[0].checked == false) {
+        continue;
+      }
+      const vRow = table.rows[index];
 
-        document.getElementById('anyShareBtn').setAttribute('data-a2a-url', surl);
+      let startDate = table.rows[index].cells[1].childNodes[0].value.split('-')[0].trim();
+      let endDate = table.rows[index].cells[1].childNodes[0].value.split('-')[1].trim();
+
+      let myRow = {
+        daystart: startDate.split('/')[2] + '-' + startDate.split('/')[1] + '-' + startDate.split('/')[0],
+        dayend: endDate.split('/')[2] + '-' + endDate.split('/')[1] + '-' + endDate.split('/')[0],
+        vacationcount: parseFloat(table.rows[index].cells[2].textContent.replace(',', '.')),
+        holidaycount: parseFloat(table.rows[index].cells[3].textContent.replace(',', '.')),
+        description: table.rows[index].cells[4].textContent
+      }
+      vpJSON.tablevacat[vacationIndex] = myRow;
+      vacationIndex = vacationIndex + 1;
+    }
+
+    if (vpJSON.tablevacat.length > 0) {
+
+      const data = vpJSON;
+      /** */
+      fetch('https://vphrestapi.herokuapp.com/api/vacations/', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("loader").style.display = "none";
+          document.getElementById("staticBackdropLabel").innerText = "Paylaşım Linki Hazır";
+
+          document.getElementById('sharingurl').value = url + '?q=' + data.data._id;
+          let surl = url + '?q=' + data.data._id;
+
+          document.getElementById('anyShareBtn').setAttribute('data-a2a-url', surl);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
   }
 }
 
@@ -543,21 +565,13 @@ function outFunc() {
   tooltip.innerHTML = "Copy to clipboard";
 }
 
-function changeFooterVisiblty(pHidden) {
-  var which = document.getElementById("holidayPreview");
-
-  if (pHidden)
-    which.style.visibility = "hidden"
-  else
-    which.style.visibility = "visible"
-}
-
 function focusTotalVacation() {
   document.getElementById("vacationCount").focus();
 }
 
 function addLeaveCompareTable(data) {
   let selectedYaar = parseInt(document.getElementById('inputGroupSelectYears').value);
+
   // let selectedYaar = 2020;
 
   if (selectedYaar) {
@@ -567,7 +581,7 @@ function addLeaveCompareTable(data) {
   let tableB = document.getElementById('tableLeaveCompareB');
   let tableBTR = document.createElement('tr');
 
-  for (let index = 0; index < 13; index++) {
+  for (let index = 0; index < 14; index++) {
     let tableBTd = document.createElement('td');
 
     // if (index == 0) {
@@ -582,9 +596,11 @@ function addLeaveCompareTable(data) {
       let inp = document.createElement('input');
       inp.setAttribute("id", "txtIdlpc" + index);
       inp.setAttribute("type", "text");
-      inp.setAttribute("value", data._id);
+      inp.setAttribute("value", data.sharedesc);
       tableBTd.setAttribute("class", "zui-sticky-col");
       tableBTd.appendChild(inp);
+    } else if (index == 13) {
+      tableBTd.appendChild(document.createTextNode(data._id));
     } else {
       var daysIndex = new Date(selectedYaar, index - 1, 1, 1, 1, 1, 1);
 
@@ -635,14 +651,18 @@ function addLeaveCompareTable(data) {
 }
 
 
-function addLeaveCompareTableByURL() {
+function addLeaveCompareTableByURL(pId) {
   var url_string = document.getElementById("txtLeavesCompare").value;
-  if (url_string) {
+  if (url_string || pId) {
     var url = null;
     var q = null;
     try {
-      url = new URL(url_string);
-      q = url.searchParams.get("q");
+      if (url_string) {
+        url = new URL(url_string);
+        q = url.searchParams.get("q");
+      } else if (pId) {
+        q = pId;
+      }
     } catch (error) {
       alert('Lütfen ' + window.location.href + ' tarafından verilen paylaşım linkini giriniz.')
     }
@@ -727,10 +747,39 @@ function visibiltyHolidayPreButtons(visible) {
 
   document.getElementById("vacatStatusDiv").style.display = vdisplay;
 
+  // document.getElementById("btnGroupYearCont").style.display = vdisplay;
+
+
+
 }
 
 function displayCompareTable() {
+  document.getElementById('txtSharePlan').value = "";
   visibiltyHolidayPreButtons(false);
+}
+
+function getCompareTableAllIDs() {
+  let cmpTable = document.getElementById('tableLeaveCompare');
+  var tableHeaderRowCount = 1;
+  var rowCount = cmpTable.rows.length;
+  let allID = "";
+  for (let index = tableHeaderRowCount; index < rowCount; index++) {
+    let id = cmpTable.rows[index].cells[13].textContent
+    allID += id + "_";
+  }
+  return allID;
+}
+
+function loadComparableData(cUrl) {
+  $('#nav-tab a[href="#nav-compare"]').tab('show');
+  let shareIDlist = cUrl.split('_');
+  for (let index = 0; index < shareIDlist.length; index++) {
+    const shareId = shareIDlist[index];
+    if (shareId) {
+      addLeaveCompareTableByURL(shareId);
+    }
+
+  }
 }
 
 

@@ -69,6 +69,7 @@
   border-collapse: separate;
   border-spacing: 0;
   font: normal 13px Arial, sans-serif;
+  /* transform:rotate(270deg); */
 }
 
 .zui-table thead th {

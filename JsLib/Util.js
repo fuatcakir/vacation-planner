@@ -23,7 +23,7 @@ function addRowToTable() {
     let i = tblVacations.rows.length;
 
     let chk = document.createElement('input');
-    chk.setAttribute("id", "chk" + i-1);
+    chk.setAttribute("id", "chk" + i - 1);
     chk.setAttribute("type", "checkbox");
     chk.setAttribute("checked", "checked");
     chk.addEventListener('change', function () {
@@ -580,7 +580,7 @@ function addLeaveCompareTable(data) {
   let tableB = document.getElementById('tableLeaveCompareB');
   let tableBTR = document.createElement('tr');
 
-   for (let index = 0; index < 14; index++) {
+  for (let index = 0; index < 14; index++) {
     let tableBTd = document.createElement('td');
 
     // if (index == 0) {
@@ -600,7 +600,7 @@ function addLeaveCompareTable(data) {
       tableBTd.appendChild(inp);
     } else if (index == 13) {
       tableBTd.appendChild(document.createTextNode(data._id));
-      tableBTd.hidden=true;
+      tableBTd.hidden = true;
     } else {
       var daysIndex = new Date(selectedYaar, index - 1, 1, 1, 1, 1, 1);
 
@@ -753,6 +753,8 @@ function visibiltyHolidayPreButtons(visible) {
 function displayCompareTable() {
   document.getElementById("vacatStatusDiv").style.display = "none";
   document.getElementById('txtSharePlan').value = "";
+  showFooterOfSharing(false);
+
 }
 
 function getCompareTableAllIDs() {
@@ -792,5 +794,58 @@ function demoDataToCompare() {
   loadComparableData("5e8758f754570c0004debfc9_5e87594054570c0004debfcf_5e87596d54570c0004debfd5_5e87599a54570c0004debfde_5e8759f454570c0004debfe8");
 }
 
+function setYearCalendarRanges() {
+  let drList = [];
+
+  let tblVacations = document.getElementById("tblPlannedVacations4");
 
 
+  let panelIndx = 0;
+  if (document.getElementById('nav-sugplan1-tab').getAttribute('aria-selected') == "true") {
+    tblVacations = document.getElementById("tblPlannedVacations1");
+    panelIndx = 1;
+  } else if (document.getElementById('nav-sugplan2-tab').getAttribute('aria-selected') == "true") {
+    tblVacations = document.getElementById("tblPlannedVacations2");
+    panelIndx = 2;
+  } else if (document.getElementById('nav-sugplan3-tab').getAttribute('aria-selected') == "true") {
+    tblVacations = document.getElementById("tblPlannedVacations3");
+    panelIndx = 3;
+  } else if (document.getElementById('nav-manuel-tab').getAttribute('aria-selected') == "true") {
+    tblVacations = document.getElementById("tblPlannedVacations4");
+    panelIndx = 4;
+  } else if (document.getElementById('nav-compare-tab').getAttribute('aria-selected') == "true") {
+    tblVacations = document.getElementById("tableLeaveCompare");
+    panelIndx = 5;
+  }
+
+  //clear table
+  var tableHeaderRowCount = 1;
+  var rowCount = tblVacations.rows.length;
+
+  for (var i = tableHeaderRowCount; i < rowCount; i++) {
+
+    if (tblVacations.rows[i].cells[0].childNodes[0].checked == true || panelIndx != 4) {
+
+      let dateRange = tblVacations.rows[i].cells[1].childNodes[0].value;
+      let startDate = dateRange.split('-')[0];
+      let endDate = dateRange.split('-')[1];
+
+      let mydate = {
+        startDate: new Date(parseInt(startDate.split('/')[2]), parseInt(startDate.split('/')[1]) - 1, parseInt(startDate.split('/')[0]), 0, 0, 0, 0),
+        endDate: new Date(parseInt(endDate.split('/')[2]), parseInt(endDate.split('/')[1]) - 1, parseInt(endDate.split('/')[0]), 0, 0, 0, 0)
+      }
+      drList.push(mydate);
+    }
+  }
+
+  calendar.setDataSource(drList);
+}
+
+function showFooterOfSharing(isVisible) {
+  if (isVisible) {
+    document.getElementById("shareAndSave").style.visibility = "visible";
+  } else {
+    document.getElementById("shareAndSave").style.visibility = "hidden";
+
+  }
+}

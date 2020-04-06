@@ -23,10 +23,18 @@
     <script src="./JsLib/vacationPlanner.js"></script>
     <script src="./JsLib/Util.js"></script>
 
+    <link rel="stylesheet" href="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.css">
+
+
+    <script src="https://unpkg.com/js-year-calendar@latest/dist/js-year-calendar.min.js"></script>
+
+    <script src="https://unpkg.com/js-year-calendar@latest/locales/js-year-calendar.tr.js"></script>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
         .checked {
             color: orange;
@@ -103,6 +111,7 @@
 
             //JSON test on ?q=5e81e73b0eb35e288c2b7b36 
             $(document).ready(function () {
+
                 document.getElementById("loader2").style.display = "none";
 
                 var url_string = window.location.href
@@ -124,6 +133,7 @@
                 if (qc) {
                     loadComparableData(qc);
                 }
+                showFooterOfSharing(false);
             });
 
         </script>
@@ -185,10 +195,10 @@
 
             <div class="tab-pane fade " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                 <div class="container" id="holidayPreview" style="visibility: visible;">
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg"
+                        onclick="setYearCalendarRanges()">Takvimde Görüntüle</button>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text" id="btnGroupAddon">Tatillerin Dağılımı</div>
-                        </div>
+
                         <button id="btnJan1" type="button" class="btn btn-secondary disabled">Ocak</button>
                         <button id="btnFeb1" type="button" class="btn btn-secondary disabled">Şubat</button>
                         <button id="btnMar1" type="button" class="btn btn-secondary disabled">Mart</button>
@@ -219,10 +229,10 @@
             </div>
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                 <div class="container" id="holidayPreview" style="visibility: visible;">
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg"
+                        onclick="setYearCalendarRanges()">Takvimde Görüntüle</button>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text" id="btnGroupAddon">Tatillerin Dağılımı</div>
-                        </div>
+
                         <button id="btnJan2" type="button" class="btn btn-secondary disabled">Ocak</button>
                         <button id="btnFeb2" type="button" class="btn btn-secondary disabled">Şubat</button>
                         <button id="btnMar2" type="button" class="btn btn-secondary disabled">Mart</button>
@@ -254,10 +264,9 @@
             </div>
             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                 <div class="container" id="holidayPreview" style="visibility: visible;">
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg"
+                        onclick="setYearCalendarRanges()">Takvimde Görüntüle</button>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text" id="btnGroupAddon">Tatillerin Dağılımı</div>
-                        </div>
                         <button id="btnJan3" type="button" class="btn btn-secondary disabled">Ocak</button>
                         <button id="btnFeb3" type="button" class="btn btn-secondary disabled">Şubat</button>
                         <button id="btnMar3" type="button" class="btn btn-secondary disabled">Mart</button>
@@ -289,10 +298,12 @@
             <div class="tab-pane fade " id="nav-manuel" role="tabpanel" aria-labelledby="nav-contact-tab">
 
                 <div class="container" id="holidayPreview" style="visibility: visible;">
+
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg"
+                        onclick="setYearCalendarRanges()">Takvimde Görüntüle</button>
+
+
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text" id="btnGroupAddon">Tatillerin Dağılımı</div>
-                        </div>
                         <button id="btnJan4" type="button" class="btn btn-secondary disabled">Ocak</button>
                         <button id="btnFeb4" type="button" class="btn btn-secondary disabled">Şubat</button>
                         <button id="btnMar4" type="button" class="btn btn-secondary disabled">Mart</button>
@@ -329,8 +340,6 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item pointer" onclick="deleteRowsByChecked(0)">Kalsın</a>
                             <a class="dropdown-item pointer" onclick="deleteRowsByChecked(1)">Silinsin</a>
-                            <div role="separator" class="dropdown-divider"></div>
-                            <a class="dropdown-item pointer" id="btnExport">Excel'e Çıkar</a>
                         </div>
                     </div>
                     <input id="manualDatePicker" type="text" class="form-control"
@@ -416,7 +425,7 @@
                             onclick="demoDataToCompare()">DEMO</button>
                         <button id="btnClearCompData" type="button" class="btn btn-danger"
                             onclick="clearCompTableData()">Tabloyu Temizle</button>
-                       
+
                         <!-- <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-secondary active">
                                 <input type="radio" name="options" id="radioHorizontal" autocomplete="off" checked> Yatay
@@ -430,17 +439,31 @@
                 </div>
 
             </div>
+
+
         </div>
         <br>
 
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+        </div>
 
-        <div class="input-group mb-3">
+        <div id = "shareAndSave" class="input-group mb-3">
+
             <input id="txtSharePlan" type="text" class="form-control" placeholder="Paylaşım açıklaması giriniz"
                 aria-label="Paylaşım açıklaması giriniz" aria-describedby="button-addon2">
             <div class="input-group-append">
                 <button id="btnSharePlan" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop"
                     onclick="prepareSharePanel()">
                     Paylaş!</button>
+                <button class="btn btn-success" id="btnExport"><i class="fa fa-file-excel-o"></i> indir</button>
+
+
             </div>
         </div>
 
@@ -518,6 +541,13 @@
     <!-- Modal -->
 
     <script type="text/javascript">
+
+        const calendar = new Calendar('#calendar', {
+            language: 'tr',
+            style: 'background',
+            displayHeader: false,
+            dataSource: []
+        });
         document.getElementById("txtLeavesCompare").addEventListener(
             "keypress", function (event) {
                 if (event.keyCode == 13) {
@@ -527,12 +557,33 @@
         );
 
         $(function () {
+
             $("#btnExport").click(function () {
-                $("#tblPlannedVacations4").table2excel({
-                    filename: "izin_planim.xls",
-                    exclude_inputs: false,
-                    sheetName: "İzin Planım"
-                });
+                if (document.getElementById('nav-sugplan1-tab').getAttribute('aria-selected') == "true") {
+                    $("#tblPlannedVacations1").table2excel({
+                        filename: "izin_planim.xls",
+                        exclude_inputs: false,
+                        sheetName: "İzin Planım"
+                    });
+                } else if (document.getElementById('nav-sugplan2-tab').getAttribute('aria-selected') == "true") {
+                    $("#tblPlannedVacations2").table2excel({
+                        filename: "izin_planim.xls",
+                        exclude_inputs: false,
+                        sheetName: "İzin Planım"
+                    });
+                } else if (document.getElementById('nav-sugplan3-tab').getAttribute('aria-selected') == "true") {
+                    $("#tblPlannedVacations3").table2excel({
+                        filename: "izin_planim.xls",
+                        exclude_inputs: false,
+                        sheetName: "İzin Planım"
+                    });
+                } else if (document.getElementById('nav-manuel-tab').getAttribute('aria-selected') == "true") {
+                    $("#tblPlannedVacations4").table2excel({
+                        filename: "izin_planim.xls",
+                        exclude_inputs: false,
+                        sheetName: "İzin Planım"
+                    });
+                }
             });
         });   
     </script>

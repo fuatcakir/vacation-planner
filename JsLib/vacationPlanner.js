@@ -279,6 +279,8 @@ function displayAll() {
 }
 
 function display(page) {
+    showFooterOfSharing(true);
+
     if (page == 4) {
         let therIsAplan = isThereAnyManuelPlan();
         if (therIsAplan) {

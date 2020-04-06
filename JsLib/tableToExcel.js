@@ -262,8 +262,19 @@
   function getRichContent(pCell, index) {
     let content = '';
     if (pCell.html().indexOf("litepicker") >= 0) {
-      content = document.getElementById("inputlp4" + index).value;
-    }else {
+      let tblVacations = document.getElementById("tblPlannedVacations4");
+      if (document.getElementById('nav-sugplan1-tab').getAttribute('aria-selected') == "true") {
+        tblVacations = document.getElementById("tblPlannedVacations1");
+      } else if (document.getElementById('nav-sugplan2-tab').getAttribute('aria-selected') == "true") {
+        tblVacations = document.getElementById("tblPlannedVacations2");
+      } else if (document.getElementById('nav-sugplan3-tab').getAttribute('aria-selected') == "true") {
+        tblVacations = document.getElementById("tblPlannedVacations3");
+      } else if (document.getElementById('nav-manuel-tab').getAttribute('aria-selected') == "true") {
+        tblVacations = document.getElementById("tblPlannedVacations4");
+      }
+
+      content = tblVacations.rows[index].cells[1].childNodes[0].value;
+    } else {
       content = pCell.html();
     }
     return content;

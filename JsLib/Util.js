@@ -104,9 +104,20 @@ function addRowToTable() {
     calculateVacations();
     refreshYearPreview(4, false);
   } else {
-    alert("Lütfen tatil aralığını seçiniz.");
+
+    alertX("Lütfen tatil aralığını seçiniz.");
     document.getElementById("manualDatePicker").focus();
   }
+}
+
+
+function alertX(msg) {
+  Swal.fire({
+    position: 'top',
+    title: msg,
+    showConfirmButton: false,
+    timer: 2000
+  });
 }
 
 function deleteRowsByChecked(delCheckedRows) {
@@ -172,7 +183,7 @@ function disableFooter() {
 }
 
 function msg(txt) {
-  alert(txt);
+  alertX(txt);
 }
 
 function repeatedControl(obj) {
@@ -317,8 +328,12 @@ function getStarRatings(starCount) {
 function setMothPreview(pBtn, isGreen) {
   if (isGreen) {
     pBtn.setAttribute('class', 'btn btn-success disabled');
+    pBtn.setAttribute('title', 'Tatil Var');
+
   } else {
     pBtn.setAttribute('class', 'btn btn-secondary disabled');
+    pBtn.setAttribute('title', 'Tatil Yok');
+
   }
 }
 
@@ -664,7 +679,7 @@ function addLeaveCompareTableByURL(pId) {
         q = pId;
       }
     } catch (error) {
-      alert('Lütfen ' + window.location.href + ' tarafından verilen paylaşım linkini giriniz.')
+      alertX('Lütfen ' + window.location.href + ' tarafından verilen paylaşım linkini giriniz.')
     }
     if (q) {
       document.getElementById("loader2").style.display = "block";
@@ -680,7 +695,7 @@ function addLeaveCompareTableByURL(pId) {
           document.getElementById("txtLeavesCompare").value = "";
         });
     } else {
-      alert('Lütfen ' + window.location.href + ' tarafından verilen paylaşım linkini giriniz.')
+      alertX('Lütfen ' + window.location.href + ' tarafından verilen paylaşım linkini giriniz.')
     }
   }
 }

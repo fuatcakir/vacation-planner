@@ -2,6 +2,9 @@
   cursor: pointer;
 }
 
+.default {
+  cursor: default;
+}
 .tooltip {
   position: relative;
   display: inline-block;

@@ -16,6 +16,9 @@
     <link href="./Style/fav.ico" rel="icon" type="image/x-icon" />
     <link rel="stylesheet" href="./Style/style.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-wordpress-admin/wordpress-admin.css"> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
+
     <script src="./JsLib/calendarUtil.js"></script>
     <script src="./JsLib/holidays/holidaysTR2020.js"></script>
     <script src="./JsLib/holidays/holidaysTR2021.js"></script>
@@ -69,6 +72,9 @@
 
         gtag('config', 'UA-162624232-1');
     </script>
+
+
+
 
 </head>
 
@@ -199,18 +205,18 @@
                         onclick="setYearCalendarRanges()">Takvimde Görüntüle</button>
                     <div class="btn-group" role="group" aria-label="Basic example">
 
-                        <button id="btnJan1" type="button" class="btn btn-secondary disabled">Ocak</button>
-                        <button id="btnFeb1" type="button" class="btn btn-secondary disabled">Şubat</button>
-                        <button id="btnMar1" type="button" class="btn btn-secondary disabled">Mart</button>
-                        <button id="btnApr1" type="button" class="btn btn-secondary disabled">Nisan</button>
-                        <button id="btnMay1" type="button" class="btn btn-secondary disabled">Mayıs</button>
-                        <button id="btnJun1" type="button" class="btn btn-secondary disabled">Haziran</button>
-                        <button id="btnJly1" type="button" class="btn btn-secondary disabled">Temmuz</button>
-                        <button id="btnAug1" type="button" class="btn btn-secondary disabled">Ağustos</button>
-                        <button id="btnSep1" type="button" class="btn btn-secondary disabled">Eylül</button>
-                        <button id="btnOct1" type="button" class="btn btn-secondary disabled">Ekim</button>
-                        <button id="btnNov1" type="button" class="btn btn-secondary disabled">Kasım</button>
-                        <button id="btnDec1" type="button" class="btn btn-secondary disabled">Aralık</button>
+                        <button id="btnJan1" type="button" class="btn btn-secondary disabled default">Ocak</button>
+                        <button id="btnFeb1" type="button" class="btn btn-secondary disabled default">Şubat</button>
+                        <button id="btnMar1" type="button" class="btn btn-secondary disabled default">Mart</button>
+                        <button id="btnApr1" type="button" class="btn btn-secondary disabled default">Nisan</button>
+                        <button id="btnMay1" type="button" class="btn btn-secondary disabled default">Mayıs</button>
+                        <button id="btnJun1" type="button" class="btn btn-secondary disabled default">Haziran</button>
+                        <button id="btnJly1" type="button" class="btn btn-secondary disabled default">Temmuz</button>
+                        <button id="btnAug1" type="button" class="btn btn-secondary disabled default">Ağustos</button>
+                        <button id="btnSep1" type="button" class="btn btn-secondary disabled default">Eylül</button>
+                        <button id="btnOct1" type="button" class="btn btn-secondary disabled default">Ekim</button>
+                        <button id="btnNov1" type="button" class="btn btn-secondary disabled default">Kasım</button>
+                        <button id="btnDec1" type="button" class="btn btn-secondary disabled default">Aralık</button>
                     </div>
                 </div>
 
@@ -336,10 +342,12 @@
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Seçili İzinler</button>
+                            aria-haspopup="true" aria-expanded="false">Aksiyon</button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item pointer" onclick="deleteRowsByChecked(0)">Kalsın</a>
-                            <a class="dropdown-item pointer" onclick="deleteRowsByChecked(1)">Silinsin</a>
+                            <a class="dropdown-item pointer" onclick="deleteRowsByChecked(0)">Seçili olMayanlar silinsin</a>
+                            <a class="dropdown-item pointer" onclick="deleteRowsByChecked(1)">Seçili olanlar silinsin</a>
+                            <div role="separator" class="dropdown-divider"></div>
+                            <a class="dropdown-item pointer" onclick="plan(4)">Listeyi tekrar yükle</a>
                         </div>
                     </div>
                     <input id="manualDatePicker" type="text" class="form-control"
@@ -447,13 +455,18 @@
         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
+
                 <div class="modal-content">
                     <div id="calendar"></div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div id = "shareAndSave" class="input-group mb-3">
+        <div id="shareAndSave" class="input-group mb-3">
 
             <input id="txtSharePlan" type="text" class="form-control" placeholder="Paylaşım açıklaması giriniz"
                 aria-label="Paylaşım açıklaması giriniz" aria-describedby="button-addon2">

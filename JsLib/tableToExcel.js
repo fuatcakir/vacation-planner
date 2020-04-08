@@ -65,6 +65,7 @@
       // get contents of table except for exclude
       $(e.element).each(function (i, o) {
         var tempRows = "";
+        let indexLP = 0;
         $(o).find("tr").not(e.settings.exclude).each(function (i, p) {
 
           // Reset for this row
@@ -79,7 +80,7 @@
 
           // Create HTML for Row
           tempRows += "<tr style='" + additionalStyles + "'>";
-          let indexLP = 1;
+     
           // Loop through each TH and TD
           $(p).find("td,th").not(e.settings.exclude).each(function (i, q) { // p did not exist, I corrected
 
@@ -114,7 +115,7 @@
               }
               tempRows += ">" +
 
-                getRichContent($(q), indexLP++);
+                getRichContent($(q), indexLP);
               //fuat fix
 
               + "</td>";
@@ -122,7 +123,7 @@
           });
 
           tempRows += "</tr>";
-
+          indexLP++;
         });
         // exclude img tags
         if (e.settings.exclude_img) {

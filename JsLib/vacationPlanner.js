@@ -293,6 +293,7 @@ function display(page) {
 }
 
 function plan(page) {
+    showFooterOfSharing(true);
     let person = {
         name: 'Fuat',
         surname: 'CAKIR',
